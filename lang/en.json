@@ -1,5 +1,7 @@
 {
     "cancel" : "Cancel",
     "detail" : "Detail",
-    "back" : "Back"
+    "back" : "Back",
+    "email" : "Email",
+    "password" : "Password"
 }

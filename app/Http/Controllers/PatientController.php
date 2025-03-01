@@ -69,7 +69,7 @@ class PatientController extends Controller
             return redirect()->route('patient.index')->with('success',__('patient.create_success'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->back()->withErrors('patient.create_failed');
+            return redirect()->back()->withErrors(__('patient.create_failed'));
         }
     }
 
@@ -115,7 +115,7 @@ class PatientController extends Controller
             return redirect()->route('patient.index')->with('success',__('patient.update_success'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->back()->withErrors('patient.update_failed');
+            return redirect()->back()->withErrors(__('patient.update_failed'));
         }
     }
 
@@ -129,7 +129,7 @@ class PatientController extends Controller
             return redirect()->route('patient.index')->with('success', __('patient.delete_success'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->back()->withErrors('patient.delete_failed');
+            return redirect()->back()->withErrors(__('patient.delete_failed'));
         }
     }
 }

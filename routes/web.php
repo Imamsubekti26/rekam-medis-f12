@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -13,6 +14,10 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::resource('patient', PatientController::class)
+    ->except(['edit'])
+    ->middleware(['auth']);
+
+Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
     ->middleware(['auth']);
 

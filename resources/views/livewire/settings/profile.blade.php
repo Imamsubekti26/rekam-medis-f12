@@ -9,6 +9,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public string $name = '';
     public string $email = '';
+    public string $phone = '';
 
     /**
      * Mount the component.
@@ -17,6 +18,7 @@ new class extends Component {
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->phone = Auth::user()->phone ?? '';
     }
 
     /**
@@ -37,6 +39,7 @@ new class extends Component {
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id)
             ],
+            'phone' => ['required', 'numeric'],
         ]);
 
         $user->fill($validated);
@@ -72,14 +75,14 @@ new class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <x-settings.layout heading="{{ __('Profile') }}" subheading="{{ __('Update your name and email address') }}">
+    <x-settings.layout heading="{{ __('Profile') }}" subheading="{{ __('Update your name, phone, and email address') }}">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" label="{{ __('Name') }}" type="text" name="name" required autofocus autocomplete="name" />
 
             <div>
                 <flux:input wire:model="email" label="{{ __('Email') }}" type="email" name="email" required autocomplete="email" />
 
-                @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
+                @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                     <div>
                         <p class="mt-2 text-sm text-gray-800">
                             {{ __('Your email address is unverified.') }}
@@ -100,6 +103,8 @@ new class extends Component {
                     </div>
                 @endif
             </div>
+
+            <flux:input wire:model="phone" label="{{ __('Phone') }}" type="text" name="phone" required autofocus autocomplete="phone" />
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">

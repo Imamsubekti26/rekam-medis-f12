@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->boolean('is_male')->default(true);
             $table->timestamp('date_of_birth')->nullable();
+            $table->string('food_allergies')->nullable();
+            $table->string('drug_allergies')->nullable();
             $table->timestamps();
         });
     }

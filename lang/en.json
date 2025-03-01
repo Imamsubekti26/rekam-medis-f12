@@ -3,5 +3,6 @@
     "detail" : "Detail",
     "back" : "Back",
     "email" : "Email",
-    "password" : "Password"
+    "password" : "Password",
+    "choose" : "Choose..."
 }

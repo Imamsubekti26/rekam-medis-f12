@@ -23,12 +23,18 @@
                     {{-- Phone --}}
                     <flux:input inputmode="numeric" label="{{ __('patient.phone') }}" name="phone" value="{{ $patient->phone }}" />
                     {{-- Gender --}}
-                    <flux:select label="{{ __('patient.gender') }} *" placeholder="{{ __('patient.choose') }}" name="is_male" required>
+                    <flux:select label="{{ __('patient.gender') }} *" placeholder="{{ __('choose') }}" name="is_male" required>
                         <option value="1" {{ $patient->is_male ? "selected" : "" }}>{{ __('patient.male') }}</option>
                         <option value="0" {{ !$patient->is_male ? "selected" : "" }}>{{ __('patient.female') }}</option>
                     </flux:select>
                     {{-- Date of Birth --}}
                     <flux:input type="date" label="{{ __('patient.date_of_birth') }}" name="date_of_birth" value="{{ $patient->date_of_birth }}" />
+                </div>
+                <div class="grid auto-rows-min gap-4 md:grid-cols-2 mt-4 mb-8">
+                    {{-- Drug Allergies --}}
+                    <flux:textarea label="{{ __('patient.drug_allergies') }}" resize="none" name="drug_allergies">{{ $patient->drug_allergies }}</flux:textarea>
+                    {{-- Food Allergies --}}
+                    <flux:textarea label="{{ __('patient.food_allergies') }}" resize="none" name="food_allergies">{{ $patient->food_allergies }}</flux:textarea>
                 </div>
                 {{-- / Form Input --}}
 

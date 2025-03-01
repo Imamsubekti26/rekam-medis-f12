@@ -28,5 +28,6 @@ return [
     'update_success' => 'Update patient was successfully',
     'update_failed' => 'Update patient failed',
     'show_failed' => 'The patient you are looking for is not found',
-    'choose' => 'Choose...'
+    'drug_allergies' => "Drug Allergies",
+    'food_allergies' => "Food Allergies",
 ];

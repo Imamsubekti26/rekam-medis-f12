@@ -11,6 +11,6 @@ class Patient extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = ['member_id', 'name', 'phone', 'address', 'is_male', 'date_of_birth'];
+    protected $fillable = ['member_id', 'name', 'phone', 'address', 'is_male', 'date_of_birth', 'food_allergies', 'drug_allergies'];
 
 }

@@ -85,7 +85,7 @@ class DoctorController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * * @deprecated the edit form has handled by 'show' route, this method is not necesary again
+     * @deprecated the edit form has handled by 'show' route, this method is not necesary again
      */
     public function edit(User $doctor)
     {

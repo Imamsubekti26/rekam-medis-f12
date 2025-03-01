@@ -62,6 +62,8 @@ class PatientController extends Controller
             'phone' => ['nullable', 'numeric'],
             'is_male' => ['nullable', 'boolean'],
             'date_of_birth'=> ['nullable', 'date'],
+            'food_allergies' => ['nullable', 'string'],
+            'drug_allergies' => ['nullable', 'string'],
         ]);
 
         try {
@@ -108,11 +110,13 @@ class PatientController extends Controller
             'phone' => ['nullable', 'numeric'],
             'is_male' => ['nullable', 'boolean'],
             'date_of_birth'=> ['nullable', 'date'],
+            'food_allergies' => ['nullable', 'string'],
+            'drug_allergies' => ['nullable', 'string'],
         ]);
 
         try {
             Patient::find($patient->id)->update($validated);
-            return redirect()->route('patient.index')->with('success',__('patient.update_success'));
+            return redirect()->route('patient.show', $patient->id)->with('success',__('patient.update_success'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->back()->withErrors(__('patient.update_failed'));

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -19,6 +20,10 @@ Route::resource('patient', PatientController::class)
 
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
+    ->middleware(['auth']);
+
+Route::resource('record', MedicalRecordController::class)
+    ->except(['edit', 'store'])
     ->middleware(['auth']);
 
 Route::middleware(['auth'])->group(function () {

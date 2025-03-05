@@ -66,7 +66,7 @@
                                 <td class="p-4">{{ $doctor->phone }}</td>
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
-                                        <flux:button href="{{ route('doctor.show', $doctor->id) }}" icon="eye" size="sm" class="cursor-pointer" wire:navigate/>
+                                        <flux:button href="{{ route('doctor.show', $doctor->id) }}" icon="information-circle" size="sm" class="cursor-pointer" wire:navigate/>
                                     </flux:tooltip>
                                 </td>
                             </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MedicalRecord;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -76,7 +77,8 @@ class DoctorController extends Controller
     {
         try {
             $doctor_data = User::find($doctor->id);
-            return view('doctor.detail', ['doctor' => $doctor_data]);
+            $medical_records = MedicalRecord::with('doctor')->where('doctor_id','=', $doctor->id)->get();
+            return view('doctor.detail', ['doctor' => $doctor_data, 'medical_records' => $medical_records]);
         } catch (\Exception $e) {
             dd($e);
             return redirect()->route('doctor.index')->withErrors(__('doctor.show_failed'));

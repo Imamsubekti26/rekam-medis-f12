@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MedicalRecord;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -82,7 +83,8 @@ class PatientController extends Controller
     {
         try {
             $patient_data = Patient::find($patient->id);
-            return view('patient.detail', ['patient' => $patient_data]);
+            $medical_records = MedicalRecord::with('patient')->where('patient_id', $patient->id)->get();
+            return view('patient.detail', ['patient' => $patient_data, 'medical_records' => $medical_records]);
         } catch (\Exception $e) {
             dd($e);
             return redirect()->route('patient.index')->withErrors(__('patient.show_failed'));

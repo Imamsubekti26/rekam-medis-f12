@@ -1,3 +1,7 @@
+@php
+use Carbon\Carbon;
+@endphp
+
 <x-layouts.app>
     <main class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
 
@@ -55,14 +59,49 @@
         </header>
         {{-- / Form Card Update --}}
 
-        {{-- Form Card Medical Record Lists --}}
+        {{-- Table Medical Record Lists --}}
         <section class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-4 md:p-12">
             {{-- Title --}}
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
                 {{ __("doctor.title_medic") }}
             </h2>
             {{-- / Title --}}
+
+            <table class="w-full">
+                <thead class="border-b-1">
+                    <tr>
+                        {{-- Record Number --}}
+                        <th class="p-4 py-6">{{ __('medical_record.record_number') }}</th>
+                        {{-- Date --}}
+                        <th class="p-4 py-6">{{ __('medical_record.date') }}</th>
+                        {{-- Doctor Name --}}
+                        <th class="p-4 py-6">{{ __('patient.name') }}</th>
+                        {{-- Anamnesis --}}
+                        <th class="p-4 py-6">{{ __('medical_record.anamnesis') }}</th>
+                        {{-- Action --}}
+                        <th class="p-4 py-6">{{ __('patient.action') }}</th>
+                    </tr>
+                </thead>
+                @if ($medical_records)
+                    <tbody class="text-center">
+                        @foreach ($medical_records as $record)
+                            <tr>
+                                <td class="p-4">{{ $record->record_number }}</td>
+                                <td class="p-4">{{ Carbon::parse($record->date)->setTimezone('Asia/Jakarta')->format('y/m/d H:i') }}</td>
+                                <td class="p-4">{{ $record->patient->name }}</td>
+                                <td class="p-4">{{ $record->anamnesis }}</td>
+                                <td class="p-4">
+                                    <flux:tooltip content="{{ __('detail') }}">
+                                        <flux:button href="{{ route('record.show', $record->id) }}" icon="information-circle" size="sm"
+                                            class="cursor-pointer" wire:navigate />
+                                    </flux:tooltip>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                @endif
+            </table>
         </section>
-        {{-- / Form Card Medical Record Lists --}}
+        {{-- / Table Medical Record Lists --}}
     </main>
 </x-layouts.app>

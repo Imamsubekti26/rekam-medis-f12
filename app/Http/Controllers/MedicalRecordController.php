@@ -37,8 +37,8 @@ class MedicalRecordController extends Controller
         }
 
         try {
-            $record = $query->with('doctor')->with('patient')->paginate(10);
-            return view("medical_record.list", ['records' => $record]);
+            $records = $query->with('doctor')->with('patient')->paginate(10);
+            return view("medical_record.list", compact('records'));
         } catch (\Exception $e) {
             dd($e);
         }
@@ -67,7 +67,7 @@ class MedicalRecordController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @deprecated the behaviour of 'store' action has been handle by livewire 'medical-record/index'.
+     * @deprecated the behaviour of 'store' action has been handle by livewire 'medical-record/create'.
      */
     public function store(Request $request) {}
 
@@ -76,13 +76,7 @@ class MedicalRecordController extends Controller
      */
     public function show(MedicalRecord $record)
     {
-        try {
-            $record_data = MedicalRecord::find($record->id);
-            return view('medical_record.detail', ['record' => $record_data]);
-        } catch (\Exception $e) {
-            dd($e);
-            return redirect()->route('record.index')->withErrors(__('medical_record.show_failed'));
-        }
+        return view('medical_record.detail', compact('record'));
     }
 
     /**
@@ -96,11 +90,9 @@ class MedicalRecordController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @deprecated the behaviour of 'update' action has been handle by livewire 'medical-record/detail'.
      */
-    public function update(Request $request, MedicalRecord $medicalRecord)
-    {
-        //
-    }
+    public function update(Request $request, MedicalRecord $medicalRecord) {}
 
     /**
      * Remove the specified resource from storage.
@@ -108,7 +100,7 @@ class MedicalRecordController extends Controller
     public function destroy(MedicalRecord $record)
     {
         try{
-            MedicalRecord::find($record->id)->delete();
+            $record->delete();
             return redirect()->route('record.index')->with('success', __('medical_record.delete_success'));
         } catch (\Exception $e) {
             dd($e);

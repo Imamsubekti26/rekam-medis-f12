@@ -38,8 +38,8 @@ class DoctorController extends Controller
         }
 
         try {
-            $doctor = $query->paginate(10);
-            return view("doctor.list", ['doctors' => $doctor]);
+            $doctors = $query->paginate(10);
+            return view("doctor.list", compact('doctors'));
         } catch (\Exception $e) {
             dd($e);
         }
@@ -76,9 +76,8 @@ class DoctorController extends Controller
     public function show(User $doctor)
     {
         try {
-            $doctor_data = User::find($doctor->id);
             $medical_records = MedicalRecord::with('doctor')->where('doctor_id','=', $doctor->id)->get();
-            return view('doctor.detail', ['doctor' => $doctor_data, 'medical_records' => $medical_records]);
+            return view('doctor.detail', compact('doctor', 'medical_records'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->route('doctor.index')->withErrors(__('doctor.show_failed'));
@@ -106,7 +105,7 @@ class DoctorController extends Controller
         ]);
         
         try {
-            User::find($doctor->id)->update($validated);
+            $doctor->update($validated);
             return redirect()->route('doctor.index')->with('success',__('doctor.update_success'));
         } catch (\Exception $e) {
             dd($e);
@@ -120,7 +119,7 @@ class DoctorController extends Controller
     public function destroy(User $doctor)
     {
         try{
-            User::find($doctor->id)->delete();
+            $doctor->delete();
             return redirect()->route('doctor.index')->with('success', __('doctor.delete_success'));
         } catch (\Exception $e) {
             dd($e);

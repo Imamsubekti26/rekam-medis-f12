@@ -37,7 +37,7 @@ class PatientController extends Controller
 
         try {
             $patients = $query->paginate(10);
-            return view("patient.list", ["patients"=> $patients]);
+            return view("patient.list", compact('patients'));
         } catch (\Exception $e) {
             dd($e);
         }
@@ -82,9 +82,8 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         try {
-            $patient_data = Patient::find($patient->id);
             $medical_records = MedicalRecord::with('patient')->where('patient_id', $patient->id)->get();
-            return view('patient.detail', ['patient' => $patient_data, 'medical_records' => $medical_records]);
+            return view('patient.detail', compact('patient', 'medical_records'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->route('patient.index')->withErrors(__('patient.show_failed'));
@@ -117,7 +116,7 @@ class PatientController extends Controller
         ]);
 
         try {
-            Patient::find($patient->id)->update($validated);
+            $patient->update($validated);
             return redirect()->route('patient.show', $patient->id)->with('success',__('patient.update_success'));
         } catch (\Exception $e) {
             dd($e);
@@ -131,7 +130,7 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         try{
-            Patient::find($patient->id)->delete();
+            $patient->delete();
             return redirect()->route('patient.index')->with('success', __('patient.delete_success'));
         } catch (\Exception $e) {
             dd($e);

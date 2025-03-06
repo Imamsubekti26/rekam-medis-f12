@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Medicine Lists',
+    'title_add' => 'Add New Medicine',
+    'title_show' => 'Medicine Detail',
+    'action' => 'Action',
+    'add' => 'Add Medicine',
+    'update' => 'Update Medicine',
+    'delete' => 'Delete Medicine',
+    'delete_msg' => 'Are you sure? The action cannot be undo!',
+    'delete_success' => 'Delete medicine was successfully!',
+    'delete_failed' => 'Delete medicine failed!',
+    'search' => 'Search',
+    'search_hint' => 'Search medicine...',
+    'create_success' => 'Create a new medicine was successfully',
+    'create_failed' => 'Create a new medicine failed',
+    'update_success' => 'Update medicine was successfully',
+    'update_failed' => 'Update medicine failed',
+    'show_failed' => 'The medicine you are looking for is not found',
+    'id' => 'Medicine ID',
+    'name' => 'Medicine Name',
+    'stock' => 'Stock',
+    'price' => 'Price',
+    'barcode' => 'Barcode',
+    'description' => 'Medicine Description',
+];

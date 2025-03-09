@@ -2,11 +2,10 @@
 
 namespace App\Livewire\MedicalRecord;
 
-use App\Models\MedicalRecord;
 use App\Models\User;
 use Carbon\Carbon;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Ramsey\Uuid\Uuid;
 
 class CardRecord extends Component
 {
@@ -19,11 +18,11 @@ class CardRecord extends Component
     public ?string $anamnesis;
     public ?string $diagnosis;
     public ?string $therapy;
-    protected $listeners = ['getRecordData' => 'sendRecordToParent'];
 
+    #[On('collectRecord')]
     public function sendRecordToParent()
     {
-        $this->dispatch('sendRecordToParent', [
+        $this->dispatch('submitRecordToParent', [
             "date" => Carbon::now('Asia/Jakarta'),
             "doctor_id" => $this->doctor_id,
             "weight" => $this->weight ?? 0,

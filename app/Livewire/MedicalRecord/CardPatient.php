@@ -3,6 +3,7 @@
 namespace App\Livewire\MedicalRecord;
 
 use App\Models\Patient;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CardPatient extends Component
@@ -10,11 +11,11 @@ class CardPatient extends Component
     public ?string $patient_id;
     public ?Patient $patient_data;
     public string $member_id = '';
-    protected $listeners = ['getPatientData' => 'sendPatientToParent'];
 
+    #[On('collectPatient')]
     public function sendPatientToParent()
     {
-        $this->dispatch('sendPatientToParent', $this->patient_id);
+        $this->dispatch('submitPatientToParent', $this->patient_id);
     }
 
     public function mount($patient = null)

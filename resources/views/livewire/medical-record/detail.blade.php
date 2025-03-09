@@ -1,7 +1,7 @@
 <main class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
     <livewire:medical-record.card-patient :patient="$record->patient" />
     <livewire:medical-record.card-record :record="$record" />
-    <livewire:medical-record.card-prescription :prescriptions="$record->prescriptions" />
+    <livewire:medical-record.card-prescription :prescriptions="$prescriptions" />
     <section
         class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-6 md:px-8">
         <div class="flex flex-col md:flex-row justify-end gap-4">
@@ -11,7 +11,7 @@
             <flux:button class="cursor-pointer">{{ __('medical_record.print') }}</flux:button>
             <flux:button variant="primary" class="cursor-pointer" wire:click="updateData">{{ __('medical_record.save') }}
             </flux:button>
-            <flux:button @click="window.history.back()" class="cursor-pointer" wire:navigate>{{ __('cancel') }}
+            <flux:button @click="window.history.back()" class="cursor-pointer" wire:navigate>{{ __('back') }}
             </flux:button>
         </div>
     </section>

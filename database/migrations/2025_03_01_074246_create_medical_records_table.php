@@ -16,14 +16,13 @@ return new class extends Migration
             $table->string('record_number')->unique();
             $table->timestamp('date');
             $table->foreignUuid('patient_id')->references('id')->on('patients')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignUuid('doctor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignUuid('doctor_id')->nullable()->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
             $table->decimal('weight',3,2)->nullable();
             $table->integer('temperature')->nullable();
             $table->string('blood_pressure', 7)->nullable();
             $table->longText('anamnesis');
             $table->longText('diagnosis')->nullable();
             $table->longText('therapy')->nullable();
-            $table->longText('prescriptions')->nullable();
             $table->timestamps();
         });
     }

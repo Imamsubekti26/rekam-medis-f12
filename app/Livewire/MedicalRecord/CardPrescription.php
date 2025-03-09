@@ -2,49 +2,70 @@
 
 namespace App\Livewire\MedicalRecord;
 
+use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CardPrescription extends Component
 {
     public $prescriptions = [];
-    protected $listeners = ['getPrescriptionData' => 'sendPrescriptionToParent'];
+    public $deletedPrescriptions = [];
 
+    #[On('collectPrescriptions')]
     public function sendPrescriptionToParent()
     {
-        $this->dispatch('sendPrescriptionToParent', json_encode($this->prescriptions));
+        $this->dispatch('submitPrescriptionToParent', $this->prescriptions, $this->deletedPrescriptions);
+    }
+
+    #[On('lockPrescription')]
+    public function syncPrescription($prescription)
+    {
+        $index = array_search($prescription['id'], array_column($this->prescriptions, 'id'));
+        if ($index !== false) {
+            $this->prescriptions[$index] = $prescription;
+        }
+    }
+
+    #[On('removePrescription')]
+    public function deletePrescription($id)
+    {
+        array_push($this->deletedPrescriptions, $id);
+        $index = array_search($id, array_column($this->prescriptions, 'id'));
+        unset($this->prescriptions[$index]);
+        $this->prescriptions = array_values($this->prescriptions);
     }
 
     public function addNewPrescription()
     {
-        $this->prescriptions = [[
+        $prescription = [
+            'id' => Str::uuid()->toString(),
+            'medicine_id' => '',
             'medicine_name' => '',
-            'schedule' => '',
+            'rule_of_use' => '',
             'aftermeal'=> true,
             'notes' => '',
-            'locked' => false,
-        ], ...$this->prescriptions];
-    }
-
-    public function lockPrescription(int $index)
-    {
-        $this->prescriptions[$index]['locked'] = true;
-    }
-
-    public function unlockPrescription(int $index)
-    {
-        $this->prescriptions[$index]['locked'] = false;
-    }
-
-    public function removePrescription(int $index)
-    {
-        unset($this->prescriptions[$index]);
-        $this->prescriptions = array_values($this->prescriptions);
+            'in_edit' => true,
+        ];
+        array_unshift($this->prescriptions, $prescription);
     }
 
     public function mount($prescriptions = null)
     {
         if ($prescriptions != null) {
-            $this->prescriptions = json_decode($prescriptions, true);
+            $temp = [];
+            foreach ($prescriptions as $p) {
+                $prescription = [
+                    'id' => $p->id,
+                    'medicine_id' => $p->medicine_id,
+                    'medicine_name' => $p->medicine->name,
+                    'rule_of_use' => $p->rule_of_use,
+                    'aftermeal'=> $p->aftermeal,
+                    'notes' => $p->notes,
+                    'in_edit' => false,
+                ];
+                array_push($temp, $prescription);
+            }
+            $this->prescriptions = $temp;
         }
     }
 

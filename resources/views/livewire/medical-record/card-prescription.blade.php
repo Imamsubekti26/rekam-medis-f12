@@ -28,38 +28,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($prescriptions as $i => $p)
-                    <tr class="text-center">
-                        {{-- Prescription Lists --}}
-                        @if ($p['locked'])
-                            <td class="p-2 py-4">{{ $p['medicine_name'] }}</td>
-                            <td class="p-2 py-4">{{ $p['schedule'] }}</td>
-                            <td class="p-2 py-4">{{ $p['aftermeal'] ? 'after meal' : 'before meal' }}</td>
-                            <td class="p-2 py-4">{{ $p['notes'] }}</td>
-                        @else
-                            <td class="p-2 py-4"><flux:input wire:model="prescriptions.{{ $i }}.medicine_name" /></td>
-                            <td class="p-2 py-4"><flux:input wire:model="prescriptions.{{ $i }}.schedule" /></td>
-                            <td class="p-2 py-4">
-                                <flux:select placeholder="{{ __('choose') }}" wire:model="prescriptions.{{ $i }}.aftermeal">
-                                    <flux:select.option value="1">{{ __('medical_record.aftermeal') }}</flux:select.option>
-                                    <flux:select.option value="0">{{ __('medical_record.beforemeal') }}</flux:select.option>
-                                </flux:select>
-                            </td>
-                            <td class="p-2 py-4"><flux:input wire:model="prescriptions.{{ $i }}.notes" /></td>
-                        @endif
-                        {{-- / Prescription Lists --}}
-
-                        {{-- Action Button --}}
-                        <td class="p-2 py-4">
-                            @if ($p['locked'])
-                                <flux:button icon="pencil" variant="ghost" class="cursor-pointer" wire:click="unlockPrescription({{ $i }})" />
-                            @else
-                                <flux:button icon="check" variant="ghost" class="cursor-pointer" wire:click="lockPrescription({{ $i }})" />
-                            @endif
-                            <flux:button icon="trash" variant="ghost" class="cursor-pointer" wire:click="removePrescription({{ $i }})" />
-                        </td>
-                        {{-- / Action Button --}}
-                    </tr>
+                @foreach ($prescriptions as $p)
+                    <livewire:components.prescription :key="$p['id']" :data="$p" />
                 @endforeach
             </tbody>
         </table>

@@ -14,7 +14,7 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group heading="{{ __('dashboard.dashboard') }}" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('dashboard.dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="home" :href="route('record.index')" :current="request()->routeIs('record.index')" wire:navigate>{{ __('dashboard.medical_record') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('record.index')" :current="request()->routeIs('record.index')" wire:navigate>{{ __('dashboard.medical_record') }}</flux:navlist.item>
                 </flux:navlist.group>
                 <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
                     <flux:navlist.item icon="home" :href="route('patient.index')" :current="request()->routeIs('patient.index')" wire:navigate>{{ __('dashboard.patient') }}</flux:navlist.item>

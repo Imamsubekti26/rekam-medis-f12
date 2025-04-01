@@ -23,7 +23,7 @@ class CardRecord extends Component
     public function sendRecordToParent()
     {
         $this->dispatch('submitRecordToParent', [
-            "date" => Carbon::now('Asia/Jakarta'),
+            "date" => Carbon::now(timezone:'Asia/Jakarta')->format(format: 'Y-m-d H:i:s'),
             "doctor_id" => $this->doctor_id,
             "weight" => $this->weight ?? 0,
             "temperature" => $this->temperature ?? 0,

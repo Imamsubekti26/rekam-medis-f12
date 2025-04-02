@@ -2,9 +2,10 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'menu_utama' => 'Main Menu',
     'medical_record' => "Medical Records",
     'patient' => 'Patients',
     'doctor' => 'Doctors',
-    'medicine' => 'Mendicine',
+    'medicine' => 'Medicine',
     'manage_data' => 'Manage Data'
 ];

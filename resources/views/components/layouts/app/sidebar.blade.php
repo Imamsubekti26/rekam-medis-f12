@@ -12,14 +12,14 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group heading="{{ __('dashboard.dashboard') }}" class="grid">
+                <flux:navlist.group heading="{{ __('dashboard.menu_utama') }}" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('dashboard.dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document" :href="route('record.index')" :current="request()->routeIs('record.index')" wire:navigate>{{ __('dashboard.medical_record') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document-text" :href="route('record.index')" :current="request()->routeIs('record.index')" wire:navigate>{{ __('dashboard.medical_record') }}</flux:navlist.item>
                 </flux:navlist.group>
                 <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
-                    <flux:navlist.item icon="home" :href="route('patient.index')" :current="request()->routeIs('patient.index')" wire:navigate>{{ __('dashboard.patient') }}</flux:navlist.item>
-                    <flux:navlist.item icon="home" :href="route('doctor.index')" :current="request()->routeIs('doctor.index')" wire:navigate>{{ __('dashboard.doctor') }}</flux:navlist.item>
-                    <flux:navlist.item icon="home" :href="route('medicine.index')" :current="request()->routeIs('medicine.index')" wire:navigate>{{ __('dashboard.medicine') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('patient.index')" :current="request()->routeIs('patient.index')" wire:navigate>{{ __('dashboard.patient') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user" :href="route('doctor.index')" :current="request()->routeIs('doctor.index')" wire:navigate>{{ __('dashboard.doctor') }}</flux:navlist.item>
+                    <flux:navlist.item icon="inbox" :href="route('medicine.index')" :current="request()->routeIs('medicine.index')" wire:navigate>{{ __('dashboard.medicine') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

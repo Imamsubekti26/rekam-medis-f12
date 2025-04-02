@@ -11,13 +11,18 @@ use Livewire\Component;
 class Create extends Component
 {
     public $record;
+    public $record_id;
     private $prescriptions;
 
     #[On('submitPatientToParent')]
-    public function collectPatient($patient_id)
+    public function collectPatient($patient_id, $printing = false)
     {
         $this->record['patient_id'] = $patient_id;
         $this->saveHandler();
+        
+        if ($printing) {
+            $this->dispatch('printRecord', $this->record_id);
+        }
     }
 
     #[On('submitRecordToParent')]
@@ -39,12 +44,21 @@ class Create extends Component
         $this->dispatch('collectPatient');
     }
 
+    public function storeAndPrint()
+    {
+        $this->dispatch('collectRecord');
+        $this->dispatch('collectPrescriptions');
+        $this->dispatch('collectPatient', printing: true);
+    }
+
     public function saveHandler()
     {
         try {
             DB::beginTransaction();
             $newMedical = new MedicalRecord($this->record);
             $newMedical->save();
+
+            $this->record_id = $newMedical->id;
             
             Prescription::bulkInsert($newMedical->id, $this->prescriptions);
             DB::commit();

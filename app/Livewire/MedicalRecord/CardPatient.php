@@ -13,9 +13,9 @@ class CardPatient extends Component
     public string $member_id = '';
 
     #[On('collectPatient')]
-    public function sendPatientToParent()
+    public function sendPatientToParent($printing = false)
     {
-        $this->dispatch('submitPatientToParent', $this->patient_id);
+        $this->dispatch('submitPatientToParent', patient_id: $this->patient_id, printing: $printing);
     }
 
     public function mount($patient = null)

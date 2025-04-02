@@ -107,4 +107,9 @@ class MedicalRecordController extends Controller
             return redirect()->back()->withErrors(__('medical_record.delete_failed'));
         }
     }
+
+    public function print(MedicalRecord $record)
+    {
+        return view('medical_record.print', compact('record'));
+    }
 }

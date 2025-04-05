@@ -17,7 +17,10 @@ use Carbon\Carbon;
                 <div class="flex flex-col gap-4">
                     {{-- Button Create --}}
                     <flux:button href="{{ route('record.create') }}" class="cursor-pointer" icon="plus" wire:navigate>{{ __('medical_record.title_add') }}</flux:button>
-
+                    
+                    {{-- Button Print --}}
+                    <flux:button onclick="printTable()" class="cursor-pointer" icon="printer">{{ __('medical_record.print') }}</flux:button>
+                    
                     {{-- Search Field --}}
                     <form class="flex gap-4 items-center">
                         <flux:input icon="magnifying-glass" placeholder="{{ __('medical_record.search_hint') }}" name="search" value="{{ request()->query('search') }}" />
@@ -33,37 +36,15 @@ use Carbon\Carbon;
         {{-- / Header --}}
 
         {{-- Table Patient Lists --}}
-        <section class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
+        <section id="printableTable" class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
             <table class="w-full">
                 <thead class="border-b-1">
                     <tr>
-                        {{-- Doctor Name --}}
-                        <th class="p-4 py-6">
-                            <div class="flex justify-center items-center gap-2">
-                                {{ __('medical_record.record_number') }}
-                                <livewire:components.sorter :asc="'record_number_asc'" :desc="'record_number_desc'" />
-                            </div>
-                        </th>
-                        {{-- date --}}
-                        <th class="p-4 py-6">
-                            <div class="flex justify-center items-center gap-2">
-                                {{ __('medical_record.date') }}
-                                <livewire:components.sorter :asc="'date_asc'" :desc="'date_desc'" />
-                            </div>
-                        </th>
-                        {{-- Patient Name --}}
-                        <th class="p-4 py-6">
-                            <div class="flex justify-center items-center gap-2">
-                                {{ __('patient.name') }}
-                                <livewire:components.sorter :asc="'patient_asc'" :desc="'patient_desc'" />
-                            </div>
-                        </th>
-                        {{-- Doctor Name --}}
+                        <th class="p-4 py-6">{{ __('medical_record.record_number') }}</th>
+                        <th class="p-4 py-6">{{ __('medical_record.date') }}</th>
+                        <th class="p-4 py-6">{{ __('patient.name') }}</th>
                         <th class="p-4 py-6">{{ __('doctor.name') }}</th>
-                        {{-- Anamnesis --}}
                         <th class="p-4 py-6">{{ __('medical_record.anamnesis') }}</th>
-                        {{-- Action --}}
-                        <th class="p-4 py-6">{{ __('patient.action') }}</th>
                     </tr>
                 </thead>
                 @if ($records)
@@ -75,11 +56,6 @@ use Carbon\Carbon;
                                 <td class="p-4">{{ $record->patient->name }}</td>
                                 <td class="p-4">{{ $record->doctor->name }}</td>
                                 <td class="p-4">{{ $record->anamnesis }}</td>
-                                <td class="p-4">
-                                    <flux:tooltip content="{{ __('detail') }}">
-                                        <flux:button href="{{ route('record.show', $record->id) }}" icon="information-circle" size="sm" class="cursor-pointer" wire:navigate/>
-                                    </flux:tooltip>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -90,6 +66,17 @@ use Carbon\Carbon;
             </footer>
         </section>
         {{-- / Table Patient Lists --}}
+
+        <script>
+            function printTable() {
+                var printContent = document.getElementById("printableTable").innerHTML;
+                var originalContent = document.body.innerHTML;
+                document.body.innerHTML = printContent;
+                window.print();
+                document.body.innerHTML = originalContent;
+                location.reload();
+            }
+        </script>
 
     </main>
 </x-layouts.app>

@@ -69,12 +69,21 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
+            <!-- Theme Switcher -->
+<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="hidden lg:flex mr-2">
+    <flux:radio value="light" icon="sun" class="py-1" />
+    <flux:radio value="dark" icon="moon" class="py-1" />
+</flux:menu.radio.group>
         </flux:sidebar>
 
         <!-- Mobile User Menu -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
+             <!-- Theme Switcher -->
+<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="flex lg:hidden mt-2 ml-2">
+    <flux:radio value="light" icon="sun" class="py-1" />
+    <flux:radio value="dark" icon="moon" class="py-1" />
+</flux:menu.radio.group>
             <flux:spacer />
 
             <flux:dropdown position="top" align="end">
@@ -119,6 +128,8 @@
                     </form>
                 </flux:menu>
             </flux:dropdown>
+           
+
         </flux:header>
 
         {{ $slot }}

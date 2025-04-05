@@ -88,7 +88,8 @@ use Carbon\Carbon;
                     {{ __('medical_record.add') }}</flux:button>
             </div>
             
-            <table class="w-full">
+            <div class="w-full mt-8 overflow-y-auto">
+            <table class="w-full min-w-2xl">
                 <thead class="border-b-1">
                     <tr>
                         {{-- Record Number --}}
@@ -122,6 +123,7 @@ use Carbon\Carbon;
                     </tbody>
                 @endif
             </table>
+            </div>
         </section>
         {{-- / Detail Medical Record Lists --}}
     </main>

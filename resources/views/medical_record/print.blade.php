@@ -3,12 +3,25 @@ use Carbon\Carbon;
 @endphp
 <x-layouts.print>
     <main class="">
-        <div class="border h-20">
-            <h1 class="text-2xl text-center font-bold">Kop Surat</h1>
-        </div>
+        <table style="width: 100%; border-bottom: 4px solid #000000;">
+            <tr>
+                <td style="width: 15%; border: none;">
+                    <img src="/build/assets/img/logof21warna.png" alt="Logo Apotek F-21 Minomartani" style="width: 100px; height: auto; margin: 10px;"> 
+                </td>
+                <td style="text-align: center; border: none;">
+                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800;">Apotek F-21 Minomartani</h2>
+                    <p style="margin: 0; font-size: 12px;">Jl. Contoh Alamat No. 456, Minomartani, Sleman, Yogyakarta</p>
+                    <p style="margin: 0; font-size: 12px;">Telepon: (0274) 7654321 | Email: info@apotekf21.com</p>
+                </td>
+                <td style="width: 15%; border: none;">
+                </td>
+            </tr>
+        </table>
+        
+        
         <div class="dividers"></div>
         <h2 class="text-xl font-bold underline text-center mt-4">Rekam Medis</h2>
-        <div class="grid grid-cols-2 text-sm mt-4">
+        <div class="grid grid-cols-2 text-sm mt-4 mx-12">
             <div>
                 <h3 class="font-bold mt-4">No. Rekam Medis:</h3>
                 <p>{{ $record->record_number }}</p>
@@ -29,7 +42,7 @@ use Carbon\Carbon;
                 </table>
             </div>
         </div>
-        <div class="text-sm mt-8">
+        <div class="text-sm mt-8 mx-12">
             <h3 class="font-bold mt-4">Hasil Pemeriksaan:</h3>
             <div class="grid grid-cols-2">
                 <div>
@@ -48,7 +61,7 @@ use Carbon\Carbon;
             </div>
         </div>
         @if (count($record->prescriptions) > 0)
-            <div class="text-sm mt-8">
+            <div class="text-sm mt-8 mx-12">
                 <h3 class="font-bold mt-4">Resep:</h3>
                 <table class="w-full text-start">
                     @foreach ($record->prescriptions as $p)

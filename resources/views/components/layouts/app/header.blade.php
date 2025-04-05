@@ -42,7 +42,7 @@
                     />
                 </flux:tooltip>
             </flux:navbar>
-
+            
             <!-- Desktop User Menu -->
             <flux:dropdown position="top" align="end">
                 <flux:profile

@@ -66,8 +66,8 @@ use Carbon\Carbon;
                 {{ __("doctor.title_medic") }}
             </h2>
             {{-- / Title --}}
-
-            <table class="w-full">
+            <div class="w-full mt-8 overflow-y-auto">
+            <table class="w-full min-w-2xl">
                 <thead class="border-b-1">
                     <tr>
                         {{-- Record Number --}}
@@ -101,6 +101,7 @@ use Carbon\Carbon;
                     </tbody>
                 @endif
             </table>
+            </div>
         </section>
         {{-- / Table Medical Record Lists --}}
     </main>

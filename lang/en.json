@@ -1,12 +1,12 @@
 {
-    "cancel" : "Cancel",
-    "detail" : "Detail",
-    "back" : "Back",
-    "email" : "Email",
-    "password" : "Password",
-    "choose" : "Choose...",
-    "save" : "Save",
-    "Settings" : "Settings",
-    "Log Out" : "Log Out",
-    "action" : "Action"
+    "cancel": "Batal",
+    "detail": "Detail",
+    "back": "Kembali",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "choose": "Pilih...",
+    "save": "Simpan",
+    "Settings": "Pengaturan",
+    "Log Out": "Keluar",
+    "action": "Aksi"
 }

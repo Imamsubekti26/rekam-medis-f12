@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Daftar Obat',
+    'title_add' => 'Tambah Obat Baru',
+    'title_show' => 'Detail Obat',
+    'action' => 'Aksi',
+    'add' => 'Tambah Obat',
+    'update' => 'Perbarui Obat',
+    'delete' => 'Hapus Obat',
+    'delete_msg' => 'Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan!',
+    'delete_success' => 'Obat berhasil dihapus!',
+    'delete_failed' => 'Gagal menghapus obat!',
+    'search' => 'Cari',
+    'search_hint' => 'Cari obat...',
+    'create_success' => 'Obat baru berhasil ditambahkan',
+    'create_failed' => 'Gagal menambahkan obat baru',
+    'update_success' => 'Data obat berhasil diperbarui',
+    'update_failed' => 'Gagal memperbarui data obat',
+    'show_failed' => 'Obat yang Anda cari tidak ditemukan',
+    'id' => 'ID Obat',
+    'name' => 'Nama Obat',
+    'stock' => 'Stok',
+    'price' => 'Harga',
+    'barcode' => 'Kode Barcode',
+    'description' => 'Deskripsi Obat',
+];

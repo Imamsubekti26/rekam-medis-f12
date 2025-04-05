@@ -73,53 +73,74 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6">
-    <x-auth-header title="Log in to your account" description="Enter your email and password below to log in" />
+    <!-- Theme Switcher kanan atas -->
+    <div class="absolute right-0 top-0 mt-2 mr-2">
+        <flux:menu.radio.group 
+            x-data 
+            x-model="$flux.appearance" 
+            variant="segmented" 
+            class="flex cursor-pointer"
+        >
+            <flux:radio value="light" icon="sun" class="py-1" />
+            <flux:radio value="dark" icon="moon" class="py-1" />
+        </flux:menu.radio.group>
+    </div>
+    <!-- Logo untuk mode terang -->
+<img src="/build/assets/img/logof21warna.png" alt="Logo Light" 
+class="block dark:hidden" style="width: 100px; margin: 0 auto;">
 
-    <!-- Session Status -->
+<!-- Logo untuk mode gelap -->
+<img src="/build/assets/img/logof21.png" alt="Logo Dark" 
+class="hidden dark:block" style="width: 100px; margin: 0 auto;">
+
+    <x-auth-header title="Masuk ke Akun Anda" description="Masukkan email dan kata sandi Anda untuk Log-in" />
+
+    <!-- Status Sesi -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
+        <!-- Alamat Email -->
         <flux:input
             wire:model="email"
-            label="{{ __('Email address') }}"
+            label="Alamat Email"
             type="email"
             name="email"
             required
             autofocus
             autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="email@contoh.com"
         />
 
-        <!-- Password -->
+        <!-- Kata Sandi -->
         <div class="relative">
             <flux:input
                 wire:model="password"
-                label="{{ __('Password') }}"
+                label="Kata Sandi"
                 type="password"
                 name="password"
                 required
                 autocomplete="current-password"
-                placeholder="Password"
+                placeholder="Kata Sandi"
             />
 
             @if (Route::has('password.request'))
                 <flux:link class="absolute right-0 top-0 text-sm" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
+                    Lupa kata sandi?
                 </flux:link>
             @endif
         </div>
 
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" label="{{ __('Remember me') }}" />
+        <!-- Ingat Saya -->
+        <flux:checkbox wire:model="remember" label="Ingat saya" />
 
         <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
+            <flux:button variant="primary" type="submit" class="w-full">Masuk</flux:button>
         </div>
     </form>
 
     <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">
-        Don't have an account?
-        <flux:link href="{{ route('register') }}" wire:navigate>Sign up</flux:link>
+        Belum punya akun?
+        <flux:link href="{{ route('register') }}" wire:navigate>Daftar</flux:link>
     </div>
 </div>
+

@@ -54,8 +54,10 @@ class Prescription extends Component
     #[On('dropdownOnSelected')]
     public function medicineSelected($id, $name)
     {
-        $this->medicine_id = $id;
-        $this->medicine_name = $name;
+        if ($this->in_edit) {
+            $this->medicine_id = $id;
+            $this->medicine_name = $name;
+        }
     }
 
     public function mount($data)

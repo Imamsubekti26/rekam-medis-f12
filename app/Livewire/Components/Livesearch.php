@@ -18,7 +18,9 @@ class Livesearch extends Component
 
     public function dropdownSelected($id)
     {
-        $this->search_key = array_filter($this->dropdowns, fn($d) => $d["id"] == $id)[0]['item'];
+        $selectedItem = array_filter($this->dropdowns, fn($d) => $d["id"] == $id);
+        $reorderItem = array_values($selectedItem);
+        $this->search_key = $reorderItem[0]['item'];
         $this->dropdowns = [];
         $this->dispatch('dropdownOnSelected', $id, $this->search_key);
     }

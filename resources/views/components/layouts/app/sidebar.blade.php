@@ -70,7 +70,7 @@
                 </flux:menu>
             </flux:dropdown>
             <!-- Theme Switcher -->
-<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="hidden lg:flex mr-2">
+<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="hidden lg:flex mr-2 cursor-pointer">
     <flux:radio value="light" icon="sun" class="py-1" />
     <flux:radio value="dark" icon="moon" class="py-1" />
 </flux:menu.radio.group>

@@ -1,5 +1,8 @@
 <x-layouts.app>
-    <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl p-6 bg-gray-100 dark:bg-gray-900">
+    <div class="flex w-full flex-1 flex-col  rounded-xl p-6 bg-gray-100 dark:bg-gray-900">
+        Selamat datang di Dashboard Klinik F-21 Minomartani
+    </div>
+    <div class="flex w-full flex-1 flex-col gap-6 rounded-xl p-6 bg-gray-100 dark:bg-gray-900 mt-2">
         <div class="grid gap-6 md:grid-cols-4">
             <!-- Total Dokter -->
             <div
@@ -42,19 +45,22 @@
             <div
                 class="relative overflow-hidden rounded-xl border border-neutral-300 dark:border-neutral-700 p-6 bg-white dark:bg-gray-800 shadow-md">
                 <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Visitor Rekam Medis</h2>
-                <canvas id="areaChart" class="h-64"></canvas>
+                <canvas id="areaChart" class="w-full max-h-[300px]"></canvas>
             </div>
 
-            <!-- Grafik Statistik -->
+            <!-- Grafik Bar Pasien -->
             <div
                 class="relative overflow-hidden rounded-xl border border-neutral-300 dark:border-neutral-700 p-6 bg-white dark:bg-gray-800 shadow-md">
-                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Statistik Data</h2>
-                <canvas id="dashboardChart" class="h-64"></canvas>
+                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Statistik Data Pasien
+                </h2>
+                <canvas id="dashboardChart" class="w-full max-h-[250px]"></canvas>
             </div>
+
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Card Instruksi -->
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
+            <div
+                class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                     <i class="fas fa-book-open text-2xl mr-2 text-blue-500"></i> Instruksi Penggunaan
                 </h2>
@@ -83,8 +89,9 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
+
+            <div
+                class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                     <i class="fas fa-file-medical text-2xl mr-2 text-yellow-500"></i> Pengelolaan Rekam Medis
                 </h2>
@@ -130,49 +137,58 @@
             const textColor = isDarkMode ? "#e5e7eb" : "#333";
             const gridColor = isDarkMode ? "#374151" : "#ddd";
 
-            // Grafik Bar (Statistik Data)
-            var ctx = document.getElementById("dashboardChart").getContext("2d");
-            new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: ["Dokter", "Pasien", "Rekam Medis", "Stok Obat"],
-                    datasets: [{
-                        label: "Jumlah Data",
-                        data: [{{ $totalDoctors }}, {{ $totalPatients }},
-                            {{ $totalMedicalRecords }}, {{ $totalMedicineStock }}
-                        ],
-                        backgroundColor: ["#93c5fd", "#6ee7b7", "#fde68a", "#fca5a5"],
-                        borderRadius: 8,
-                    }],
+            // Grafik Statistik Umur & Jenis Kelamin
+    const ctxBar = document.getElementById("dashboardChart").getContext("2d");
+            new Chart(ctxBar, {
+        type: "bar",
+        data: {
+            labels: {!! json_encode($rangeLabels) !!},
+            datasets: [
+                {
+                    label: "Laki-laki",
+                    data: {!! json_encode($maleCounts) !!},
+                    backgroundColor: "#60a5fa",
+                    borderRadius: 6,
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
+                {
+                    label: "Perempuan",
+                    data: {!! json_encode($femaleCounts) !!},
+                    backgroundColor: "#f472b6",
+                    borderRadius: 6,
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor,
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColor,
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
-                        },
-                        x: {
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
-                        },
+                    grid: {
+                        color: gridColor,
                     },
                 },
-            });
+                x: {
+                    ticks: {
+                        color: textColor,
+                    },
+                    grid: {
+                        color: gridColor,
+                    },
+                },
+            },
+        },
+    });
+
 
             // Grafik Line (Tren Data)
             var ctxArea = document.getElementById("areaChart").getContext("2d");
@@ -181,7 +197,7 @@
                 data: {
                     labels: ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"],
                     datasets: [{
-                        label: "Penambahan Data",
+                        label: "Jumlah Visitor",
                         data: [5, 10, 8, 15, 7, 12, 9], // Data contoh
                         backgroundColor: "rgba(54, 162, 235, 0.2)",
                         borderColor: "rgba(54, 162, 235, 1)",

@@ -56,6 +56,11 @@ use Carbon\Carbon;
                                 <td class="p-4">{{ $record->patient->name }}</td>
                                 <td class="p-4">{{ $record->doctor->name }}</td>
                                 <td class="p-4">{{ $record->anamnesis }}</td>
+                                <td class="p-4">
+                                    <flux:tooltip content="{{ __('detail') }}">
+                                        <flux:button href="{{ route('record.show', $record->id) }}" icon="information-circle" size="sm" class="cursor-pointer" wire:navigate/>
+                                    </flux:tooltip>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

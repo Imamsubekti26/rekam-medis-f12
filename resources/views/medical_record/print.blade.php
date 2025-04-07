@@ -1,6 +1,26 @@
 @php
 use Carbon\Carbon;
 @endphp
+<style>
+    @media print {
+    html {
+        color-scheme: light; /* Force light mode */
+        --tw-bg-opacity: 1;
+        background-color: white !important;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .dark * {
+        background-color: white !important;
+        color: black !important;
+    }
+}
+
+</style>
 <x-layouts.print>
     <main class="">
         <table style="width: 100%; border-bottom: 4px solid #000000;">
@@ -9,7 +29,7 @@ use Carbon\Carbon;
                     <img src="/build/assets/img/logof21warna.png" alt="Logo Apotek F-21 Minomartani" style="width: 100px; height: auto; margin: 10px;"> 
                 </td>
                 <td style="text-align: center; border: none;">
-                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800;">Apotek F-21 Minomartani</h2>
+                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800;">Klinik F-21 Minomartani</h2>
                     <p style="margin: 0; font-size: 12px;">Jl. Contoh Alamat No. 456, Minomartani, Sleman, Yogyakarta</p>
                     <p style="margin: 0; font-size: 12px;">Telepon: (0274) 7654321 | Email: info@apotekf21.com</p>
                 </td>

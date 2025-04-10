@@ -36,6 +36,19 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6">
+    <!-- Theme Switcher kanan atas -->
+    <div class="absolute right-0 top-0 mt-2 mr-2">
+        <flux:menu.radio.group 
+            x-data 
+            x-model="$flux.appearance" 
+            variant="segmented" 
+            class="flex cursor-pointer"
+        >
+            <flux:radio value="light" icon="sun" class="py-1 cursor-pointer" />
+            <flux:radio value="dark" icon="moon" class="py-1 cursor-pointer" />
+        </flux:menu.radio.group>
+    </div>
+    
     <img src="/build/assets/img/logof21.png" alt="" style="width: 100px; margin: 0 auto;">
     <x-auth-header 
         title="Buat akun" 

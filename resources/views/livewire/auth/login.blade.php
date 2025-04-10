@@ -81,8 +81,8 @@ new #[Layout('components.layouts.auth')] class extends Component {
             variant="segmented" 
             class="flex cursor-pointer"
         >
-            <flux:radio value="light" icon="sun" class="py-1" />
-            <flux:radio value="dark" icon="moon" class="py-1" />
+            <flux:radio value="light" icon="sun" class="py-1 cursor-pointer" />
+            <flux:radio value="dark" icon="moon" class="py-1 cursor-pointer" />
         </flux:menu.radio.group>
     </div>
     <!-- Logo untuk mode terang -->

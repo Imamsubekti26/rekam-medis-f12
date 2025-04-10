@@ -7,38 +7,42 @@
             <!-- Total Dokter -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-blue-100 dark:bg-blue-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
-                <i class="fas fa-user-md text-5xl mb-2 text-blue-500"></i>
-                <h2 class="text-lg font-semibold">Total Dokter</h2>
-                <p class="text-2xl font-bold">{{ $totalDoctors }}</p>
+                <i class="fas fa-user-md text-3xl mb-2 text-blue-500"></i>
+                <h2 class="text-sm font-semibold">Total Dokter</h2>
+                <p class="text-1xl font-bold">{{ $totalDoctors }}</p>
                 <span class="text-sm text-green-500">+{{ $newDoctorsToday }} hari ini</span>
             </div>
 
             <!-- Total Pasien -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-green-100 dark:bg-green-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
-                <i class="fas fa-user-injured text-5xl mb-2 text-green-500"></i>
-                <h2 class="text-lg font-semibold">Total Pasien</h2>
-                <p class="text-2xl font-bold">{{ $totalPatients }}</p>
+                <i class="fas fa-user-injured text-3xl mb-2 text-green-500"></i>
+                <h2 class="text-sm font-semibold">Total Pasien</h2>
+                <p class="text-1xl font-bold">{{ $totalPatients }}</p>
                 <span class="text-sm text-green-500">+{{ $newPatientsToday }} hari ini</span>
             </div>
 
             <!-- Total Rekam Medis -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-yellow-100 dark:bg-yellow-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
-                <i class="fas fa-file-medical text-5xl mb-2 text-yellow-500"></i>
-                <h2 class="text-lg font-semibold">Total Rekam Medis</h2>
-                <p class="text-2xl font-bold">{{ $totalMedicalRecords }}</p>
+                <i class="fas fa-file-medical text-3xl mb-2 text-yellow-500"></i>
+                <h2 class="text-sm font-semibold">Total Rekam Medis</h2>
+                <p class="text-1xl font-bold">{{ $totalMedicalRecords }}</p>
                 <span class="text-sm text-green-500">+{{ $newMedicalRecordsToday }} hari ini</span>
             </div>
 
             <!-- Stok Obat -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-red-100 dark:bg-red-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
-                <i class="fas fa-pills text-5xl mb-2 text-red-500"></i>
-                <h2 class="text-lg font-semibold">Total Stok Obat</h2>
-                <p class="text-2xl font-bold">{{ $totalMedicineStock }}</p>
+                <i class="fas fa-pills text-3xl mb-2 text-red-500"></i>
+                <h2 class="text-sm font-semibold">Total Stok Obat</h2>
+                <p class="text-1xl font-bold">{{ $totalMedicineStock }}</p>
                 <span class="text-sm text-green-500">+{{ $newMedicineStockToday }} hari ini</span>
             </div>
+        </div>
+        <div class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md">
+            <i class="fas fa-info-circle mr-2"></i>
+            Jika grafik tidak muncul, silakan <strong>refresh halaman</strong> untuk memuat ulang data.
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Grafik Area Statistik -->
@@ -54,6 +58,9 @@
                 <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Statistik Data Pasien
                 </h2>
                 <canvas id="dashboardChart" class="w-full max-h-[250px]"></canvas>
+                <p class="text-sm text-blue-600 dark:text-blue-300 mt-2 text-center">
+                    <i class="fas fa-info-circle mr-1"></i> Keterangan: Sumbu X menunjukkan rentang umur pasien
+                </p>
             </div>
 
         </div>

@@ -37,4 +37,5 @@ return [
     'condition' => 'Condition',
     'notes' => 'Notes',
     'print' => 'Print Record',
+    'empty_prescriptions' => 'No prescriptions have been added yet',
 ];

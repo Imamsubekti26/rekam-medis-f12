@@ -53,7 +53,7 @@
                     <ul
                         class="absolute left-0 top-full mt-2 w-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg z-50 max-h-60 overflow-auto transition-all duration-200">
                         @foreach ($suggestions as $suggestion)
-                            <li wire:click="setPatient({{ $suggestion->id }})"
+                            <li wire:click="setPatient('{{ $suggestion->id }}')"
                                 class="px-4 py-2 text-sm text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer transition-colors duration-150">
                                 <span class="font-semibold">{{ $suggestion->member_id }}</span>
                                 <span class="text-zinc-500 ml-2">{{ $suggestion->name }}</span>

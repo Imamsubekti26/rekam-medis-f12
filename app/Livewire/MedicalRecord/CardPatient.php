@@ -37,37 +37,37 @@ class CardPatient extends Component
     }
 
     public function findPatientById()
-{
-    if (trim($this->member_id) === '') {
-        $this->patient_data = null;
-        $this->patient_id = null;
+    {
+        if (trim($this->member_id) === '') {
+            $this->patient_data = null;
+            $this->patient_id = null;
+            $this->suggestions = [];
+            return;
+        }
+
+        // Live search mode - suggestions
+        $this->suggestions = Patient::where('member_id', 'like', '%' . $this->member_id . '%')
+            ->limit(5)
+            ->get();
+
+        // Jika hanya satu hasil dan ingin langsung pilih
+        if ($this->suggestions->count() === 1) {
+            $this->patient_data = $this->suggestions->first();
+            $this->patient_id = $this->patient_data->id;
+            $this->suggestions = [];
+        }
+    }
+
+    // Triggered ketika user klik salah satu saran
+    public function setPatient($id)
+    {
+        $this->patient_data = Patient::find($id);
+        if ($this->patient_data) {
+            $this->patient_id = $this->patient_data->id;
+            $this->member_id = $this->patient_data->member_id;
+        }
         $this->suggestions = [];
-        return;
     }
-
-    // Live search mode - suggestions
-    $this->suggestions = Patient::where('member_id', 'like', '%' . $this->member_id . '%')
-        ->limit(5)
-        ->get();
-
-    // Jika hanya satu hasil dan ingin langsung pilih
-    if ($this->suggestions->count() === 1) {
-        $this->patient_data = $this->suggestions->first();
-        $this->patient_id = $this->patient_data->id;
-        $this->suggestions = [];
-    }
-}
-
-// Triggered ketika user klik salah satu saran
-public function setPatient($id)
-{
-    $this->patient_data = Patient::find($id);
-    if ($this->patient_data) {
-        $this->patient_id = $this->patient_data->id;
-        $this->member_id = $this->patient_data->member_id;
-    }
-    $this->suggestions = [];
-}
 
     public function render()
     {

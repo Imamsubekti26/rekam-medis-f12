@@ -16,23 +16,29 @@
     </div>
 
     {{-- Table Medicine --}}
-    <div class="w-full mt-8 overflow-y-auto">
-        <table class="w-full min-w-2xl">
-            <thead class="border-b-1">
-                <tr>
-                    <th class="p-4">{{ __('medical_record.medicine_name') }}</th>
-                    <th class="p-4">{{ __('medical_record.rule_of_use') }}</th>
-                    <th class="p-4">{{ __('medical_record.condition') }}</th>
-                    <th class="p-4">{{ __('medical_record.notes') }}</th>
-                    <th class="p-4"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($prescriptions as $p)
-                    <livewire:components.prescription :key="$p['id']" :data="$p" />
-                @endforeach
-            </tbody>
-        </table>
+    <div class="w-full mt-8 min-h-52 overflow-y-auto">
+        @if ($prescriptions)
+            <table class="w-full min-w-2xl">
+                <thead class="border-b-1">
+                    <tr>
+                        <th class="p-4">{{ __('medical_record.medicine_name') }}</th>
+                        <th class="p-4">{{ __('medical_record.rule_of_use') }}</th>
+                        <th class="p-4">{{ __('medical_record.condition') }}</th>
+                        <th class="p-4">{{ __('medical_record.notes') }}</th>
+                        <th class="p-4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($prescriptions as $p)
+                        <livewire:components.prescription :key="$p['id']" :data="$p" />
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <div class="w-full h-full flex justify-center items-center">
+                <p class="italic">{{ __('medical_record.empty_prescriptions') }}</p>
+            </div>
+        @endif
     </div>
 
 </section>

@@ -1,3 +1,4 @@
+
 <section
     class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-4 md:p-12">
 
@@ -16,7 +17,7 @@
     </div>
 
     {{-- Table Medicine --}}
-    <div class="w-full mt-8 min-h-52 overflow-y-auto">
+    <div class="w-full mt-8 overflow-y-auto">
         @if ($prescriptions)
             <table class="w-full min-w-2xl">
                 <thead class="border-b-1">
@@ -25,7 +26,7 @@
                         <th class="p-4">{{ __('medical_record.rule_of_use') }}</th>
                         <th class="p-4">{{ __('medical_record.condition') }}</th>
                         <th class="p-4">{{ __('medical_record.notes') }}</th>
-                        <th class="p-4"></th>
+                        <th class="p-4">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,10 +36,18 @@
                 </tbody>
             </table>
         @else
-            <div class="w-full h-full flex justify-center items-center">
+            <div class="w-full h-full flex justify-center items-center py-5">
                 <p class="italic">{{ __('medical_record.empty_prescriptions') }}</p>
             </div>
         @endif
+    </div>
+
+    {{-- Alert Info --}}
+    <div class="mt-6 w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md flex items-start gap-2">
+        <i class="fas fa-info-circle mt-1"></i>
+        <div>
+            <p><strong>Perhatian:</strong> Pastikan obat yang akan ditambahkan ke dalam resep dokter sudah terdaftar pada daftar obat dan harap klik obat yang muncul dibawahnya.</p>
+        </div>
     </div>
 
 </section>

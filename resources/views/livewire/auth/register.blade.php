@@ -48,8 +48,14 @@ new #[Layout('components.layouts.auth')] class extends Component {
             <flux:radio value="dark" icon="moon" class="py-1 cursor-pointer" />
         </flux:menu.radio.group>
     </div>
-    
-    <img src="/build/assets/img/logof21.png" alt="" style="width: 100px; margin: 0 auto;">
+
+    <!-- Logo untuk mode terang -->
+<img src="/build/assets/img/logof21warna.png" alt="Logo Light" 
+class="block dark:hidden" style="width: 100px; margin: 0 auto;">
+
+<!-- Logo untuk mode gelap -->
+<img src="/build/assets/img/logof21.png" alt="Logo Dark" 
+class="hidden dark:block" style="width: 100px; margin: 0 auto;">
     <x-auth-header 
         title="Buat akun" 
         description="Masukkan data diri Anda untuk membuat akun" 

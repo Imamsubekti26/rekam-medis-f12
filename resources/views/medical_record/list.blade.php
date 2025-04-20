@@ -1,5 +1,5 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 <x-layouts.app>
     <main class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
@@ -21,7 +21,14 @@
                         {{ __('medical_record.title_add') }}</flux:button>
 
                     {{-- Button Print --}}
-                    <flux:button onclick="printTable()" class="cursor-pointer" icon="printer">
+                    <flux:button 
+                        onclick="window.open(`{{ route('record.print.list', [
+                            'date_start' => request()->query('date_start'), 
+                            'date_end' => request()->query('date_end')
+                        ]) }}`)" 
+                        class="cursor-pointer" 
+                        icon="printer"
+                    >
                         {{ __('medical_record.print') }}</flux:button>
 
                 </div>
@@ -31,55 +38,54 @@
         </header>
         {{-- / Header --}}
         {{-- Filter Search Card --}}
-        <section
-    class="rounded-xl border border-blue-300 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/30 px-4 py-4 sm:px-6 md:px-12 md:py-6 transition-all duration-300">
-    <form class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between w-full flex-wrap" method="GET">
-        
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center w-full md:w-auto flex-wrap">
-            {{-- Search Input --}}
-            <flux:input 
-                icon="magnifying-glass" 
-                placeholder="{{ __('medical_record.search_hint') }}"
-                name="search" 
-                value="{{ request()->query('search') }}" 
-                class="w-full sm:w-64" 
-            />
+        <section 
+            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 px-4 py-4 sm:px-6 md:px-12 md:py-6 transition-all duration-300">
+            <form class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between w-full flex-wrap" method="GET">
+                
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-center w-full md:w-auto flex-wrap">
+                    {{-- Search Input --}}
+                    <flux:input 
+                        icon="magnifying-glass" 
+                        placeholder="{{ __('medical_record.search_hint') }}"
+                        name="search" 
+                        value="{{ request()->query('search') }}" 
+                        class="w-full sm:w-64" 
+                    />
 
-            {{-- Rentang Tanggal --}}
-            <div class="flex flex-wrap items-center gap-2">
-                <label for="date_start" class="text-sm text-zinc-700 dark:text-zinc-200 whitespace-nowrap">
-                    {{ __('medical_record.date') }}
-                </label>
-                <input 
-                    type="date" 
-                    id="date_start" 
-                    name="date_start" 
-                    value="{{ request('date_start') }}"
-                    class="rounded-lg border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 p-2 text-sm w-full sm:w-auto" 
-                />
-                <span class="text-zinc-600 dark:text-zinc-300">s/d</span>
-                <input 
-                    type="date" 
-                    name="date_end" 
-                    value="{{ request('date_end') }}"
-                    class="rounded-lg border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 p-2 text-sm w-full sm:w-auto" 
-                />
-            </div>
-        </div>
+                    {{-- Rentang Tanggal --}}
+                    <div class="flex items-center gap-2">
+                        <label for="date_start" class="text-sm text-zinc-700 dark:text-zinc-200 whitespace-nowrap">
+                            {{ __('medical_record.date') }}
+                        </label>
+                        <flux:input
+                            type="date"
+                            name="date_start"
+                            value="{{ request()->query('date_start') }}"
+                        />
+                        <label for="date_start" class="text-sm text-zinc-700 dark:text-zinc-200 whitespace-nowrap">
+                            {{ __('s/d') }}
+                        </label>
+                        <flux:input 
+                            type="date" 
+                            name="date_end" 
+                            value="{{ request()->query('date_end') }}" 
+                        />
+                    </div>
+                </div>
 
-        {{-- Submit Filter Button --}}
-        <div class="flex gap-2 flex-wrap">
-            <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
-            <flux:button type="submit" icon="magnifying-glass" class="cursor-pointer">
-                {{ __('medical_record.search') }}
-            </flux:button>
-            <flux:button type="button" onclick="window.location='{{ route('record.index') }}'" variant="ghost"
-                class="cursor-pointer">
-                Reset
-            </flux:button>
-        </div>
-    </form>
-</section>
+                {{-- Submit Filter Button --}}
+                <div class="flex gap-2 flex-wrap">
+                    <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
+                    <flux:button type="submit" icon="magnifying-glass" class="cursor-pointer">
+                        {{ __('medical_record.search') }}
+                    </flux:button>
+                    <flux:button type="button" onclick="window.location='{{ route('record.index') }}'" variant="ghost"
+                        class="cursor-pointer">
+                        Reset
+                    </flux:button>
+                </div>
+            </form>
+        </section>
 
 
         {{-- / Filter Search Card --}}
@@ -149,17 +155,6 @@
             </footer>
         </section>
         {{-- / Table Patient Lists --}}
-
-        <script>
-            function printTable() {
-                var printContent = document.getElementById("printableTable").innerHTML;
-                var originalContent = document.body.innerHTML;
-                document.body.innerHTML = printContent;
-                window.print();
-                document.body.innerHTML = originalContent;
-                location.reload();
-            }
-        </script>
 
     </main>
 </x-layouts.app>

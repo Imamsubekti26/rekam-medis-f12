@@ -8,7 +8,7 @@
             <flux:modal.trigger name="delete_record">
                 <flux:button class="cursor-pointer" variant="danger">{{ __('medical_record.delete') }}</flux:button>
             </flux:modal.trigger>
-            <flux:button class="cursor-pointer" @click="window.open(`{{ route('record.print', $record->id) }}`)">{{ __('medical_record.print') }}</flux:button>
+            <flux:button class="cursor-pointer" @click="window.open(`{{ route('record.print.detail', $record->id) }}`)">{{ __('medical_record.print') }}</flux:button>
             <flux:button variant="primary" class="cursor-pointer" wire:click="updateData">{{ __('medical_record.save') }}
             </flux:button>
             <flux:button @click="window.history.back()" class="cursor-pointer" wire:navigate>{{ __('back') }}

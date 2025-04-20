@@ -24,12 +24,14 @@ Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
     ->middleware(['auth']);
 
+Route::get('record/print', [MedicalRecordController::class, 'printList'])
+    ->name('record.print.list');
+Route::get('record/{record}/print', [MedicalRecordController::class, 'printDetail'])
+    ->name('record.print.detail');
+
 Route::resource('record', MedicalRecordController::class)
     ->except(['edit', 'store'])
     ->middleware(['auth']);
-
-Route::get('record/{record}/print', [MedicalRecordController::class, 'print'])
-    ->name('record.print');
 
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])

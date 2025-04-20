@@ -80,7 +80,7 @@
         <div
             class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md">
             <i class="fas fa-info-circle mr-2"></i>
-            Jika grafik tidak muncul, silakan <strong>refresh halaman</strong> untuk memuat ulang data.
+            Jika grafik tidak muncul, silakan <strong class="cursor-pointer hover:underline" onclick="window.location.reload()">refresh halaman</strong> untuk memuat ulang data.
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Grafik Area Statistik -->
@@ -162,7 +162,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        function loadChart() {
             // Cek apakah mode gelap aktif
             const isDarkMode = document.documentElement.classList.contains("dark");
 
@@ -266,7 +266,8 @@
                     },
                 },
             });
-        });
+        };
+
         // Event listener dropdown
         document.getElementById("rangeSelector").addEventListener("change", function() {
             const selectedRange = this.value;
@@ -274,5 +275,16 @@
             url.searchParams.set("range", selectedRange);
             window.location.href = url.toString(); // redirect dengan parameter baru
         });
+
+        // Load chart saat mengakses halaman dashboard
+        if (!window._livewireNavigatedInitialized) {
+            window._livewireNavigatedInitialized = true;
+
+            document.addEventListener('livewire:navigated', () => {
+                if (window.location.pathname === '/dashboard') {
+                    loadChart();
+                }
+            });
+        }
     </script>
 </x-layouts.app>

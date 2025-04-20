@@ -13,55 +13,54 @@ class MedicalRecordController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $query = MedicalRecord::query();
-    $query->select(['medical_records.*'])->join("patients", "patients.id", "=", "medical_records.patient_id");
+    {
+        $query = MedicalRecord::query();
+        $query->select(['medical_records.*'])->join("patients", "patients.id", "=", "medical_records.patient_id");
 
-    if ($request->has("search") && $request->search != null) {
-        $query->where(function ($q) use ($request) {
-            $q->where("record_number", "like", "%" . $request->search . "%")
-              ->orWhere("patients.name", "like", "%" . $request->search . "%");
-        });
+        if ($request->has("search") && $request->search != null) {
+            $query->where(function ($q) use ($request) {
+                $q->where("record_number", "like", "%" . $request->search . "%")
+                ->orWhere("patients.name", "like", "%" . $request->search . "%");
+            });
+        }
+
+        // 🔍 Filter dokter
+        if ($request->has("doctor_id") && $request->doctor_id != null) {
+            $query->where("doctor_id", $request->doctor_id);
+        }
+
+        // 📅 Filter rentang tanggal
+        if ($request->filled('date_start') && $request->filled('date_end')) {
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        } elseif ($request->filled('date_start')) {
+            $query->whereDate('date', '>=', $request->date_start);
+        } elseif ($request->filled('date_end')) {
+            $query->whereDate('date', '<=', $request->date_end);
+        }
+
+        // 🔃 Sortir
+        if ($request->has("sort_by") && $request->sort_by != null) {
+            $sort = match ($request->sort_by) {
+                "record_number_asc" => ["record_number", "asc"],
+                "record_number_desc" => ["record_number", "desc"],
+                "date_asc" => ["date", "asc"],
+                "date_desc" => ["date", "desc"],
+                "patient_asc" => ["patients.name", "asc"],
+                "patient_desc" => ["patients.name", "desc"],
+            };
+            $query->orderBy($sort[0], $sort[1]);
+        } else {
+            $query->orderBy("created_at", "asc");
+        }
+
+        try {
+            $records = $query->with('doctor')->with('patient')->paginate(10);
+
+            return view("medical_record.list", compact('records'));
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
-
-    // 🔍 Filter dokter
-    if ($request->has("doctor_id") && $request->doctor_id != null) {
-        $query->where("doctor_id", $request->doctor_id);
-    }
-
-    // 📅 Filter rentang tanggal
-if ($request->filled('date_start') && $request->filled('date_end')) {
-    $query->whereBetween('date', [$request->date_start, $request->date_end]);
-} elseif ($request->filled('date_start')) {
-    $query->whereDate('date', '>=', $request->date_start);
-} elseif ($request->filled('date_end')) {
-    $query->whereDate('date', '<=', $request->date_end);
-}
-
-    // 🔃 Sortir
-    if ($request->has("sort_by") && $request->sort_by != null) {
-        $sort = match ($request->sort_by) {
-            "record_number_asc" => ["record_number", "asc"],
-            "record_number_desc" => ["record_number", "desc"],
-            "date_asc" => ["date", "asc"],
-            "date_desc" => ["date", "desc"],
-            "patient_asc" => ["patients.name", "asc"],
-            "patient_desc" => ["patients.name", "desc"],
-        };
-        $query->orderBy($sort[0], $sort[1]);
-    } else {
-        $query->orderBy("created_at", "asc");
-    }
-
-    try {
-        $records = $query->with('doctor')->with('patient')->paginate(10);
-        $doctors = User::where('is_admin', false)->get(); // kirim data dokter ke view
-
-        return view("medical_record.list", compact('records', 'doctors'));
-    } catch (\Exception $e) {
-        dd($e);
-    }
-}
 
 
     /**
@@ -128,8 +127,31 @@ if ($request->filled('date_start') && $request->filled('date_end')) {
         }
     }
 
-    public function print(MedicalRecord $record)
+    public function printDetail(MedicalRecord $record)
     {
-        return view('medical_record.print', compact('record'));
+        return view('medical_record.print-detail', compact('record'));
+    }
+
+    public function printList(Request $request)
+    {
+        $query = MedicalRecord::query();
+        $query->select(['medical_records.*'])->join("patients", "patients.id", "=", "medical_records.patient_id");
+
+        // 📅 Filter rentang tanggal
+        if ($request->filled('date_start') && $request->filled('date_end')) {
+            $query->whereBetween('date', [$request->date_start, $request->date_end]);
+        } elseif ($request->filled('date_start')) {
+            $query->whereDate('date', '>=', $request->date_start);
+        } elseif ($request->filled('date_end')) {
+            $query->whereDate('date', '<=', $request->date_end);
+        }
+
+        try {
+            $records = $query->with('doctor')->with('patient')->get();
+
+            return view("medical_record.print-list", compact('records'));
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 }

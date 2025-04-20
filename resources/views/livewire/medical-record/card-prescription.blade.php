@@ -19,7 +19,7 @@
     {{-- Table Medicine --}}
     <div class="w-full mt-8 overflow-y-auto">
         @if ($prescriptions)
-            <table class="w-full min-w-2xl">
+            <table class="w-full min-h-[200px] min-w-2xl">
                 <thead class="border-b-1">
                     <tr>
                         <th class="p-4">{{ __('medical_record.medicine_name') }}</th>

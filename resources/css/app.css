@@ -64,3 +64,14 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+.flux-navlist-item-active {
+    background-color: #2B7FFF !important; /* zinc-200 */
+    color: #ffffff !important; /* zinc-900 */
+    font-weight: 600 !important;
+}
+.dark .flux-navlist-item-active {
+    background-color: #374151 !important; /* zinc-700 */
+    color: #ffffff !important;
+}
+

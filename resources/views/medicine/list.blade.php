@@ -79,7 +79,7 @@
                     </tr>
                 </thead>
                 @if ($medicines)
-                    <tbody class="text-center">
+                    <tbody class="text-center border-b-1">
                         @foreach ($medicines as $medicine)
                             <tr>
                                 <td class="p-4">{{ $medicine->barcode }}</td>
@@ -98,7 +98,7 @@
                     </tbody>
                 @endif
             </table>
-            <footer class="p-4 px-4 md:px-12 border-t-1">
+            <footer class="p-4 px-4 md:px-12">
                 {{ $medicines->appends(request()->query())->links() }}
             </footer>
         </section>

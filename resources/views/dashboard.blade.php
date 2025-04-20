@@ -1,16 +1,47 @@
+<style>
+    /* Sembunyikan panah di layar kecil */
+    @media (max-width: 767px) {
+        .fa-arrow-right {
+            display: none !important;
+        }
+    }
+</style>
 <x-layouts.app>
-    <div class="flex w-full flex-1 flex-col  rounded-xl p-6 bg-gray-100 dark:bg-gray-900">
-        Selamat datang di Dashboard Klinik F-21 Minomartani
+    <div
+    class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-rose-100 via-rose-100 to-rose-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
+    
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-2">
+        <h1 class="font-semibold text-slate-800 dark:text-white text-lg">
+            Selamat datang, 
+            <span class="text-rose-600 dark:text-fuchsia-400 font-bold">
+                {{ Auth::user()->name }}
+            </span>!
+        </h1>
+        <p class="text-sm italic font-medium text-rose-700 dark:text-fuchsia-300">
+            Dashboard
+        </p>
     </div>
+
+    <p class="mt-3 text-sm text-rose-600 dark:text-rose-300">
+        Jika tampilan terlihat berantakan, silakan lakukan <strong>zoom out</strong> pada browser Anda (Ctrl +
+        Scroll atau Ctrl + -).
+    </p>
+</div>
+
+
     <div class="flex w-full flex-1 flex-col gap-6 rounded-xl p-6 bg-gray-100 dark:bg-gray-900 mt-2">
-        <div class="grid gap-6 md:grid-cols-4">
+        <div class="grid gap-4 grid-cols-2 md:grid-cols-4">
             <!-- Total Dokter -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-blue-100 dark:bg-blue-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-user-md text-3xl mb-2 text-blue-500"></i>
                 <h2 class="text-sm font-semibold">Total Dokter</h2>
                 <p class="text-1xl font-bold">{{ $totalDoctors }}</p>
-                <span class="text-sm text-green-500">+{{ $newDoctorsToday }} hari ini</span>
+                <span
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">
+                    +{{ $newDoctorsToday }} hari ini
+                </span>
+
             </div>
 
             <!-- Total Pasien -->
@@ -19,7 +50,9 @@
                 <i class="fas fa-user-injured text-3xl mb-2 text-green-500"></i>
                 <h2 class="text-sm font-semibold">Total Pasien</h2>
                 <p class="text-1xl font-bold">{{ $totalPatients }}</p>
-                <span class="text-sm text-green-500">+{{ $newPatientsToday }} hari ini</span>
+                <span
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newPatientsToday }}
+                    hari ini</span>
             </div>
 
             <!-- Total Rekam Medis -->
@@ -28,19 +61,24 @@
                 <i class="fas fa-file-medical text-3xl mb-2 text-yellow-500"></i>
                 <h2 class="text-sm font-semibold">Total Rekam Medis</h2>
                 <p class="text-1xl font-bold">{{ $totalMedicalRecords }}</p>
-                <span class="text-sm text-green-500">+{{ $newMedicalRecordsToday }} hari ini</span>
+                <span
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newMedicalRecordsToday }}
+                    hari ini</span>
             </div>
 
             <!-- Stok Obat -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-red-100 dark:bg-red-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-pills text-3xl mb-2 text-red-500"></i>
-                <h2 class="text-sm font-semibold">Total Stok Obat</h2>
+                <h2 class="text-sm font-semibold">Total Jenis Obat</h2>
                 <p class="text-1xl font-bold">{{ $totalMedicineStock }}</p>
-                <span class="text-sm text-green-500">+{{ $newMedicineStockToday }} hari ini</span>
+                <span
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newMedicineStockToday }}
+                    hari ini</span>
             </div>
         </div>
-        <div class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md">
+        <div
+            class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md">
             <i class="fas fa-info-circle mr-2"></i>
             Jika grafik tidak muncul, silakan <strong>refresh halaman</strong> untuk memuat ulang data.
         </div>
@@ -48,91 +86,79 @@
             <!-- Grafik Area Statistik -->
             <div
                 class="relative overflow-hidden rounded-xl border border-neutral-300 dark:border-neutral-700 p-6 bg-white dark:bg-gray-800 shadow-md">
-                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Visitor Rekam Medis</h2>
+
+                <!-- Header + Dropdown -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-2">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Visitor Rekam Medis</h2>
+                    <div>
+                        <label for="rangeSelector" class="mr-2 font-medium text-gray-700 dark:text-gray-200">Rentang
+                            Waktu:</label>
+                        <select id="rangeSelector"
+                            class="px-3 py-1 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white text-sm">
+                            <option value="days" {{ request('range') == 'days' ? 'selected' : '' }}>7 Hari</option>
+                            <option value="weeks" {{ request('range') == 'weeks' ? 'selected' : '' }}>7 Minggu
+                            </option>
+                            <option value="months"
+                                {{ request('range') == 'months' || request('range') === null ? 'selected' : '' }}>7
+                                Bulan</option>
+                            <option value="years" {{ request('range') == 'years' ? 'selected' : '' }}>7 Tahun</option>
+                        </select>
+                    </div>
+                </div>
+
                 <canvas id="areaChart" class="w-full max-h-[300px]"></canvas>
             </div>
 
             <!-- Grafik Bar Pasien -->
             <div
                 class="relative overflow-hidden rounded-xl border border-neutral-300 dark:border-neutral-700 p-6 bg-white dark:bg-gray-800 shadow-md">
-                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Statistik Data Pasien
-                </h2>
+                <h2 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Statistik Data Pasien</h2>
                 <canvas id="dashboardChart" class="w-full max-h-[250px]"></canvas>
                 <p class="text-sm text-blue-600 dark:text-blue-300 mt-2 text-center">
                     <i class="fas fa-info-circle mr-1"></i> Keterangan: Sumbu X menunjukkan rentang umur pasien
                 </p>
             </div>
-
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Card Instruksi -->
-            <div
-                class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                    <i class="fas fa-book-open text-2xl mr-2 text-blue-500"></i> Instruksi Penggunaan
-                </h2>
-                <div class="space-y-4 text-gray-700 dark:text-gray-300">
-                    <div>
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <i class="fas fa-user-md text-blue-500 mr-2"></i> Isi Data Dokter
-                        </h3>
-                        <ul class="list-disc list-inside ml-4 text-sm">
-                            <li>Masuk ke menu "Dokter" pada sidebar.</li>
-                            <li>Klik tombol "Tambah Dokter".</li>
-                            <li>Isi formulir dengan informasi lengkap dokter.</li>
-                            <li>Klik tombol "Simpan" untuk menyimpan data.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <i class="fas fa-pills text-green-500 mr-2"></i> Isi Data Obat
-                        </h3>
-                        <ul class="list-disc list-inside ml-4 text-sm">
-                            <li>Masuk ke menu "Obat".</li>
-                            <li>Klik tombol "Tambah Obat".</li>
-                            <li>Isi formulir dengan detail obat, termasuk stok dan tanggal kadaluarsa.</li>
-                            <li>Klik "Simpan" untuk menambahkan obat ke sistem.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
+        <div
+            class="p-6 md:p-6 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-600 dark:bg-blue-900 dark:text-blue-100">
+            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i class="fas fa-info-circle text-blue-500 mr-2"></i> Alur Penggunaan Sistem Rekam Medis
+            </h3>
             <div
-                class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-neutral-300 dark:border-neutral-700">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                    <i class="fas fa-file-medical text-2xl mr-2 text-yellow-500"></i> Pengelolaan Rekam Medis
-                </h2>
-                <div class="space-y-4 text-gray-700 dark:text-gray-300">
-                    <div>
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <i class="fas fa-user text-red-500 mr-2"></i> Isi Data Pasien
-                        </h3>
-                        <ul class="list-disc list-inside ml-4 text-sm">
-                            <li>Masuk ke menu "Pasien".</li>
-                            <li>Klik tombol "Tambah Pasien".</li>
-                            <li>Masukkan informasi pasien, termasuk riwayat medis.</li>
-                            <li>Klik "Simpan" untuk menyimpan data pasien.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold flex items-center">
-                            <i class="fas fa-print text-purple-500 mr-2"></i> Cetak Rekam Medis
-                        </h3>
-                        <ul class="list-disc list-inside ml-4 text-sm">
-                            <li>Masuk ke menu "Rekam Medis".</li>
-                            <li>Pilih rekam medis yang ingin dicetak.</li>
-                            <li>Klik ikon "Print" atau tombol "Cetak Rekam Medis".</li>
-                            <li>Pastikan informasi sudah benar sebelum mencetak.</li>
-                        </ul>
-                    </div>
+                class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0 text-sm text-blue-900 dark:text-blue-100">
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="bg-blue-200 text-blue-900 w-6 h-6 rounded-full flex items-center justify-center font-bold">
+                        1</div>
+                    <span>Masuk ke menu <strong>Dokter</strong>, lalu isi data dokter secara lengkap</span>
+                </div>
+                <i class="fas fa-arrow-right md:inline hidden text-blue-500"></i>
+
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="bg-blue-200 text-blue-900 w-6 h-6 rounded-full flex items-center justify-center font-bold">
+                        2</div>
+                    <span>Masuk ke menu <strong>Pasien</strong>, lalu tambahkan data pasien</span>
+                </div>
+                <i class="fas fa-arrow-right md:inline hidden text-blue-500"></i>
+
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="bg-blue-200 text-blue-900 w-6 h-6 rounded-full flex items-center justify-center font-bold">
+                        3</div>
+                    <span>Masuk ke menu <strong>Obat</strong> dan tambahkan data obat</span>
+                </div>
+                <i class="fas fa-arrow-right md:inline hidden text-blue-500"></i>
+
+                <div class="flex items-center space-x-2">
+                    <div
+                        class="bg-blue-200 text-blue-900 w-6 h-6 rounded-full flex items-center justify-center font-bold">
+                        4</div>
+                    <span>Masuk ke <strong>Rekam Medis</strong>, lalu isi dan simpan rekam medis</span>
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
 
     <script>
@@ -145,56 +171,55 @@
             const gridColor = isDarkMode ? "#374151" : "#ddd";
 
             // Grafik Statistik Umur & Jenis Kelamin
-    const ctxBar = document.getElementById("dashboardChart").getContext("2d");
+            const ctxBar = document.getElementById("dashboardChart").getContext("2d");
             new Chart(ctxBar, {
-        type: "bar",
-        data: {
-            labels: {!! json_encode($rangeLabels) !!},
-            datasets: [
-                {
-                    label: "Laki-laki",
-                    data: {!! json_encode($maleCounts) !!},
-                    backgroundColor: "#60a5fa",
-                    borderRadius: 6,
+                type: "bar",
+                data: {
+                    labels: {!! json_encode($rangeLabels) !!},
+                    datasets: [{
+                            label: "Laki-laki",
+                            data: {!! json_encode($maleCounts) !!},
+                            backgroundColor: "#60a5fa",
+                            borderRadius: 6,
+                        },
+                        {
+                            label: "Perempuan",
+                            data: {!! json_encode($femaleCounts) !!},
+                            backgroundColor: "#f472b6",
+                            borderRadius: 6,
+                        }
+                    ],
                 },
-                {
-                    label: "Perempuan",
-                    data: {!! json_encode($femaleCounts) !!},
-                    backgroundColor: "#f472b6",
-                    borderRadius: 6,
-                }
-            ],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor,
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: textColor,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor,
+                            }
+                        }
                     },
-                    grid: {
-                        color: gridColor,
-                    },
-                },
-                x: {
-                    ticks: {
-                        color: textColor,
-                    },
-                    grid: {
-                        color: gridColor,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: textColor,
+                            },
+                            grid: {
+                                color: gridColor,
+                            },
+                        },
+                        x: {
+                            ticks: {
+                                color: textColor,
+                            },
+                            grid: {
+                                color: gridColor,
+                            },
+                        },
                     },
                 },
-            },
-        },
-    });
+            });
 
 
             // Grafik Line (Tren Data)
@@ -202,10 +227,10 @@
             new Chart(ctxArea, {
                 type: "line",
                 data: {
-                    labels: ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"],
+                    labels: @json($chartLabels),
                     datasets: [{
-                        label: "Jumlah Visitor",
-                        data: [5, 10, 8, 15, 7, 12, 9], // Data contoh
+                        label: "Jumlah Rekam Medis",
+                        data: @json($chartData),
                         backgroundColor: "rgba(54, 162, 235, 0.2)",
                         borderColor: "rgba(54, 162, 235, 1)",
                         borderWidth: 2,
@@ -241,6 +266,13 @@
                     },
                 },
             });
+        });
+        // Event listener dropdown
+        document.getElementById("rangeSelector").addEventListener("change", function() {
+            const selectedRange = this.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set("range", selectedRange);
+            window.location.href = url.toString(); // redirect dengan parameter baru
         });
     </script>
 </x-layouts.app>

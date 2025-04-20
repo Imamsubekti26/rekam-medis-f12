@@ -14,7 +14,7 @@
 @script
     <script>
         $wire.on('printRecord', (record_id) => {
-            window.open(`{{ route('record.print', '__record_id__') }}`.replace('__record_id__', record_id));
+            window.open(`{{ route('record.print.detail', '__record_id__') }}`.replace('__record_id__', record_id));
         });
     </script>
 @endscript

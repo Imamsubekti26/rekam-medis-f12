@@ -34,7 +34,7 @@
             <table style="width: 100%; border-bottom: 4px solid #000000;">
                 <tr>
                     <td style="width: 15%; border: none;">
-                        <img src="/build/assets/img/logof21warna.png" alt="Logo Apotek F-21 Minomartani"
+                        <img src="{{ asset('/assets/img/logof21warna.png') }}" alt="Logo Apotek F-21 Minomartani"
                             style="width: 100px; height: auto; margin: 10px;">
                     </td>
                     <td style="text-align: center; border: none;">

@@ -16,9 +16,9 @@ class PatientController extends Controller
         $query = Patient::query();
 
         if ($request->has("search") && $request->search != null) {
-            $query = $query->where("name","like","%". $request->search ."%")
-                ->orWhere("address","like","%". $request->search ."%")
-                ->orWhere("member_id","like","%". $request->search ."%");
+            $query = $query->where("name", "like", "%" . $request->search . "%")
+                ->orWhere("address", "like", "%" . $request->search . "%")
+                ->orWhere("member_id", "like", "%" . $request->search . "%");
         }
 
         if ($request->has("sort_by") && $request->sort_by != null) {
@@ -30,9 +30,9 @@ class PatientController extends Controller
                 "address_asc" => ["address", "asc"],
                 "address_desc" => ["address", "desc"],
             };
-            $query = $query->orderBy($sort[0],$sort[1]);
+            $query = $query->orderBy($sort[0], $sort[1]);
         } else {
-            $query = $query->orderBy("created_at","asc");
+            $query = $query->orderBy("created_at", "asc");
         }
 
         try {
@@ -62,14 +62,14 @@ class PatientController extends Controller
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'numeric'],
             'is_male' => ['nullable', 'boolean'],
-            'date_of_birth'=> ['nullable', 'date'],
+            'date_of_birth' => ['nullable', 'date'],
             'food_allergies' => ['nullable', 'string'],
             'drug_allergies' => ['nullable', 'string'],
         ]);
 
         try {
             Patient::create($validated);
-            return redirect()->route('patient.index')->with('success',__('patient.create_success'));
+            return redirect()->route('patient.index')->with('success', __('patient.create_success'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->back()->withErrors(__('patient.create_failed'));
@@ -110,14 +110,14 @@ class PatientController extends Controller
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'numeric'],
             'is_male' => ['nullable', 'boolean'],
-            'date_of_birth'=> ['nullable', 'date'],
+            'date_of_birth' => ['nullable', 'date'],
             'food_allergies' => ['nullable', 'string'],
             'drug_allergies' => ['nullable', 'string'],
         ]);
 
         try {
             $patient->update($validated);
-            return redirect()->route('patient.show', $patient->id)->with('success',__('patient.update_success'));
+            return redirect()->route('patient.show', $patient->id)->with('success', __('patient.update_success'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->back()->withErrors(__('patient.update_failed'));
@@ -129,12 +129,44 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        try{
+        try {
             $patient->delete();
             return redirect()->route('patient.index')->with('success', __('patient.delete_success'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->back()->withErrors(__('patient.delete_failed'));
         }
+    }
+
+    public function printList(Request $request)
+    {
+        $query = Patient::query();
+
+        if ($request->has("search") && $request->search != null) {
+            $query->where(function ($q) use ($request) {
+                $q->where("name", "like", "%" . $request->search . "%")
+                    ->orWhere("address", "like", "%" . $request->search . "%")
+                    ->orWhere("member_id", "like", "%" . $request->search . "%");
+            });
+        }
+
+        if ($request->has("sort_by") && $request->sort_by != null) {
+            $sort = match ($request->sort_by) {
+                "name_asc" => ["name", "asc"],
+                "name_desc" => ["name", "desc"],
+                "member_id_asc" => ["member_id", "asc"],
+                "member_id_desc" => ["member_id", "desc"],
+                "address_asc" => ["address", "asc"],
+                "address_desc" => ["address", "desc"],
+                default => ["created_at", "asc"]
+            };
+            $query = $query->orderBy($sort[0], $sort[1]);
+        } else {
+            $query = $query->orderBy("created_at", "asc");
+        }
+
+        $patients = $query->get(); // ambil semua tanpa pagination
+
+        return view("patient.print-list", compact("patients"));
     }
 }

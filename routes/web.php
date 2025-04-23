@@ -17,13 +17,20 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('patient/print', [PatientController::class, 'printList'])
+    ->name('patient.print.list');
+
 Route::resource('patient', PatientController::class)
     ->except(['edit'])
     ->middleware(['auth']);
 
+Route::get('doctor/print', [DoctorController::class, 'printList'])
+    ->name('doctor.print.list');
+
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
     ->middleware(['auth', AdminRestriction::class]);
+
 
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
     ->name('record.print.list');
@@ -33,6 +40,9 @@ Route::get('record/{record}/print', [MedicalRecordController::class, 'printDetai
 Route::resource('record', MedicalRecordController::class)
     ->except(['edit', 'store'])
     ->middleware(['auth']);
+
+Route::get('medicine/print', [MedicineController::class, 'printList'])
+    ->name('medicine.print.list');
 
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
@@ -46,4 +56,4 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

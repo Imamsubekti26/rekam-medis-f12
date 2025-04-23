@@ -121,4 +121,30 @@ class MedicineController extends Controller
             return redirect()->back()->withErrors(__('medicine.delete_failed'));
         }
     }
+    public function printList(Request $request)
+{
+    $query = Medicine::query();
+
+    if ($request->has("search") && $request->search != null) {
+        $query = $query->where("name", "like", "%" . $request->search . "%")
+            ->orWhere("barcode", "like", "%" . $request->search . "%");
+    }
+
+    if ($request->has("sort_by") && $request->sort_by != null) {
+        $sort = match ($request->sort_by) {
+            "name_asc" => ["name", "asc"],
+            "name_desc" => ["name", "desc"],
+            "barcode_asc" => ["barcode", "asc"],
+            "barcode_desc" => ["barcode", "desc"],
+        };
+        $query = $query->orderBy($sort[0], $sort[1]);
+    } else {
+        $query = $query->orderBy("created_at", "asc");
+    }
+
+    $medicines = $query->get(); // ambil semua tanpa pagination
+
+    return view("medicine.print-list", compact("medicines"));
+}
+
 }

@@ -5,7 +5,7 @@ return [
     'title_add' => 'Tambah Pasien Baru',
     'title_show' => 'Detail Pasien',
     'title_medic' => 'Riwayat Rekam Medis',
-    'member_id' => 'ID Anggota',
+    'member_id' => 'ID Pasien',
     'name' => 'Nama Pasien',
     'address' => 'Alamat',
     'phone' => 'Nomor Telepon',
@@ -31,4 +31,5 @@ return [
     'show_failed' => 'Pasien yang Anda cari tidak ditemukan',
     'drug_allergies' => 'Alergi Obat',
     'food_allergies' => 'Alergi Makanan',
+    'print' => 'Cetak Daftar Pasien',
 ];

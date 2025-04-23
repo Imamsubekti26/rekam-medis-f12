@@ -38,84 +38,44 @@ new #[Layout('components.layouts.auth')] class extends Component {
 <div class="flex flex-col gap-6">
     <!-- Theme Switcher kanan atas -->
     <div class="absolute right-0 top-0 mt-2 mr-2">
-        <flux:menu.radio.group 
-            x-data 
-            x-model="$flux.appearance" 
-            variant="segmented" 
-            class="flex cursor-pointer"
-        >
+        <flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="flex cursor-pointer">
             <flux:radio value="light" icon="sun" class="py-1 cursor-pointer" />
             <flux:radio value="dark" icon="moon" class="py-1 cursor-pointer" />
         </flux:menu.radio.group>
     </div>
 
     <!-- Logo untuk mode terang -->
-<img src="/build/assets/img/logof21warna.png" alt="Logo Light" 
-class="block dark:hidden" style="width: 100px; margin: 0 auto;">
+    <img src="{{ asset('/assets/img/logof21warna.png') }}" alt="Logo Light" class="block dark:hidden"
+        style="width: 100px; margin: 0 auto;">
 
-<!-- Logo untuk mode gelap -->
-<img src="/build/assets/img/logof21.png" alt="Logo Dark" 
-class="hidden dark:block" style="width: 100px; margin: 0 auto;">
-    <x-auth-header 
-        title="Buat akun" 
-        description="Masukkan data diri Anda untuk membuat akun" 
-    />
+    <!-- Logo untuk mode gelap -->
+    <img src="{{ asset('/assets/img/logof21.png') }}" alt="Logo Dark" class="hidden dark:block"
+        style="width: 100px; margin: 0 auto;">
+    <x-auth-header title="Buat akun" description="Masukkan data diri Anda untuk membuat akun" />
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="register" class="flex flex-col gap-6">
         <!-- Nama -->
-        <flux:input
-            wire:model="name"
-            id="name"
-            label="Nama lengkap"
-            type="text"
-            name="name"
-            required
-            autofocus
-            autocomplete="name"
-            placeholder="Nama lengkap"
-        />
+        <flux:input wire:model="name" id="name" label="Nama lengkap" type="text" name="name" required
+            autofocus autocomplete="name" placeholder="Nama lengkap" />
 
         <!-- Alamat Email -->
-        <flux:input
-            wire:model="email"
-            id="email"
-            label="Alamat email"
-            type="email"
-            name="email"
-            required
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+        <flux:input wire:model="email" id="email" label="Alamat email" type="email" name="email" required
+            autocomplete="email" placeholder="email@example.com" />
 
         <!-- Kata Sandi -->
-        <flux:input
-            wire:model="password"
-            id="password"
-            label="Kata sandi"
-            type="password"
-            name="password"
-            required
-            autocomplete="new-password"
-            placeholder="Kata sandi"
-        />
+        <flux:input wire:model="password" id="password" label="Kata sandi" type="password" name="password" required
+            autocomplete="new-password" placeholder="Kata sandi" />
 
         <!-- Konfirmasi Kata Sandi -->
-        <flux:input
-            wire:model="password_confirmation"
-            id="password_confirmation"
-            label="Konfirmasi kata sandi"
-            type="password"
-            name="password_confirmation"
-            required
-            autocomplete="new-password"
-            placeholder="Konfirmasi kata sandi"
-        />
+        <flux:input wire:model="password_confirmation" id="password_confirmation" label="Konfirmasi kata sandi"
+            type="password" name="password_confirmation" required autocomplete="new-password"
+            placeholder="Konfirmasi kata sandi" />
 
         <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
+            <flux:button type="submit" variant="primary" class="w-full cursor-pointer">
                 Buat akun
             </flux:button>
         </div>
@@ -126,4 +86,3 @@ class="hidden dark:block" style="width: 100px; margin: 0 auto;">
         <flux:link href="{{ route('login') }}" wire:navigate>Masuk</flux:link>
     </div>
 </div>
-

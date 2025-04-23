@@ -24,4 +24,5 @@ return [
     'price' => 'Harga',
     'barcode' => 'Kode Barcode',
     'description' => 'Deskripsi Obat',
+    'print' => 'Cetak Daftar Obat',
 ];

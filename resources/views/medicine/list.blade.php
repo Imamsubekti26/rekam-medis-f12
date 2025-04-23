@@ -43,6 +43,14 @@
                         <flux:button type="submit" class="cursor-pointer">{{ __('medicine.search') }}</flux:button>
                     </form>
                     {{-- / Search Field --}}
+                    <flux:button
+                        onclick="window.open(`{{ route('medicine.print.list', [
+                            'search' => request()->query('search'),
+                            'sort_by' => request()->query('sort_by'),
+                        ]) }}`)"
+                        class="cursor-pointer" icon="printer">
+                        {{ __('medicine.print') }}
+                    </flux:button>
 
                 </div>
                 {{-- / Action Field --}}

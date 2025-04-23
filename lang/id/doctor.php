@@ -22,5 +22,6 @@ return [
     'id' => 'ID Dokter',
     'name' => 'Nama Dokter',
     'phone' => 'Telepon',
-    'confirmation_password' => 'Konfirmasi Kata Sandi'
+    'confirmation_password' => 'Konfirmasi Kata Sandi',
+    'print' => 'Cetak Daftar Dokter',
 ];

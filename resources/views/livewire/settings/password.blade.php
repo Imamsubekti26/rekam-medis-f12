@@ -40,12 +40,12 @@ new class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <x-settings.layout heading="{{ __('Update password') }}" subheading="{{ __('Ensure your account is using a long, random password to stay secure') }}">
+    <x-settings.layout heading="{{ __('Perbarui Kata Sandi') }}" subheading="{{ __('Pastikan akun Anda menggunakan kata sandi yang panjang dan acak untuk menjaga keamanan') }}">
         <form wire:submit="updatePassword" class="mt-6 space-y-6">
             <flux:input
                 wire:model="current_password"
                 id="update_password_current_passwordpassword"
-                label="{{ __('Current password') }}"
+                label="{{ __('Kata Sandi Saat Ini') }}"
                 type="password"
                 name="current_password"
                 required
@@ -54,7 +54,7 @@ new class extends Component {
             <flux:input
                 wire:model="password"
                 id="update_password_password"
-                label="{{ __('New password') }}"
+                label="{{ __('Kata Sandi Baru') }}"
                 type="password"
                 name="password"
                 required
@@ -63,7 +63,7 @@ new class extends Component {
             <flux:input
                 wire:model="password_confirmation"
                 id="update_password_password_confirmation"
-                label="{{ __('Confirm Password') }}"
+                label="{{ __('Konfirmasi Kata Sandi') }}"
                 type="password"
                 name="password_confirmation"
                 required
@@ -72,7 +72,7 @@ new class extends Component {
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full">{{ __('Save') }}</flux:button>
+                    <flux:button variant="primary" type="submit" class="w-full">{{ __('Simpan') }}</flux:button>
                 </div>
 
                 <x-action-message class="me-3" on="password-updated">

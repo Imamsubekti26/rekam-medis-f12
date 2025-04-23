@@ -13,7 +13,7 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-2">
         <h1 class="font-semibold text-slate-800 dark:text-white text-lg">
             Selamat datang, 
-            <span class="text-rose-600 dark:text-fuchsia-400 font-bold">
+            <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
                 {{ Auth::user()->name }}
             </span>!
         </h1>
@@ -162,24 +162,31 @@
     </div>
 
     <script>
+        let barChartInstance = null;
+        let lineChartInstance = null;
+    
         function loadChart() {
-            // Cek apakah mode gelap aktif
             const isDarkMode = document.documentElement.classList.contains("dark");
-
-            // Warna teks dan grid disesuaikan dengan mode gelap
+    
             const textColor = isDarkMode ? "#e5e7eb" : "#333";
             const gridColor = isDarkMode ? "#374151" : "#ddd";
-
-            // Grafik Statistik Umur & Jenis Kelamin
+    
+            const lineBgColor = isDarkMode ? "rgba(168, 85, 247, 0.2)" : "rgba(54, 162, 235, 0.2)";
+            const lineBorderColor = isDarkMode ? "rgba(168, 85, 247, 1)" : "rgba(54, 162, 235, 1)";
+    
+            if (barChartInstance) barChartInstance.destroy();
+            if (lineChartInstance) lineChartInstance.destroy();
+    
             const ctxBar = document.getElementById("dashboardChart").getContext("2d");
-            new Chart(ctxBar, {
+            barChartInstance = new Chart(ctxBar, {
                 type: "bar",
                 data: {
                     labels: {!! json_encode($rangeLabels) !!},
-                    datasets: [{
+                    datasets: [
+                        {
                             label: "Laki-laki",
                             data: {!! json_encode($maleCounts) !!},
-                            backgroundColor: "#60a5fa",
+                            backgroundColor: lineBorderColor,
                             borderRadius: 6,
                         },
                         {
@@ -202,37 +209,27 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
                         },
                         x: {
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
                         },
                     },
                 },
             });
-
-
-            // Grafik Line (Tren Data)
-            var ctxArea = document.getElementById("areaChart").getContext("2d");
-            new Chart(ctxArea, {
+    
+            const ctxArea = document.getElementById("areaChart").getContext("2d");
+            lineChartInstance = new Chart(ctxArea, {
                 type: "line",
                 data: {
                     labels: @json($chartLabels),
                     datasets: [{
                         label: "Jumlah Rekam Medis",
                         data: @json($chartData),
-                        backgroundColor: "rgba(54, 162, 235, 0.2)",
-                        borderColor: "rgba(54, 162, 235, 1)",
+                        backgroundColor: lineBgColor,
+                        borderColor: lineBorderColor,
                         borderWidth: 2,
                         fill: true,
                         tension: 0.3,
@@ -248,25 +245,17 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
                         },
                         x: {
-                            ticks: {
-                                color: textColor,
-                            },
-                            grid: {
-                                color: gridColor,
-                            },
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
                         },
                     },
                 },
             });
-        };
+        }
 
         // Event listener dropdown
         document.getElementById("rangeSelector").addEventListener("change", function() {
@@ -275,16 +264,24 @@
             url.searchParams.set("range", selectedRange);
             window.location.href = url.toString(); // redirect dengan parameter baru
         });
-
-        // Load chart saat mengakses halaman dashboard
-        if (!window._livewireNavigatedInitialized) {
-            window._livewireNavigatedInitialized = true;
-
-            document.addEventListener('livewire:navigated', () => {
-                if (window.location.pathname === '/dashboard') {
-                    loadChart();
+    
+        // Observer untuk mendeteksi perubahan mode gelap/terang
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.attributeName === "class") {
+                    loadChart(); // update chart saat mode berubah
                 }
-            });
-        }
+            }
+        });
+    
+        observer.observe(document.documentElement, { attributes: true });
+    
+        // Panggil saat pertama kali
+        window.addEventListener("DOMContentLoaded", () => {
+            if (window.location.pathname === '/dashboard') {
+                loadChart();
+            }
+        });
     </script>
+    
 </x-layouts.app>

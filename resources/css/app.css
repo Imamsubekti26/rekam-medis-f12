@@ -22,6 +22,7 @@
     --color-zinc-800: #1f2937;
     --color-zinc-900: #111827;
     --color-zinc-950: #0b0f19;
+    --color-custom-50: #6D28D9;
 
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
@@ -65,13 +66,24 @@ select:focus[data-flux-control] {
     @apply size-4;
 } */
 
+/* Light mode - elegan dengan aksen biru soft dan shadow halus */
 .flux-navlist-item-active {
-    background-color: #2B7FFF !important; /* zinc-200 */
-    color: #ffffff !important; /* zinc-900 */
-    font-weight: 600 !important;
-}
-.dark .flux-navlist-item-active {
-    background-color: #374151 !important; /* zinc-700 */
+    background-color: #3B82F6 !important; /* soft blue */
     color: #ffffff !important;
+    box-shadow: 0 0px 15px rgba(59, 130, 246, 1); /* shadow elegan */
+    border-radius: 0.5rem; /* biar smooth */
+    transition: all 0.3s ease; /* transisi smooth */
+    border: none;
 }
+
+/* Dark mode - tetap elegan, shadow menyesuaikan */
+.dark .flux-navlist-item-active {
+    background-color: #6D28D9 !important; /* violet-700 */
+    color: #ffffff !important;
+    box-shadow: 0 0px 15px rgb(103, 49, 191); /* shadow ungu lembut */
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+
 

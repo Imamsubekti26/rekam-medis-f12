@@ -1,5 +1,5 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -7,25 +7,38 @@ use Carbon\Carbon;
 
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 p-6 md:p-12 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+            <div
+                class="flex flex-col md:flex-row items-center justify-between gap-4 p-6 md:p-12 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
                 {{-- Title Page --}}
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
-                    {{ __("patient.title") }}
+                    {{ __('patient.title') }}
                 </h2>
                 {{-- / Title Page --}}
 
                 {{-- Action Field --}}
                 <div class="flex flex-col gap-4">
                     {{-- Button Create --}}
-                    <flux:button href="{{ route('patient.create') }}" class="cursor-pointer" icon="plus" wire:navigate>{{ __('patient.title_add') }}</flux:button>
+                    <flux:button href="{{ route('patient.create') }}" class="cursor-pointer" icon="plus" wire:navigate>
+                        {{ __('patient.title_add') }}</flux:button>
 
                     {{-- Search Field --}}
                     <form class="flex gap-4 items-center">
-                        <flux:input icon="magnifying-glass" placeholder="{{ __('patient.search_hint') }}" name="search" value="{{ request()->query('search') }}" />
+                        <flux:input icon="magnifying-glass" placeholder="{{ __('patient.search_hint') }}" name="search"
+                            value="{{ request()->query('search') }}" />
                         <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
                         <flux:button type="submit" class="cursor-pointer">{{ __('patient.search') }}</flux:button>
                     </form>
                     {{-- / Search Field --}}
+                    {{-- Button Print --}}
+                    <flux:button
+                        onclick="window.open(`{{ route('patient.print.list', [
+                            'search' => request()->query('search'),
+                            'sort_by' => request()->query('sort_by'),
+                        ]) }}`)"
+                        class="cursor-pointer" icon="printer">
+                        {{ __('patient.print') }}
+                    </flux:button>
+
 
                 </div>
                 {{-- / Action Field --}}
@@ -34,7 +47,8 @@ use Carbon\Carbon;
         {{-- / Header --}}
 
         {{-- Table Patient Lists --}}
-        <section class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
+        <section
+            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
             <table class="w-full">
                 <thead class="border-b-1">
                     <tr>
@@ -72,13 +86,19 @@ use Carbon\Carbon;
                                 <td class="p-4">{{ $patient->member_id }}</td>
                                 <td class="p-4">{{ $patient->name }}</td>
                                 <td class="p-4">{{ $patient->address }}</td>
-                                <td class="p-4">{{ $patient->is_male ? 'L' : 'P' }} / {{ Carbon::createFromDate($patient->date_of_birth)->age }}</td>
+                                <td class="p-4">{{ $patient->is_male ? 'L' : 'P' }} /
+                                    {{ Carbon::createFromDate($patient->date_of_birth)->age }}</td>
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
-                                        <flux:button href="{{ route('patient.show', $patient->id) }}" icon="information-circle" size="sm" class="cursor-pointer" wire:navigate/>
+                                        <flux:button href="{{ route('patient.show', $patient->id) }}"
+                                            icon="information-circle" size="sm" class="cursor-pointer"
+                                            wire:navigate />
                                     </flux:tooltip>
                                     <flux:tooltip content="{{ __('medical_record.add') }}">
-                                        <flux:button href="{{ route('record.create', ['patient_id' => $patient->id]) }}" icon="clipboard-document-list" size="sm" class="cursor-pointer" wire:navigate/>
+                                        <flux:button
+                                            href="{{ route('record.create', ['patient_id' => $patient->id]) }}"
+                                            icon="clipboard-document-list" size="sm" class="cursor-pointer"
+                                            wire:navigate />
                                     </flux:tooltip>
                                 </td>
                             </tr>

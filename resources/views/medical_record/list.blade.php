@@ -39,7 +39,7 @@ use Carbon\Carbon;
         {{-- / Header --}}
         {{-- Filter Search Card --}}
         <section 
-            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 px-4 py-4 sm:px-6 md:px-12 md:py-6 transition-all duration-300">
+            class="rounded-xl border border-blue-500 dark:border-custom-50 bg-blue-300/30 dark:bg-custom-50/30 px-4 py-4 sm:px-6 md:px-12 md:py-6 transition-all duration-300">
             <form class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between w-full flex-wrap" method="GET">
                 
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center w-full md:w-auto flex-wrap">
@@ -53,7 +53,7 @@ use Carbon\Carbon;
                     />
 
                     {{-- Rentang Tanggal --}}
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <label for="date_start" class="text-sm text-zinc-700 dark:text-zinc-200 whitespace-nowrap">
                             {{ __('medical_record.date') }}
                         </label>
@@ -61,6 +61,7 @@ use Carbon\Carbon;
                             type="date"
                             name="date_start"
                             value="{{ request()->query('date_start') }}"
+                            class="rounded-lg text-sm w-full sm:w-auto" 
                         />
                         <label for="date_start" class="text-sm text-zinc-700 dark:text-zinc-200 whitespace-nowrap">
                             {{ __('s/d') }}
@@ -69,6 +70,7 @@ use Carbon\Carbon;
                             type="date" 
                             name="date_end" 
                             value="{{ request()->query('date_end') }}" 
+                            class="rounded-lg text-sm w-full sm:w-auto" 
                         />
                     </div>
                 </div>

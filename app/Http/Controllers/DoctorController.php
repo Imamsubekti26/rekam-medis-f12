@@ -126,4 +126,38 @@ class DoctorController extends Controller
             return redirect()->back()->withErrors(__('doctor.delete_failed'));
         }
     }
+    public function printList(Request $request)
+{
+    $query = User::query()->where("is_admin", false); // Ambil semua dokter (non-admin)
+
+    // Pencarian berdasarkan nama, alamat, atau member_id
+    if ($request->has("search") && $request->search != null) {
+        $query->where(function ($q) use ($request) {
+            $q->where("name", "like", "%" . $request->search . "%")
+                ->orWhere("address", "like", "%" . $request->search . "%")
+                ->orWhere("member_id", "like", "%" . $request->search . "%");
+        });
+    }
+
+    // Sorting berdasarkan parameter yang diterima
+    if ($request->has("sort_by") && $request->sort_by != null) {
+        $sort = match ($request->sort_by) {
+            "name_asc" => ["name", "asc"],
+            "name_desc" => ["name", "desc"],
+            "member_id_asc" => ["member_id", "asc"],
+            "member_id_desc" => ["member_id", "desc"],
+            "address_asc" => ["address", "asc"],
+            "address_desc" => ["address", "desc"],
+            default => ["created_at", "asc"]
+        };
+        $query = $query->orderBy($sort[0], $sort[1]);
+    } else {
+        $query = $query->orderBy("created_at", "asc");
+    }
+
+    $doctors = $query->get(); // Ambil semua dokter tanpa pagination
+
+    return view("doctor.print-list", compact("doctors"));
+}
+
 }

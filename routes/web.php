@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
+use App\Http\Middleware\AdminRestriction;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -22,7 +23,7 @@ Route::resource('patient', PatientController::class)
 
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
-    ->middleware(['auth']);
+    ->middleware(['auth', AdminRestriction::class]);
 
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
     ->name('record.print.list');

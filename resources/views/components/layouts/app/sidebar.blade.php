@@ -42,14 +42,16 @@
             {{ __('dashboard.patient') }}
         </flux:navlist.item>
 
-        <flux:navlist.item
-            icon="user"
-            :href="route('doctor.index')"
-            :current="request()->routeIs('doctor.index')"
-            wire:navigate
-            class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
-            {{ __('dashboard.doctor') }}
-        </flux:navlist.item>
+        @if (request()->user()->is_admin)
+            <flux:navlist.item
+                icon="user"
+                :href="route('doctor.index')"
+                :current="request()->routeIs('doctor.index')"
+                wire:navigate
+                class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
+                {{ __('dashboard.doctor') }}
+            </flux:navlist.item>
+        @endif
 
         <flux:navlist.item
             icon="inbox"

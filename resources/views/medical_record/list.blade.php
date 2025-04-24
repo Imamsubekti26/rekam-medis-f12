@@ -95,8 +95,8 @@ use Carbon\Carbon;
 
         {{-- Table Patient Lists --}}
         <section id="printableTable"
-            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
-            <table class="w-full">
+            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-x-auto">
+            <table class="min-w-[1000px] w-full">
                 <thead class="border-b-1">
                     <tr>
                         <th class="p-4 py-6">
@@ -126,6 +126,11 @@ use Carbon\Carbon;
                                 {{ __('medical_record.anamnesis') }}
                             </div>
                         </th>
+                        <th class="p-4 py-6">
+                            <div class="flex justify-center items-center gap-2">
+                                {{ __('medical_record.prescription_status') }}
+                            </div>
+                        </th>                        
                         <th class="p-4 py-6 text-center">{{ __('action') }}</th>
                     </tr>
                 </thead>
@@ -140,6 +145,17 @@ use Carbon\Carbon;
                                 <td class="p-4">{{ $record->patient->name }}</td>
                                 <td class="p-4">{{ $record->doctor->name }}</td>
                                 <td class="p-4">{{ $record->anamnesis }}</td>
+                                <td class="p-4">
+                                    @if ($record->prescriptions && $record->prescriptions->count() > 0)
+                                        <span class="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 text-xs font-semibold px-3 py-1.5 rounded-full">
+                                            {{ __('Sudah diisi') }}
+                                        </span>
+                                    @else
+                                        <span class="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 text-xs font-semibold px-3 py-1.5 rounded-full">
+                                            {{ __('Belum diisi') }}
+                                        </span>
+                                    @endif
+                                </td>                                
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
                                         <flux:button href="{{ route('record.show', $record->id) }}"

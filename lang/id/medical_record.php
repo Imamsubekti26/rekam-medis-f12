@@ -38,4 +38,6 @@ return [
     'notes' => 'Catatan',
     'print' => 'Cetak Rekam Medis',
     'empty_prescriptions' => 'Belum ada resep yang ditambahkan, anda dapat menambahkan resep menggunakan tombol di kanan atas',
+    'prescription_status' => 'Status Resep',
+
 ];

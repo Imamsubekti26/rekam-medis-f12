@@ -54,7 +54,7 @@ class MedicalRecordController extends Controller
         }
 
         try {
-            $records = $query->with('doctor')->with('patient')->paginate(10);
+            $records = $query->with(['doctor', 'patient', 'prescriptions'])->paginate(10);
 
             return view("medical_record.list", compact('records'));
         } catch (\Exception $e) {

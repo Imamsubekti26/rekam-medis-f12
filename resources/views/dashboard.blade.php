@@ -113,7 +113,7 @@
             <div
                 class="relative overflow-hidden rounded-xl border border-neutral-300 dark:border-neutral-700 p-6 bg-white dark:bg-gray-800 shadow-md">
                 <h2 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Statistik Data Pasien</h2>
-                <canvas id="dashboardChart" class="w-full max-h-[250px]"></canvas>
+                <canvas id="dashboardChart" class="w-full max-h-[300px]"></canvas>
                 <p class="text-sm text-blue-600 dark:text-blue-300 mt-2 text-center">
                     <i class="fas fa-info-circle mr-1"></i> Keterangan: Sumbu X menunjukkan rentang umur pasien
                 </p>

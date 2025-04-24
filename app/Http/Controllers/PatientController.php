@@ -14,6 +14,7 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $query = Patient::query();
+        $query = Patient::withCount('medical_records'); // eager load count rekam medis
 
         if ($request->has("search") && $request->search != null) {
             $query = $query->where("name", "like", "%" . $request->search . "%")

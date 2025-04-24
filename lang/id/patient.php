@@ -32,4 +32,5 @@ return [
     'drug_allergies' => 'Alergi Obat',
     'food_allergies' => 'Alergi Makanan',
     'print' => 'Cetak Daftar Pasien',
+    'medical_status' => 'Status Rekam Medis',
 ];

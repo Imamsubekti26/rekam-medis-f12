@@ -75,6 +75,8 @@
                         </th>
                         {{-- Gender --}}
                         <th class="p-4 py-6">{{ __('patient.gender') }}/{{ __('patient.age') }}</th>
+                        {{-- Status Rekam Medis --}}
+                        <th class="p-4 py-6">{{ __('patient.medical_status') }}</th>
                         {{-- Action --}}
                         <th class="p-4 py-6">{{ __('patient.action') }}</th>
                     </tr>
@@ -88,6 +90,16 @@
                                 <td class="p-4">{{ $patient->address }}</td>
                                 <td class="p-4">{{ $patient->is_male ? 'L' : 'P' }} /
                                     {{ Carbon::createFromDate($patient->date_of_birth)->age }}</td>
+                                {{-- Status Rekam Medis --}}
+                                @php $count = $patient->medical_records_count; @endphp
+                                <td class="p-4">
+                                    <span
+                                        class="px-3 py-1 rounded-full text-sm font-medium
+        {{ $count == 0 ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' }}">
+                                        {{ $count == 0 ? 'Belum pernah rekam medis' : 'Rekam medis ke-' . $count }}
+                                    </span>
+                                </td>
+
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
                                         <flux:button href="{{ route('patient.show', $patient->id) }}"

@@ -12,57 +12,57 @@
             </a>
 
             <flux:navlist variant="outline">
-    <flux:navlist.group heading="{{ __('dashboard.menu_utama') }}" class="grid">
-        <flux:navlist.item
-            icon="home"
-            :href="route('dashboard')"
-            :current="request()->routeIs('dashboard')"
-            wire:navigate
-            class="{{ request()->routeIs('dashboard') ? 'flux-navlist-item-active' : '' }}">
-            {{ __('dashboard.dashboard') }}
-        </flux:navlist.item>
+                <flux:navlist.group heading="{{ __('dashboard.menu_utama') }}" class="grid">
+                    <flux:navlist.item
+                        icon="home"
+                        :href="route('dashboard')"
+                        :current="request()->routeIs('dashboard')"
+                        wire:navigate
+                        class="{{ request()->routeIs('dashboard') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.dashboard') }}
+                    </flux:navlist.item>
 
-        <flux:navlist.item
-            icon="document-text"
-            :href="route('record.index')"
-            :current="request()->routeIs('record.index')"
-            wire:navigate
-            class="{{ request()->routeIs('record.index') ? 'flux-navlist-item-active' : '' }}">
-            {{ __('dashboard.medical_record') }}
-        </flux:navlist.item>
-    </flux:navlist.group>
+                    <flux:navlist.item
+                        icon="document-text"
+                        :href="route('record.index')"
+                        :current="request()->routeIs('record.index')"
+                        wire:navigate
+                        class="{{ request()->routeIs('record.index') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.medical_record') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
 
-    <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
-        <flux:navlist.item
-            icon="users"
-            :href="route('patient.index')"
-            :current="request()->routeIs('patient.index')"
-            wire:navigate
-            class="{{ request()->routeIs('patient.index') ? 'flux-navlist-item-active' : '' }}">
-            {{ __('dashboard.patient') }}
-        </flux:navlist.item>
+                <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
+                    <flux:navlist.item
+                        icon="users"
+                        :href="route('patient.index')"
+                        :current="request()->routeIs('patient.index')"
+                        wire:navigate
+                        class="{{ request()->routeIs('patient.index') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.patient') }}
+                    </flux:navlist.item>
 
-        @if (request()->user()->is_admin)
-            <flux:navlist.item
-                icon="user"
-                :href="route('doctor.index')"
-                :current="request()->routeIs('doctor.index')"
-                wire:navigate
-                class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
-                {{ __('dashboard.doctor') }}
-            </flux:navlist.item>
-        @endif
-
-        <flux:navlist.item
-            icon="inbox"
-            :href="route('medicine.index')"
-            :current="request()->routeIs('medicine.index')"
-            wire:navigate
-            class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
-            {{ __('dashboard.medicine') }}
-        </flux:navlist.item>
-    </flux:navlist.group>
-</flux:navlist>
+                    @if (request()->user()->is_admin)
+                        <flux:navlist.item
+                            icon="user"
+                            :href="route('doctor.index')"
+                            :current="request()->routeIs('doctor.index')"
+                            wire:navigate
+                            class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
+                            {{ __('dashboard.doctor') }}
+                        </flux:navlist.item>
+                        
+                        <flux:navlist.item
+                            icon="inbox"
+                            :href="route('medicine.index')"
+                            :current="request()->routeIs('medicine.index')"
+                            wire:navigate
+                            class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
+                            {{ __('dashboard.medicine') }}
+                        </flux:navlist.item>
+                    @endif
+                </flux:navlist.group>
+            </flux:navlist>
 
 
             <flux:spacer />
@@ -112,20 +112,20 @@
                 </flux:menu>
             </flux:dropdown>
             <!-- Theme Switcher -->
-<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="hidden lg:flex mr-2 cursor-pointer">
-    <flux:radio value="light" icon="sun" class="py-1" />
-    <flux:radio value="dark" icon="moon" class="py-1" />
-</flux:menu.radio.group>
+            <flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="hidden lg:flex mr-2 cursor-pointer">
+                <flux:radio value="light" icon="sun" class="py-1" />
+                <flux:radio value="dark" icon="moon" class="py-1" />
+            </flux:menu.radio.group>
         </flux:sidebar>
 
         <!-- Mobile User Menu -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
              <!-- Theme Switcher -->
-<flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="flex lg:hidden mt-2 ml-2">
-    <flux:radio value="light" icon="sun" class="py-1" />
-    <flux:radio value="dark" icon="moon" class="py-1" />
-</flux:menu.radio.group>
+            <flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="flex lg:hidden mt-2 ml-2">
+                <flux:radio value="light" icon="sun" class="py-1" />
+                <flux:radio value="dark" icon="moon" class="py-1" />
+            </flux:menu.radio.group>
             <flux:spacer />
 
             <flux:dropdown position="top" align="end">

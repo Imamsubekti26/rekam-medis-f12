@@ -1,5 +1,5 @@
 <x-layouts.app.sidebar>
-    <flux:main>
+    <flux:main class="bg-background">
         {{ $slot }}
     </flux:main>
 

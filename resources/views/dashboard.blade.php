@@ -161,10 +161,7 @@
         </div>
     </div>
 
-    <script>
-        let barChartInstance = null;
-        let lineChartInstance = null;
-    
+    <script>    
         function loadChart() {
             const isDarkMode = document.documentElement.classList.contains("dark");
     
@@ -173,92 +170,95 @@
     
             const lineBgColor = isDarkMode ? "rgba(168, 85, 247, 0.2)" : "rgba(54, 162, 235, 0.2)";
             const lineBorderColor = isDarkMode ? "rgba(168, 85, 247, 1)" : "rgba(54, 162, 235, 1)";
-    
-            if (barChartInstance) barChartInstance.destroy();
-            if (lineChartInstance) lineChartInstance.destroy();
-    
-            const ctxBar = document.getElementById("dashboardChart").getContext("2d");
-            barChartInstance = new Chart(ctxBar, {
-                type: "bar",
-                data: {
-                    labels: {!! json_encode($rangeLabels) !!},
-                    datasets: [
-                        {
-                            label: "Laki-laki",
-                            data: {!! json_encode($maleCounts) !!},
-                            backgroundColor: lineBorderColor,
-                            borderRadius: 6,
-                        },
-                        {
-                            label: "Perempuan",
-                            data: {!! json_encode($femaleCounts) !!},
-                            backgroundColor: "#f472b6",
-                            borderRadius: 6,
-                        }
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor,
+            
+            const ctxBar = document.getElementById("dashboardChart")?.getContext("2d");
+            if (ctxBar) {
+                if (window.barChartInstance) window.barChartInstance.destroy();
+                window.barChartInstance = new Chart(ctxBar, {
+                    type: "bar",
+                    data: {
+                        labels: {!! json_encode($rangeLabels) !!},
+                        datasets: [
+                            {
+                                label: "Laki-laki",
+                                data: {!! json_encode($maleCounts) !!},
+                                backgroundColor: lineBorderColor,
+                                borderRadius: 6,
+                            },
+                            {
+                                label: "Perempuan",
+                                data: {!! json_encode($femaleCounts) !!},
+                                backgroundColor: "#f472b6",
+                                borderRadius: 6,
                             }
-                        }
+                        ],
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { color: textColor },
-                            grid: { color: gridColor },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: textColor,
+                                }
+                            }
                         },
-                        x: {
-                            ticks: { color: textColor },
-                            grid: { color: gridColor },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: textColor },
+                                grid: { color: gridColor },
+                            },
+                            x: {
+                                ticks: { color: textColor },
+                                grid: { color: gridColor },
+                            },
                         },
                     },
-                },
-            });
+                });
+            }
     
-            const ctxArea = document.getElementById("areaChart").getContext("2d");
-            lineChartInstance = new Chart(ctxArea, {
-                type: "line",
-                data: {
-                    labels: @json($chartLabels),
-                    datasets: [{
-                        label: "Jumlah Rekam Medis",
-                        data: @json($chartData),
-                        backgroundColor: lineBgColor,
-                        borderColor: lineBorderColor,
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3,
-                    }],
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false,
+            const ctxArea = document.getElementById("areaChart")?.getContext("2d");
+            if(ctxArea) {
+                if (window.lineChartInstance) window.lineChartInstance.destroy();
+                window.lineChartInstance = new Chart(ctxArea, {
+                    type: "line",
+                    data: {
+                        labels: @json($chartLabels),
+                        datasets: [{
+                            label: "Jumlah Rekam Medis",
+                            data: @json($chartData),
+                            backgroundColor: lineBgColor,
+                            borderColor: lineBorderColor,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: textColor },
+                                grid: { color: gridColor },
+                            },
+                            x: {
+                                ticks: { color: textColor },
+                                grid: { color: gridColor },
+                            },
                         },
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { color: textColor },
-                            grid: { color: gridColor },
-                        },
-                        x: {
-                            ticks: { color: textColor },
-                            grid: { color: gridColor },
-                        },
-                    },
-                },
-            });
+                });
+            }
         }
 
         // Event listener dropdown
-        document.getElementById("rangeSelector").addEventListener("change", function() {
+        document.getElementById("rangeSelector")?.addEventListener("change", function() {
             const selectedRange = this.value;
             const url = new URL(window.location.href);
             url.searchParams.set("range", selectedRange);
@@ -266,7 +266,8 @@
         });
     
         // Observer untuk mendeteksi perubahan mode gelap/terang
-        const observer = new MutationObserver((mutations) => {
+        if (window.darkModeObserver) window.darkModeObserver.disconnect();
+        window.darkModeObserver = new MutationObserver((mutations) => {
             for (const mutation of mutations) {
                 if (mutation.attributeName === "class") {
                     loadChart(); // update chart saat mode berubah
@@ -274,7 +275,7 @@
             }
         });
     
-        observer.observe(document.documentElement, { attributes: true });
+        window.darkModeObserver.observe(document.documentElement, { attributes: true });
     
         // Panggil saat pertama kali
         window.addEventListener("DOMContentLoaded", () => {

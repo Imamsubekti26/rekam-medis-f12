@@ -3,21 +3,6 @@
 
 <head>
     @include('partials.head')
-    <style>
-        body {
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
-                url('{{ asset('/assets/img/bg-batik.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Dark mode: efek negatif pada gambar */
-        .dark body {
-            background-image: url('{{ asset('/assets/img/bg-batikdark.jpg') }}');
-        }
-    </style>
 </head>
 
 <body class="min-h-screen antialiased">

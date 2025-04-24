@@ -32,7 +32,7 @@ use Carbon\Carbon;
                         <option value="0" {{ !$patient->is_male ? "selected" : "" }}>{{ __('patient.female') }}</option>
                     </flux:select>
                     {{-- Date of Birth --}}
-                    <flux:input type="date" label="{{ __('patient.date_of_birth') }}" name="date_of_birth" value="{{ $patient->date_of_birth }}" />
+                    <flux:input type="date" label="{{ __('patient.date_of_birth') }}" name="date_of_birth" value="{{ Carbon::parse($patient->date_of_birth)->format('Y-m-d') }}" />
                 </div>
                 <div class="grid auto-rows-min gap-4 md:grid-cols-2 mt-4 mb-8">
                     {{-- Drug Allergies --}}

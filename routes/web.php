@@ -13,44 +13,49 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// Dashboard Routes
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// Patient Routes
 Route::get('patient/print', [PatientController::class, 'printList'])
-    ->name('patient.print.list');
-
+    ->name('patient.print.list')
+    ->middleware(['auth', AdminRestriction::class]);
 Route::resource('patient', PatientController::class)
     ->except(['edit'])
     ->middleware(['auth']);
 
+// Doctor Routes
 Route::get('doctor/print', [DoctorController::class, 'printList'])
-    ->name('doctor.print.list');
-
+    ->name('doctor.print.list')
+    ->middleware(['auth', AdminRestriction::class]);
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
     ->middleware(['auth', AdminRestriction::class]);
 
-
+// Medical Record Routes
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
-    ->name('record.print.list');
+    ->name('record.print.list')
+    ->middleware(['auth']);
 Route::get('record/{record}/print', [MedicalRecordController::class, 'printDetail'])
-    ->name('record.print.detail');
-
+    ->name('record.print.detail')
+    ->middleware(['auth']);
 Route::resource('record', MedicalRecordController::class)
     ->except(['edit', 'store'])
     ->middleware(['auth']);
 
+// Medicine Routes
 Route::get('medicine/print', [MedicineController::class, 'printList'])
-    ->name('medicine.print.list');
-
+    ->name('medicine.print.list')
+    ->middleware(['auth', AdminRestriction::class]);
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
-    ->middleware(['auth']);
+    ->middleware(['auth', AdminRestriction::class]);
 
+// Setting Routes
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
-
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');

@@ -20,9 +20,11 @@ class DoctorController extends Controller
         $query = $query->where("is_admin", false);
 
         if ($request->has("search") && $request->search != null) {
-            $query = $query->where("name","like","%". $request->search ."%")
-                ->orWhere("address","like","%". $request->search ."%")
-                ->orWhere("member_id","like","%". $request->search ."%");
+            $query = $query->where(function ($q) use ($request) {
+                $q->where("name", "like", "%" . $request->search . "%")
+                    ->orWhere("email", "like", "%" . $request->search . "%")
+                    ->orWhere("id", "like", "%" . $request->search . "%");
+            });
         }
 
         if ($request->has("sort_by") && $request->sort_by != null) {

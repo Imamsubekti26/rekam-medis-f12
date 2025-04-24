@@ -3,18 +3,17 @@
 
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 p-6 md:p-12 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-                {{-- Title Page --}}
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
+            <div class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+                <x-bread-crumbs />
+
+                {{-- Title --}}
+                <h2 class="font-semibold text-xl text-center md:text-start text-gray-800 dark:text-gray-200 leading-tight mb-8">
                     {{ __("doctor.title") }}
                 </h2>
-                {{-- / Title Page --}}
+                {{-- / Title --}}
 
                 {{-- Action Field --}}
-                <div class="flex flex-col gap-4">
-                    {{-- Button Create --}}
-                    <flux:button href="{{ route('doctor.create') }}" class="cursor-pointer" icon="plus" wire:navigate>{{ __('doctor.title_add') }}</flux:button>
-
+                <div class="flex flex-col md:flex-row justify-between gap-4">
                     {{-- Search Field --}}
                     <form class="flex gap-4 items-center">
                         <flux:input icon="magnifying-glass" placeholder="{{ __('doctor.search_hint') }}" name="search" value="{{ request()->query('search') }}" />
@@ -22,15 +21,23 @@
                         <flux:button type="submit" class="cursor-pointer">{{ __('doctor.search') }}</flux:button>
                     </form>
                     {{-- / Search Field --}}
-                    {{-- Button Print --}}
-                    <flux:button
-                        onclick="window.open(`{{ route('doctor.print.list', [
-                            'search' => request()->query('search'),
-                            'sort_by' => request()->query('sort_by'),
-                        ]) }}`)"
-                        class="cursor-pointer" icon="printer">
-                        {{ __('doctor.print') }}
-                    </flux:button>
+
+                    {{-- Button Field --}}
+                    <div class="flex flex-col md:flex-row gap-4">
+                        {{-- Button Create --}}
+                        <flux:button href="{{ route('doctor.create') }}" class="cursor-pointer" icon="plus" wire:navigate>{{ __('doctor.title_add') }}</flux:button>
+
+                        {{-- Button Print --}}
+                        <flux:button
+                            onclick="window.open(`{{ route('doctor.print.list', [
+                                'search' => request()->query('search'),
+                                'sort_by' => request()->query('sort_by'),
+                            ]) }}`)"
+                            class="cursor-pointer" icon="printer">
+                            {{ __('doctor.print') }}
+                        </flux:button>
+                    </div>
+                    {{-- / Button Field --}}
 
                 </div>
                 {{-- / Action Field --}}
@@ -39,7 +46,7 @@
         {{-- / Header --}}
 
         {{-- Table Patient Lists --}}
-        <section class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
+        <section class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900 overflow-y-auto">
             <table class="w-full">
                 <thead class="border-b-1">
                     <tr>

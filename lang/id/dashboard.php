@@ -7,5 +7,6 @@ return [
     'patient' => 'Pasien',
     'doctor' => 'Dokter',
     'medicine' => 'Obat',
-    'manage_data' => 'Manage Data'
+    'manage_data' => 'Manage Data',
+    'welcome' => 'Selamat Datang'
 ];

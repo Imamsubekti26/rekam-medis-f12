@@ -12,7 +12,7 @@
         {{-- Alert for Required Data --}}
         <div>
             <div
-                class="rounded-xl border border-yellow-300 bg-yellow-100 text-yellow-800 dark:border-yellow-600 dark:bg-yellow-900 dark:text-yellow-200 p-4 text-sm">
+                class="rounded-xl border border-yellow-300 bg-yellow-100 text-yellow-800 dark:border-yellow-600 dark:bg-yellow-900 dark:text-yellow-200 opacity-70 p-4 text-sm">
                 <p><strong class="font-semibold">Perhatian:</strong> Data obat wajib diisi karena akan diintegrasikan ke
                     sistem resep obat/resep dokter.</p>
             </div>
@@ -22,36 +22,41 @@
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
             <div
-                class="flex flex-col md:flex-row items-center justify-between gap-4 p-6 md:p-12 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-                {{-- Title Page --}}
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
+                class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+                <x-bread-crumbs />
+
+                {{-- Title --}}
+                <h2 class="font-semibold text-xl text-center md:text-start text-gray-800 dark:text-gray-200 leading-tight mb-8">
                     {{ __('medicine.title') }}
                 </h2>
-                {{-- / Title Page --}}
+                {{-- / Title --}}
 
                 {{-- Action Field --}}
-                <div class="flex flex-col gap-4">
-                    {{-- Button Create --}}
-                    <flux:button href="{{ route('medicine.create') }}" class="cursor-pointer" icon="plus" wire:navigate>
-                        {{ __('medicine.title_add') }}</flux:button>
-
+                <div class="flex flex-col md:flex-row justify-between gap-4">
                     {{-- Search Field --}}
                     <form class="flex gap-4 items-center">
                         <flux:input icon="magnifying-glass" placeholder="{{ __('medicine.search_hint') }}"
-                            name="search" value="{{ request()->query('search') }}" />
+                        name="search" value="{{ request()->query('search') }}" />
                         <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
                         <flux:button type="submit" class="cursor-pointer">{{ __('medicine.search') }}</flux:button>
                     </form>
-                    {{-- / Search Field --}}
-                    <flux:button
-                        onclick="window.open(`{{ route('medicine.print.list', [
-                            'search' => request()->query('search'),
-                            'sort_by' => request()->query('sort_by'),
-                        ]) }}`)"
-                        class="cursor-pointer" icon="printer">
-                        {{ __('medicine.print') }}
-                    </flux:button>
 
+                    {{-- Button Field --}}
+                    <div class="flex flex-col md:flex-row gap-4">
+                        {{-- Button Create --}}
+                        <flux:button href="{{ route('medicine.create') }}" class="cursor-pointer" icon="plus" wire:navigate>
+                            {{ __('medicine.title_add') }}</flux:button>
+                        {{-- / Search Field --}}
+                        <flux:button
+                            onclick="window.open(`{{ route('medicine.print.list', [
+    'search' => request()->query('search'),
+    'sort_by' => request()->query('sort_by'),
+]) }}`)"
+                            class="cursor-pointer" icon="printer">
+                            {{ __('medicine.print') }}
+                        </flux:button>
+                    </div>
+                    {{-- / Button Field --}}
                 </div>
                 {{-- / Action Field --}}
             </div>
@@ -60,7 +65,7 @@
 
         {{-- Table Patient Lists --}}
         <section
-            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-y-auto">
+            class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900 overflow-y-auto">
             <table class="w-full">
                 <thead class="border-b-1">
                     <tr>
@@ -113,7 +118,7 @@
         {{-- / Table Patient Lists --}}
         {{-- Instruction Guide --}}
         <section
-            class="p-4 md:p-6 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-600 dark:bg-blue-900 dark:text-blue-100">
+            class="p-4 md:p-6 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-600 dark:bg-blue-900 dark:text-blue-100 opacity-70">
             <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
                 <i class="fas fa-info-circle text-blue-500 dark:text-blue-300"></i>
                 {{ __('Panduan Pengisian Data Obat') }}

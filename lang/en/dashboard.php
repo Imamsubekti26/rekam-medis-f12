@@ -7,5 +7,6 @@ return [
     'patient' => 'Patients',
     'doctor' => 'Doctors',
     'medicine' => 'Medicine',
-    'manage_data' => 'Manage Data'
+    'manage_data' => 'Manage Data',
+    'welcome' => 'Welcome'
 ];

@@ -6,16 +6,17 @@ use Carbon\Carbon;
 
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
-            <div
-                class="flex flex-col md:flex-row items-center justify-between gap-4 p-6 md:p-12 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-                {{-- Title Page --}}
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
+            <div class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+                <x-bread-crumbs />
+
+                {{-- Title --}}
+                <h2 class="font-semibold text-xl text-center md:text-start text-gray-800 dark:text-gray-200 leading-tight mb-8">
                     {{ __('medical_record.title') }}
                 </h2>
-                {{-- / Title Page --}}
+                {{-- / Title --}}
 
                 {{-- Action Field --}}
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col md:flex-row justify-end gap-4">
                     {{-- Button Create --}}
                     <flux:button href="{{ route('record.create') }}" class="cursor-pointer" icon="plus" wire:navigate>
                         {{ __('medical_record.title_add') }}</flux:button>
@@ -39,7 +40,7 @@ use Carbon\Carbon;
         {{-- / Header --}}
         {{-- Filter Search Card --}}
         <section 
-            class="rounded-xl border border-blue-500 dark:border-custom-50 bg-blue-300/30 dark:bg-custom-50/30 px-4 py-4 sm:px-6 md:px-12 md:py-6 transition-all duration-300">
+            class="rounded-xl border border-blue-500 dark:border-custom-50 bg-blue-300/30 dark:bg-custom-50/30 px-6 py-8 md:px-8 md:py-6 transition-all duration-300">
             <form class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between w-full flex-wrap" method="GET">
                 
                 <div class="flex flex-col gap-4 sm:flex-row sm:items-center w-full md:w-auto flex-wrap">

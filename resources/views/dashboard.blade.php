@@ -8,21 +8,19 @@
 </style>
 <x-layouts.app>
     <div
-    class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-rose-100 via-rose-100 to-rose-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
+    class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
+    <x-bread-crumbs />
     
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-y-2">
-        <h1 class="font-semibold text-slate-800 dark:text-white text-lg">
-            Selamat datang, 
-            <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
-                {{ Auth::user()->name }}
-            </span>!
-        </h1>
-        <p class="text-sm italic font-medium text-rose-700 dark:text-fuchsia-300">
-            Dashboard
-        </p>
-    </div>
+    {{-- Title --}}
+    <h2 class="font-semibold text-center  md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-8">
+        {{ __('dashboard.welcome') }} 
+        <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
+            {{ Auth::user()->name }}
+        </span>!
+    </h2>
+    {{-- / Title --}}
 
-    <p class="mt-3 text-sm text-rose-600 dark:text-rose-300">
+    <p class="text-sm text-rose-600 dark:text-rose-300">
         Jika tampilan terlihat berantakan, silakan lakukan <strong>zoom out</strong> pada browser Anda (Ctrl +
         Scroll atau Ctrl + -).
     </p>
@@ -33,7 +31,7 @@
         <div class="grid gap-4 grid-cols-2 md:grid-cols-4">
             <!-- Total Dokter -->
             <div
-                class="flex flex-col items-center p-5 rounded-xl bg-blue-100 dark:bg-blue-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
+                class="flex flex-col items-center p-5 rounded-xl bg-blue-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-user-md text-3xl mb-2 text-blue-500"></i>
                 <h2 class="text-sm font-semibold">Total Dokter</h2>
                 <p class="text-1xl font-bold">{{ $totalDoctors }}</p>
@@ -46,7 +44,7 @@
 
             <!-- Total Pasien -->
             <div
-                class="flex flex-col items-center p-5 rounded-xl bg-green-100 dark:bg-green-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
+                class="flex flex-col items-center p-5 rounded-xl bg-green-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-user-injured text-3xl mb-2 text-green-500"></i>
                 <h2 class="text-sm font-semibold">Total Pasien</h2>
                 <p class="text-1xl font-bold">{{ $totalPatients }}</p>
@@ -57,7 +55,7 @@
 
             <!-- Total Rekam Medis -->
             <div
-                class="flex flex-col items-center p-5 rounded-xl bg-yellow-100 dark:bg-yellow-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
+                class="flex flex-col items-center p-5 rounded-xl bg-yellow-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-file-medical text-3xl mb-2 text-yellow-500"></i>
                 <h2 class="text-sm font-semibold">Total Rekam Medis</h2>
                 <p class="text-1xl font-bold">{{ $totalMedicalRecords }}</p>
@@ -68,7 +66,7 @@
 
             <!-- Stok Obat -->
             <div
-                class="flex flex-col items-center p-5 rounded-xl bg-red-100 dark:bg-red-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
+                class="flex flex-col items-center p-5 rounded-xl bg-red-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-pills text-3xl mb-2 text-red-500"></i>
                 <h2 class="text-sm font-semibold">Total Jenis Obat</h2>
                 <p class="text-1xl font-bold">{{ $totalMedicineStock }}</p>
@@ -78,7 +76,7 @@
             </div>
         </div>
         <div
-            class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md">
+            class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md opacity-70">
             <i class="fas fa-info-circle mr-2"></i>
             Jika grafik tidak muncul, silakan <strong class="cursor-pointer hover:underline" onclick="window.location.reload()">refresh halaman</strong> untuk memuat ulang data.
         </div>
@@ -121,7 +119,7 @@
         </div>
 
         <div
-            class="p-6 md:p-6 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-600 dark:bg-blue-900 dark:text-blue-100">
+            class="p-6 md:p-6 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-600 dark:bg-blue-900 dark:text-blue-100 opacity-70">
             <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
                 <i class="fas fa-info-circle text-blue-500 mr-2"></i> Alur Penggunaan Sistem Rekam Medis
             </h3>

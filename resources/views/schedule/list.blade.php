@@ -52,7 +52,15 @@
                     </tr>
                 </thead>
 
-                @if ($schedules)
+                @if ($schedules->isEmpty())
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center pt-8 text-gray-800 dark:text-gray-200">
+                                {{ __('No schedules available.') }}
+                            </td>
+                        </tr>
+                    </tbody>
+                @else
                     <tbody class="text-center border-b-1">
                         @foreach ($schedules as $schedule)
                             <tr
@@ -102,13 +110,16 @@
                         <flux:heading size="lg">{{ __('schedule.delete') }}</flux:heading>
                         <flux:subheading>{{ __('schedule.delete_msg') }}</flux:subheading>
                     </div>
-                    <form method="POST" action="{{ route('schedule.destroy', $schedule->id) }}"
-                        class="flex justify-end">
-                        @csrf
-                        @method('DELETE')
-                        <flux:button type="submit" variant="danger">{{ __('schedule.delete') }}
-                        </flux:button>
-                    </form>
+                    @if (!empty($schedule))
+                        <form method="POST" action="{{ route('schedule.destroy', $schedule->id) }}"
+                            class="flex justify-end">
+                            @csrf
+                            @method('DELETE')
+                            <flux:button type="submit" variant="danger">{{ __('schedule.delete') }}
+                            </flux:button>
+                        </form>
+                    @endif
+
                 </div>
             </flux:modal>
             {{-- / Modal Delete --}}

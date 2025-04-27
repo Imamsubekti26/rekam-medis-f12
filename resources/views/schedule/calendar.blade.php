@@ -68,9 +68,16 @@
 
 <script>
     function loadCalendar() {
-        var schedule = @json($events);
+        const schedule = @json($events);
 
-        $('#calendar').fullCalendar('destroy'); // Hancurkan dulu kalo udah ada
+        const calendarEl = document.getElementById('calendar');
+        if (!calendarEl) return; // Jangan lanjut kalau #calendar belum ada
+
+        // Destroy kalau sebelumnya sudah ada
+        if ($('#calendar').data('fullCalendar')) {
+            $('#calendar').fullCalendar('destroy');
+        }
+
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -93,7 +100,6 @@
                 $('#startTime').text(event.start_time);
                 $('#endTime').text(event.end_time);
                 $('#perPatientTime').text(event.per_patient_time);
-
                 $('#tailwindModal').removeClass('hidden');
             },
             eventRender: function(event, element) {
@@ -105,10 +111,9 @@
 
     function applyEventStyle(element) {
         const isDarkMode = document.documentElement.classList.contains('dark');
-
         if (isDarkMode) {
             element.css({
-                'background-color': '#8b5cf6', // Ungu untuk dark
+                'background-color': '#8b5cf6',
                 'border-color': '#7c3aed',
                 'color': 'white',
                 'padding': '4px 6px',
@@ -116,7 +121,7 @@
             });
         } else {
             element.css({
-                'background-color': '#3b82f6', // Biru untuk light
+                'background-color': '#3b82f6',
                 'border-color': '#2563eb',
                 'color': 'white',
                 'padding': '4px 6px',
@@ -125,30 +130,30 @@
         }
     }
 
-    $(document).ready(function() {
-        if (window.location.pathname === '/calendar' || window.location.pathname.includes('calendar')) {
-            loadCalendar();
-        }
-
-        // Modal close
-        $('#closeModal').on('click', function() {
-            $('#tailwindModal').addClass('hidden');
-        });
+    // Modal close event
+    document.getElementById('closeModal')?.addEventListener('click', function() {
+        document.getElementById('tailwindModal')?.classList.add('hidden');
     });
 
-    // Observer untuk perubahan dark/light mode
+    // Observer untuk mendeteksi dark/light mode
     if (window.calendarDarkModeObserver) window.calendarDarkModeObserver.disconnect();
     window.calendarDarkModeObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
             if (mutation.attributeName === "class") {
-                if (window.location.pathname === '/calendar' || window.location.pathname.includes('calendar')) {
-                    loadCalendar(); // Reload calendar saat mode berubah
-                }
+                loadCalendar(); // Reload calendar saat dark/light mode berubah
             }
         }
     });
-
     window.calendarDarkModeObserver.observe(document.documentElement, { attributes: true });
+
+    // Load pertama kali
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.pathname.includes('calendar')) {
+            loadCalendar();
+        }
+    });
 </script>
+
+
 
 

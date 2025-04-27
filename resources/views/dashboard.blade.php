@@ -9,10 +9,18 @@
 <x-layouts.app>
     <div
     class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
-    <x-bread-crumbs />
-    
+
+    <div class="flex justify-between items-start">
+        {{-- Breadcrumbs kiri --}}
+        <x-bread-crumbs />
+
+        {{-- Logo kanan --}}
+        <img src="{{ asset('/assets/img/redesignf21m.png') }}" alt="Logo" class="w-18 sm:w-25 !important h-auto object-contain"
+        />
+    </div>
+
     {{-- Title --}}
-    <h2 class="font-semibold text-center  md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-8">
+    <h2 class="font-semibold text-center md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-2">
         {{ __('dashboard.welcome') }} 
         <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
             {{ Auth::user()->name }}
@@ -27,8 +35,9 @@
 </div>
 
 
+
     <div class="flex w-full flex-1 flex-col gap-6 rounded-xl p-6 bg-gray-100 dark:bg-gray-900 mt-2">
-        <div class="grid gap-4 grid-cols-2 md:grid-cols-4">
+        <div class="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 text-center">
             <!-- Total Dokter -->
             <div
                 class="flex flex-col items-center p-5 rounded-xl bg-blue-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">

@@ -1,4 +1,3 @@
-
 <section
     class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-4 md:p-12">
 
@@ -29,7 +28,7 @@
                         <th class="p-4">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="[&>tr:nth-child(even)]:bg-blue-50 [&>tr:nth-child(even)]:dark:bg-slate-800 transition-all duration-300 ease-in-out">
                     @foreach ($prescriptions as $p)
                         <livewire:components.prescription :key="$p['id']" :data="$p" />
                     @endforeach

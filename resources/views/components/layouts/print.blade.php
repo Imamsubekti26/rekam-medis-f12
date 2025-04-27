@@ -29,7 +29,6 @@
             }
 
             .ttd-dokter {
-                margin-top: 100px;
                 text-align: right;
                 page-break-inside: avoid;
             }
@@ -59,7 +58,7 @@
         {{ $slot }}
     </main>
     {{-- bantu sesuakke ttd dokter e Mam hehe --}}
-    <div class="ttd-dokter mt-16 flex justify-end mx-15">
+    <div class="ttd-dokter mt-8 flex justify-end mx-15">
         <div class="text-center text-sm leading-snug">
             <p>Dokter/Apoteker Penanggung Jawab</p>
             <img src="{{ asset('/assets/img/qr-code.png') }}" alt="Tanda Tangan Dokter"

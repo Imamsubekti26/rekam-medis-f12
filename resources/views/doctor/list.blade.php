@@ -4,7 +4,14 @@
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
             <div class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-                <x-bread-crumbs />
+                <div class="flex justify-between items-start">
+                    {{-- Breadcrumbs kiri --}}
+                    <x-bread-crumbs />
+            
+                    {{-- Logo kanan --}}
+                    <img src="{{ asset('/assets/img/redesignf21m.png') }}" alt="Logo" class="w-18 sm:w-25 !important h-auto object-contain"
+                    />
+                </div>
 
                 {{-- Title --}}
                 <h2 class="font-semibold text-xl text-center md:text-start text-gray-800 dark:text-gray-200 leading-tight mb-8">
@@ -25,7 +32,7 @@
                     {{-- Button Field --}}
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Button Create --}}
-                        <flux:button href="{{ route('doctor.create') }}" class="cursor-pointer" icon="plus" wire:navigate>{{ __('doctor.title_add') }}</flux:button>
+                        <flux:button href="{{ route('doctor.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus" wire:navigate>{{ __('doctor.title_add') }}</flux:button>
 
                         {{-- Button Print --}}
                         <flux:button
@@ -33,7 +40,7 @@
                                 'search' => request()->query('search'),
                                 'sort_by' => request()->query('sort_by'),
                             ]) }}`)"
-                            class="cursor-pointer" icon="printer">
+                            class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600" icon="printer">
                             {{ __('doctor.print') }}
                         </flux:button>
                     </div>
@@ -75,14 +82,14 @@
                 @if ($doctors)
                     <tbody class="text-center border-b-1">
                         @foreach ($doctors as $doctor)
-                            <tr>
+                        <tr class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
                                 <td class="p-4">{{ $doctor->id }}</td>
                                 <td class="p-4">{{ $doctor->name }}</td>
                                 <td class="p-4">{{ $doctor->email }}</td>
                                 <td class="p-4">{{ $doctor->phone }}</td>
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
-                                        <flux:button href="{{ route('doctor.show', $doctor->id) }}" icon="information-circle" size="sm" class="cursor-pointer" wire:navigate/>
+                                        <flux:button href="{{ route('doctor.show', $doctor->id) }}" icon="information-circle" size="sm" class="cursor-pointer !bg-custom-2 !text-white dark:!bg-yellow-500 dark:hover:!bg-yellow-400" wire:navigate/>
                                     </flux:tooltip>
                                 </td>
                             </tr>

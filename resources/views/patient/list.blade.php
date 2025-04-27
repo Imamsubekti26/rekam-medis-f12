@@ -1,5 +1,5 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -7,11 +7,20 @@ use Carbon\Carbon;
 
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
-            <div class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-                <x-bread-crumbs />
+            <div
+                class="p-6 md:p-8 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="flex justify-between items-start">
+                    {{-- Breadcrumbs kiri --}}
+                    <x-bread-crumbs />
+
+                    {{-- Logo kanan --}}
+                    <img src="{{ asset('/assets/img/redesignf21m.png') }}" alt="Logo"
+                        class="w-18 sm:w-25 !important h-auto object-contain" />
+                </div>
 
                 {{-- Title --}}
-                <h2 class="font-semibold text-center  md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-8">
+                <h2
+                    class="font-semibold text-center  md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-8">
                     {{ __('patient.title') }}
                 </h2>
                 {{-- / Title --}}
@@ -30,17 +39,18 @@ use Carbon\Carbon;
                     {{-- Button Filed --}}
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Button Create --}}
-                        <flux:button href="{{ route('patient.create') }}" class="cursor-pointer" icon="plus" wire:navigate>
+                        <flux:button href="{{ route('patient.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus"
+                            wire:navigate>
                             {{ __('patient.title_add') }}
                         </flux:button>
-                        
+
                         {{-- Button Print --}}
                         <flux:button
                             onclick="window.open(`{{ route('patient.print.list', [
-    'search' => request()->query('search'),
-    'sort_by' => request()->query('sort_by'),
-]) }}`)"
-                            class="cursor-pointer" icon="printer">
+                                'search' => request()->query('search'),
+                                'sort_by' => request()->query('sort_by'),
+                            ]) }}`)"
+                            class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600" icon="printer">
                             {{ __('patient.print') }}
                         </flux:button>
                     </div>
@@ -52,11 +62,11 @@ use Carbon\Carbon;
         </header>
         {{-- / Header --}}
 
-        
+
         {{-- Table Patient Lists --}}
         <section
             class="w-full rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900 overflow-y-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[1000px]">
                 <thead class="border-b-1">
                     <tr>
                         {{-- Member ID --}}
@@ -91,7 +101,8 @@ use Carbon\Carbon;
                 @if ($patients)
                     <tbody class="text-center border-b-1">
                         @foreach ($patients as $patient)
-                            <tr>
+                            <tr
+                                class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
                                 <td class="p-4">{{ $patient->member_id }}</td>
                                 <td class="p-4">{{ $patient->name }}</td>
                                 <td class="p-4">{{ $patient->address }}</td>
@@ -110,15 +121,18 @@ use Carbon\Carbon;
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
                                         <flux:button href="{{ route('patient.show', $patient->id) }}"
-                                            icon="information-circle" size="sm" class="cursor-pointer"
+                                            icon="information-circle" size="sm"
+                                            class="cursor-pointer !bg-custom-2 !text-white dark:!bg-yellow-500 dark:hover:!bg-yellow-400"
                                             wire:navigate />
                                     </flux:tooltip>
                                     <flux:tooltip content="{{ __('medical_record.add') }}">
                                         <flux:button
                                             href="{{ route('record.create', ['patient_id' => $patient->id]) }}"
-                                            icon="clipboard-document-list" size="sm" class="cursor-pointer"
+                                            icon="clipboard-document-list" size="sm"
+                                            class="cursor-pointer !bg-emerald-500 hover:!bg-emerald-600 !text-white dark:!bg-emerald-600 dark:hover:!bg-emerald-500"
                                             wire:navigate />
                                     </flux:tooltip>
+
                                 </td>
                             </tr>
                         @endforeach

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\AdminRestriction;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -52,6 +55,19 @@ Route::get('medicine/print', [MedicineController::class, 'printList'])
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
     ->middleware(['auth', AdminRestriction::class]);
+
+Route::resource('schedule', ScheduleController::class)
+    ->except(['edit'])
+    ->middleware(['auth']);
+
+Route::resource('appointment', AppointmentController::class)
+    ->except(['edit'])
+    ->middleware(['auth']);
+
+Route::get('calendar', [CalenderController::class, 'index'])
+    ->middleware('auth')
+    ->name('schedule.calendar');
+
 
 // Setting Routes
 Route::middleware(['auth'])->group(function () {

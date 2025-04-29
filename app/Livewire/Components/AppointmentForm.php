@@ -19,6 +19,7 @@ class AppointmentForm extends Component
     public $status = 'pending';
     public $availableTime;
     public $disableTime = true;
+    public $hasSubmitted = false;
 
     protected $rules = [
         'patientName' => ['required', 'string'],
@@ -86,7 +87,8 @@ class AppointmentForm extends Component
             if (request()->user()) {
                 return redirect()->route('appointment.index');
             } else {
-                return redirect()->route('home');
+                // TODO: send notification to pusher
+                $this->hasSubmitted = true;
             }
         } catch (\Exception $e) {
             dd($e);

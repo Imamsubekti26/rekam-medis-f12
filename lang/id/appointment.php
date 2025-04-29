@@ -3,6 +3,7 @@
 return [
         'title' => 'Janji Temu',
         'title_add' => 'Buat Janji Temu',
+        'title_update' => 'Ubah Janji Temu',
         'search' => 'Cari',
         'search_hint' => 'Cari nama pasien...',
         'name' => 'Nama Lengkap Pasien',

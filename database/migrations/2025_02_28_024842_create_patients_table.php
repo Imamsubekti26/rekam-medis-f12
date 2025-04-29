@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('member_id');
             $table->string('name', 50);
-            $table->string('phone', 16)->nullable();
+            $table->string('phone', 24)->nullable();
             $table->string('address')->nullable();
             $table->boolean('is_male')->default(true);
             $table->timestamp('date_of_birth')->nullable();

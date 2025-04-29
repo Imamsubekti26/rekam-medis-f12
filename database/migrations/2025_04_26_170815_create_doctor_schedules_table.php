@@ -14,7 +14,7 @@ return new class extends Migration
             $table->date('available_date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->integer('per_patient_time')->comment('In minutes'); // contoh: 15, 30
+            $table->integer('per_patient_time')->default(20)->comment('In minutes'); // contoh: 15, 30
             $table->enum('serial_visibility', ['Sequential', 'Random'])->default('Sequential');
             $table->timestamps();
         });

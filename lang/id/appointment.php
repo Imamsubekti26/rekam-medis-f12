@@ -1,0 +1,35 @@
+<?php
+
+return [
+        'title' => 'Janji Temu',
+        'title_add' => 'Buat Janji Temu',
+        'search' => 'Cari',
+        'search_hint' => 'Cari nama pasien...',
+        'name' => 'Nama Lengkap Pasien',
+        'phone' => 'Nomor WhatsApp',
+        'detail' => 'Keluhan',
+        'date' => 'Pilih Tanggal',
+        'time' => 'Pilih Waktu',
+        'add' => 'Buat Janji Temu',
+        'update' => 'Edit',
+        'delete' => 'Tolak Janji Temu',
+        'delete_msg' => 'Berikan pesan penolakkan:',
+        'modal_footer_hint' => 'Pesan ini akan dikirim ke nomor whatsapp pasien',
+        'create_msg' => 'Kami akan mengkonfirmasi permintaan anda melalui whatsapp, pastikan nomor aktif dan dapat dihubungi',
+        'create_success' => 'Janji Temu berhasil dibuat.',
+        'create_failed' => 'Gagal membuat Janji Temu.',
+        'update_success' => 'Janji Temu berhasil diperbarui.',
+        'update_failed' => 'Gagal memperbarui Janji Temu.',
+        'serial_visibility_sequential' => 'Urutkan Secara Berurutan',
+        'serial_visibility_random' => 'Urutkan Secara Acak',
+        'title_show' => 'Detail Janji Temu',
+        'empty_list' => 'Belum ada janji temu yang dibuat',
+        'approve_title' => 'Terima Janji Temu',
+        'approve_msg' => 'Beri tahu pasien bahwa janji temu telah disetujui:',
+        'approve' => 'terima',
+        'reject' => 'tolak',
+        'chat' => 'hubungi pasien',
+        'reschedule' => 'Jadwalkan Ulang',
+        'process' => 'Proses Janji Temu'
+];
+

@@ -58,6 +58,12 @@ class BreadCrumbs extends Component
                     "link" => route('schedule.index')
                 ]
             ],
+            'appointment.index' => [
+                [
+                    "label" => __('dashboard.appointment'),
+                    "link" => route('appointment.index')
+                ]
+            ]
         ];
         return view('components.bread-crumbs', compact('list'));
     }

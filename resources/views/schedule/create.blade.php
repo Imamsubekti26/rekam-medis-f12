@@ -42,7 +42,7 @@
 
                             {{-- Per Patient Time --}}
                             <flux:input type="number" label="{{ __('schedule.per_patient_time') }} (menit) *"
-                                name="per_patient_time" required />
+                                name="per_patient_time" value="20" required />
 
                             {{-- Serial Visibility --}}
                             <flux:select label="{{ __('schedule.serial_visibility') }}" name="serial_visibility"

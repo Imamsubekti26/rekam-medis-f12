@@ -1,9 +1,18 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
     <main class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+        {{-- Alert for Required Data --}}
+        <div>
+            <div
+                class="rounded-xl border border-yellow-300 bg-yellow-100 text-yellow-800 dark:border-yellow-600 dark:bg-yellow-900 dark:text-yellow-200 opacity-70 p-4 text-sm">
+                <p><strong class="font-semibold">Perhatian:</strong> Isi jadwal anda minimal untuk 1 minggu kedepan, karena kami membutuhkannya untuk layanan janji temu.</p>
+            </div>
+        </div>
+        {{-- / Alert for Required Data --}}
+
         {{-- Header --}}
         <header class="grid auto-rows-min gap-4 md:grid-cols-1">
             <div

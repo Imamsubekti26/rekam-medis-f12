@@ -61,7 +61,7 @@ Route::resource('schedule', ScheduleController::class)
     ->middleware(['auth']);
 
 Route::resource('appointment', AppointmentController::class)
-    ->except(['edit'])
+    ->except(['show'])
     ->middleware(['auth']);
 
 Route::get('calendar', [CalenderController::class, 'index'])

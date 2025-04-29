@@ -8,20 +8,40 @@ use Illuminate\Http\Request;
 class AppointmentController extends Controller
 {
     // Menampilkan daftar janji temu
-    public function index()
+    public function index(Request $request)
     {
-        // Mengambil semua janji temu
-        // $appointments = Appointment::all();
+        $query = Appointment::query();
 
-        // Mengembalikan tampilan dengan data janji temu
-        return view('appointment.list');
+        if ($request->has('search') && $request->search != null) {
+            $query = $query->where('patient_name', 'like', '%' . $request->search . '%');
+            $query = $query->orWhere('phone', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('sort_by') && $request->sort_by != null) {
+            $sort = match ($request->sort_by) {
+                'date_asc' => ['date', 'asc'],
+                'date_desc' => ['date', 'desc'],
+                'patient_name_asc' => ['patient_name', 'asc'],
+                'patient_name_desc' => ['patient_name', 'desc'],
+            };
+            $query = $query->orderBy($sort[0], $sort[1]);
+        } else {
+            $query = $query->orderBy('created_at', 'desc');
+        }
+
+        try {
+            $appointments = $query->paginate(10);
+            return view('appointment.list', compact('appointments'));
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 
-    // // Menampilkan form untuk membuat janji temu baru
-    // public function create()
-    // {
-    //     return view('appointments.create');
-    // }
+    // Menampilkan form untuk membuat janji temu baru
+    public function create()
+    {
+        return view('appointment.create');
+    }
 
     // // Menyimpan janji temu baru ke database
     // public function store(Request $request)
@@ -48,12 +68,11 @@ class AppointmentController extends Controller
     //     return redirect()->route('appointments.index')->with('success', 'Janji temu berhasil dibuat!');
     // }
 
-    // // Menampilkan form untuk mengedit janji temu
-    // public function edit($id)
-    // {
-    //     $appointment = Appointment::findOrFail($id);
-    //     return view('appointments.edit', compact('appointment'));
-    // }
+    // Menampilkan form untuk mengedit janji temu
+    public function edit(Appointment $appointment)
+    {
+        return view('appointment.edit', compact('appointment'));
+    }
 
     // // Memperbarui data janji temu
     // public function update(Request $request, $id)

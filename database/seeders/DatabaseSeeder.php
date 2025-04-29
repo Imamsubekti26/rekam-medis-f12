@@ -41,6 +41,12 @@ class DatabaseSeeder extends Seeder
             'is_male' => true,
         ]);
 
+        Patient::factory()->create([
+            'member_id' => '11102',
+            'name' => 'Subekti',
+            'is_male' => true,
+        ]);
+
         // Create Medicine
         Medicine::factory()->create([
             'name' => 'Paracetamol',

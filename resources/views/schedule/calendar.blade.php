@@ -3,6 +3,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<style>
+    @media (max-width: 768px) {
+
+        /* Ukuran teks title kalender */
+        .fc-center h2 {
+            font-size: 1rem !important;
+            margin-top: 10px
+        }
+
+        /* Ukuran tombol navigasi dan teks header */
+        .fc-button {
+            font-size: 0.75rem !important;
+            padding: 4px 6px !important;
+        }
+
+        /* Tombol di kiri/kanan kalender (prev/next/today) */
+        .fc-header-left,
+        .fc-header-right {
+            font-size: 0.75rem !important;
+        }
+
+        /* Container kalender agar tidak kepotong di mobile */
+        #calendar {
+            font-size: 0.8rem;
+        }
+
+        .fc-toolbar {
+            padding: 4px 8px;
+        }
+
+    }
+</style>
+
 
 <x-layouts.app>
     <!-- Modal -->
@@ -63,7 +96,51 @@
     </div>
 
 
-    <div id="calendar"></div>
+    <div class="mt-8 lg:flex lg:gap-8">
+        <div id="calendar" class="lg:w-2/3 w-full bg-white dark:bg-zinc-800/50 p-5 rounded-2xl"></div>
+        <div class="mt-8 lg:mt-0 lg:w-1/3">
+
+            <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Jadwal Dokter Hari Ini</h3>
+            @php
+                $today = \Carbon\Carbon::now()->toDateString();
+                $todaySchedules = $events->filter(function ($event) use ($today) {
+                    return $event['available_date'] === $today;
+                });
+            @endphp
+
+            @if ($todaySchedules->isEmpty())
+                <div
+                    class="p-4 bg-yellow-100 text-yellow-800 rounded-lg dark:bg-yellow-800 dark:text-yellow-100 shadow-sm">
+                    Tidak ada jadwal dokter untuk hari ini.
+                </div>
+            @else
+                <div class="grid gap-6 ">
+                    @foreach ($todaySchedules as $schedule)
+                        <div
+                            class="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-5 shadow-md hover:shadow-lg transition-shadow duration-200">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-lg font-bold text-zinc-800 dark:text-white">
+                                    {{ $schedule['doctor_name'] }}
+                                </h4>
+                                <span
+                                    class="inline-block px-2 py-1 text-xs font-medium text-white rounded bg-custom-2 dark:bg-custom-50">
+                                    Hari Ini
+                                </span>
+                            </div>
+                            <div class="text-sm text-zinc-600 dark:text-zinc-300 space-y-1">
+                                <p><span class="font-medium">Waktu:</span> {{ $schedule['start_time'] }} -
+                                    {{ $schedule['end_time'] }}</p>
+                                <p><span class="font-medium">Durasi per pasien:</span>
+                                    {{ $schedule['per_patient_time'] }} menit</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div> <!-- penutup div dalam card jadwal -->
+    </div> <!-- penutup flex container -->
+    
+    
 </x-layouts.app>
 
 <script>
@@ -144,7 +221,9 @@
             }
         }
     });
-    window.calendarDarkModeObserver.observe(document.documentElement, { attributes: true });
+    window.calendarDarkModeObserver.observe(document.documentElement, {
+        attributes: true
+    });
 
     // Load pertama kali
     window.addEventListener('DOMContentLoaded', () => {
@@ -153,7 +232,3 @@
         }
     });
 </script>
-
-
-
-

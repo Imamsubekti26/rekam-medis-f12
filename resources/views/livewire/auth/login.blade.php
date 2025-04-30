@@ -75,7 +75,8 @@ new #[Layout('components.layouts.auth')] class extends Component {
 <div class="flex flex-col gap-6">
     <!-- Theme Switcher kanan atas -->
     <div class="absolute right-0 top-0 mt-2 mr-2">
-        <flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented" class="flex cursor-pointer">
+        <flux:menu.radio.group x-data x-model="$flux.appearance" variant="segmented"
+            class="flex cursor-pointer bg-gray-400 dark:bg-gray-600/50 rounded-xl p-2 shadow-lg">
             <flux:radio value="light" icon="sun" class="py-1 cursor-pointer" />
             <flux:radio value="dark" icon="moon" class="py-1 cursor-pointer" />
         </flux:menu.radio.group>

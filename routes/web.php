@@ -68,6 +68,9 @@ Route::get('calendar', [CalenderController::class, 'index'])
     ->middleware('auth')
     ->name('schedule.calendar');
 
+Route::get('/jadwalpublik', [CalenderController::class, 'public'])
+    ->name('schedule.public');
+
 
 // Setting Routes
 Route::middleware(['auth'])->group(function () {

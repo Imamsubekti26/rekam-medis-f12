@@ -7,17 +7,29 @@ use Illuminate\Http\Request;
 
 class CalenderController extends Controller
 {
+    // Untuk admin/petugas (akses dalam sistem)
     public function index()
     {
-        // Fetch all doctor schedules
-        $schedules = DoctorSchedule::all();
+        return view('schedule.calendar', [
+            'events' => $this->getFormattedSchedules()
+        ]);
+    }
 
-        // Prepare the events data
-        $events = $schedules->map(function($schedule) {
+    // Untuk publik (tanpa login)
+    public function public()
+    {
+        return view('schedule.public', [
+            'events' => $this->getFormattedSchedules()
+        ]);
+    }
+
+    private function getFormattedSchedules()
+    {
+        return DoctorSchedule::with('doctor')->get()->map(function($schedule) {
             return [
-                'title' => 'Dr. ' . $schedule->doctor->name, // Assuming you have a relationship with the Doctor model
-                'start' => $schedule->available_date . 'T' . $schedule->start_time, // Format start datetime
-                'end' => $schedule->available_date . 'T' . $schedule->end_time,     // Format end datetime
+                'title' => 'Dr. ' . $schedule->doctor->name,
+                'start' => $schedule->available_date . 'T' . $schedule->start_time,
+                'end' => $schedule->available_date . 'T' . $schedule->end_time,
                 'doctor_name' => 'Dr. ' . $schedule->doctor->name,
                 'available_date' => $schedule->available_date,
                 'start_time' => $schedule->start_time,
@@ -25,11 +37,7 @@ class CalenderController extends Controller
                 'per_patient_time' => $schedule->per_patient_time,
             ];
         });
-
-        // Return the events to the view
-        return view('schedule.calendar', [
-            'events' => $events
-        ]);
     }
 }
+
 

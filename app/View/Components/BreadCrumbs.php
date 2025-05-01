@@ -46,6 +46,12 @@ class BreadCrumbs extends Component
                     "link" => route('doctor.index')
                 ]
             ],
+            'pharmacist.index' => [
+                [
+                    "label" => __('dashboard.pharmacist'),
+                    "link" => route('pharmacist.index')
+                ]
+            ],
             'medicine.index' => [
                 [
                     "label" => __('dashboard.medicine'),

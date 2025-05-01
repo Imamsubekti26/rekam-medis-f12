@@ -23,15 +23,18 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@moon.id',
             'is_admin' => true,
-            'password' => Hash::make('123123123'),
         ]);
 
         // Create Doctor
-        User::factory()->create([
+        User::factory()->doctor()->create([
             'name' => 'Andi',
             'email' => 'andi@moon.id',
-            'is_admin' => false,
-            'password' => Hash::make('123123123'),
+        ]);
+
+        // Create pharmacist
+        User::factory()->pharmacist()->create([
+            'name' => 'Dina',
+            'email' => 'dina@moon.id',
         ]);
 
         // Create Patient

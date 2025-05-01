@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Daftar Apoteker',
+    'title_add' => 'Tambah Apoteker Baru',
+    'title_show' => 'Detail Apoteker',
+    'title_medic' => 'Riwayat Pemeriksaan Apoteker',
+    'action' => 'Aksi',
+    'add' => 'Tambah Apoteker',
+    'update' => 'Perbarui Apoteker',
+    'delete' => 'Hapus Apoteker',
+    'delete_msg' => 'Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan!',
+    'delete_success' => 'Apoteker berhasil dihapus!',
+    'delete_failed' => 'Gagal menghapus apoteker!',
+    'search' => 'Cari',
+    'search_hint' => 'Cari Apoteker...',
+    'create_success' => 'Apoteker baru berhasil ditambahkan',
+    'create_failed' => 'Gagal menambahkan apoteker baru',
+    'update_success' => 'Data apoteker berhasil diperbarui',
+    'update_failed' => 'Gagal memperbarui data apoteker',
+    'show_failed' => 'Apoteker yang Anda cari tidak ditemukan',
+    'id' => 'ID Apoteker',
+    'name' => 'Nama Apoteker',
+    'phone' => 'Telepon',
+    'confirmation_password' => 'Konfirmasi Kata Sandi',
+    'print' => 'Cetak Daftar Apoteker',
+];

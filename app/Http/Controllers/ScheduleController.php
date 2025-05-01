@@ -47,7 +47,7 @@ class ScheduleController extends Controller
     public function create(Request $request)
 {
     try {
-        $doctors = User::where('is_admin', false)->get(); // ambil hanya dokter
+        $doctors = User::where('is_admin', false)->where('role', 'doctor')->get(); // ambil hanya dokter
         
         return view('schedule.create', compact('doctors'));
     } catch (\Exception $e) {

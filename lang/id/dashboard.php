@@ -6,6 +6,7 @@ return [
     'medical_record' => "Rekam Medis",
     'patient' => 'Pasien',
     'doctor' => 'Dokter',
+    'pharmacist' => 'Apoteker',
     'medicine' => 'Obat',
     'manage_data' => 'Manage Data',
     'welcome' => 'Selamat Datang',

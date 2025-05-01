@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
-class DoctorController extends Controller
+class PharmacistController extends Controller
 {
     /**
      * Generate a database query based on search and sort request
@@ -19,7 +19,7 @@ class DoctorController extends Controller
     private function generateQuery(Request $request)
     {
         $query = User::query();
-        $query = $query->where("is_admin", false)->where('role', 'doctor');
+        $query = $query->where("is_admin", false)->where('role', 'pharmacist');
 
         if ($request->has("search") && $request->search != null) {
             $query = $query->where(function ($q) use ($request) {
@@ -52,8 +52,8 @@ class DoctorController extends Controller
         $query = $this->generateQuery($request);
 
         try {
-            $doctors = $query->paginate(10);
-            return view("doctor.list", compact('doctors'));
+            $pharmacists = $query->paginate(10);
+            return view("pharmacist.list", compact('pharmacists'));
         } catch (\Exception $e) {
             dd($e);
         }
@@ -64,7 +64,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('doctor.create');
+        return view('pharmacist.create');
     }
 
     /**
@@ -79,23 +79,23 @@ class DoctorController extends Controller
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['role'] = 'doctor';
+        $validated['role'] = 'pharmacist';
 
         event(new Registered(($user = User::create($validated))));
-        return redirect()->route('doctor.index')->with('success',__('doctor.create_success'));
+        return redirect()->route('pharmacist.index')->with('success',__('pharmacist.create_success'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $doctor)
+    public function show(User $pharmacist)
     {
         try {
-            $medical_records = MedicalRecord::with('doctor')->where('doctor_id','=', $doctor->id)->get();
-            return view('doctor.detail', compact('doctor', 'medical_records'));
+            $medical_records = MedicalRecord::with('doctor')->where('doctor_id','=', $pharmacist->id)->get();
+            return view('pharmacist.detail', compact('pharmacist', 'medical_records'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->route('doctor.index')->withErrors(__('doctor.show_failed'));
+            return redirect()->route('pharmacist.index')->withErrors(__('pharmacist.show_failed'));
         }
     }
 
@@ -103,15 +103,15 @@ class DoctorController extends Controller
      * Show the form for editing the specified resource.
      * @deprecated the edit form has handled by 'show' route, this method is not necesary again
      */
-    public function edit(User $doctor)
+    public function edit(User $pharmacist)
     {
-        $this->show($doctor);
+        $this->show($pharmacist);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $doctor)
+    public function update(Request $request, User $pharmacist)
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -120,34 +120,33 @@ class DoctorController extends Controller
         ]);
         
         try {
-            $doctor->update($validated);
-            return redirect()->route('doctor.index')->with('success',__('doctor.update_success'));
+            $pharmacist->update($validated);
+            return redirect()->route('pharmacist.index')->with('success',__('pharmacist.update_success'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->back()->withErrors(__('doctor.update_failed'));
+            return redirect()->back()->withErrors(__('pharmacist.update_failed'));
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $doctor)
+    public function destroy(User $pharmacist)
     {
         try{
-            $doctor->delete();
-            return redirect()->route('doctor.index')->with('success', __('doctor.delete_success'));
+            $pharmacist->delete();
+            return redirect()->route('pharmacist.index')->with('success', __('pharmacist.delete_success'));
         } catch (\Exception $e) {
             dd($e);
-            return redirect()->back()->withErrors(__('doctor.delete_failed'));
+            return redirect()->back()->withErrors(__('pharmacist.delete_failed'));
         }
     }
     public function printList(Request $request)
     {
         $query = $this->generateQuery($request);
 
-        $doctors = $query->get(); // Ambil semua dokter tanpa pagination
+        $pharmacists = $query->get(); // Ambil semua dokter tanpa pagination
 
-        return view("doctor.print-list", compact("doctors"));
+        return view("pharmacist.print-list", compact("pharmacists"));
     }
-
 }

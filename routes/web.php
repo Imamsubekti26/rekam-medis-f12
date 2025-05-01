@@ -7,6 +7,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PharmacistController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\AdminRestriction;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,14 @@ Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
     ->middleware(['auth', AdminRestriction::class]);
 
+// Pharmacist Routes
+Route::get('pharmacist/print', [PharmacistController::class, 'printList'])
+    ->name('pharmacist.print.list')
+    ->middleware(['auth', AdminRestriction::class]);
+Route::resource('pharmacist', PharmacistController::class)
+    ->except(['edit'])
+    ->middleware(['auth', AdminRestriction::class]);
+
 // Medical Record Routes
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
     ->name('record.print.list')
@@ -56,10 +65,12 @@ Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
     ->middleware(['auth', AdminRestriction::class]);
 
+// Schedule Routes
 Route::resource('schedule', ScheduleController::class)
     ->except(['edit'])
     ->middleware(['auth']);
 
+// Appointment Routes
 Route::resource('appointment', AppointmentController::class)
     ->except(['show'])
     ->middleware(['auth']);

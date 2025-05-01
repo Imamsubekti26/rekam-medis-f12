@@ -51,7 +51,18 @@
                             class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
                             {{ __('dashboard.doctor') }}
                         </flux:navlist.item>
-                        
+
+                        <flux:navlist.item
+                            icon="user"
+                            :href="route('pharmacist.index')"
+                            :current="request()->routeIs('pharmacist.index')"
+                            wire:navigate
+                            class="{{ request()->routeIs('pharmacist.index') ? 'flux-navlist-item-active' : '' }}">
+                            {{ __('dashboard.pharmacist') }}
+                        </flux:navlist.item>
+                    @endif
+                    
+                    @if (request()->user()->role != 'doctor')
                         <flux:navlist.item
                             icon="inbox"
                             :href="route('medicine.index')"
@@ -60,17 +71,17 @@
                             class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
                             {{ __('dashboard.medicine') }}
                         </flux:navlist.item>
-
-                        <flux:navlist.group expandable heading="Jadwal & Janji Temu">
-                            {{-- Jadwal Dokter --}}
-                            <flux:navlist.item :href="route('schedule.index')" :current="request()->routeIs('schedule.index')" wire:navigate class="{{ request()->routeIs('schedule.index') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.schedule') }}</flux:navlist.item>
-                            {{-- Janji Temu --}}
-                            <flux:navlist.item :href="route('appointment.index')" :current="request()->routeIs('appointment.index')" wire:navigate class="{{ request()->routeIs('appointment.index') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.appointment') }}</flux:navlist.item>
-                            {{-- Kalender --}}
-                            <flux:navlist.item :href="route('schedule.calendar')" :current="request()->routeIs('schedule.calendar')" wire:navigate class="{{ request()->routeIs('schedule.calendar') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.calendar') }}</flux:navlist.item>
-                        </flux:navlist.group>
-
                     @endif
+
+                    <flux:navlist.group expandable heading="Jadwal & Janji Temu">
+                        {{-- Jadwal Dokter --}}
+                        <flux:navlist.item :href="route('schedule.index')" :current="request()->routeIs('schedule.index')" wire:navigate class="{{ request()->routeIs('schedule.index') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.schedule') }}</flux:navlist.item>
+                        {{-- Janji Temu --}}
+                        <flux:navlist.item :href="route('appointment.index')" :current="request()->routeIs('appointment.index')" wire:navigate class="{{ request()->routeIs('appointment.index') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.appointment') }}</flux:navlist.item>
+                        {{-- Kalender --}}
+                        <flux:navlist.item :href="route('schedule.calendar')" :current="request()->routeIs('schedule.calendar')" wire:navigate class="{{ request()->routeIs('schedule.calendar') ? 'flux-navlist-item-active' : '' }}"> {{ __('dashboard.calendar') }}</flux:navlist.item>
+                    </flux:navlist.group>
+
                 </flux:navlist.group>
             </flux:navlist>
 

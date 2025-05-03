@@ -9,7 +9,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacistController;
 use App\Http\Controllers\ScheduleController;
-use App\Http\Middleware\AdminRestriction;
+use App\Http\Middleware\RoleRestriction;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -25,7 +25,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])
 // Patient Routes
 Route::get('patient/print', [PatientController::class, 'printList'])
     ->name('patient.print.list')
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class]);
 Route::resource('patient', PatientController::class)
     ->except(['edit'])
     ->middleware(['auth']);
@@ -33,18 +33,18 @@ Route::resource('patient', PatientController::class)
 // Doctor Routes
 Route::get('doctor/print', [DoctorController::class, 'printList'])
     ->name('doctor.print.list')
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class]);
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class]);
 
 // Pharmacist Routes
 Route::get('pharmacist/print', [PharmacistController::class, 'printList'])
     ->name('pharmacist.print.list')
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class]);
 Route::resource('pharmacist', PharmacistController::class)
     ->except(['edit'])
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class]);
 
 // Medical Record Routes
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
@@ -60,10 +60,10 @@ Route::resource('record', MedicalRecordController::class)
 // Medicine Routes
 Route::get('medicine/print', [MedicineController::class, 'printList'])
     ->name('medicine.print.list')
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class.':pharmacist']);
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
-    ->middleware(['auth', AdminRestriction::class]);
+    ->middleware(['auth', RoleRestriction::class.':pharmacist']);
 
 // Schedule Routes
 Route::resource('schedule', ScheduleController::class)

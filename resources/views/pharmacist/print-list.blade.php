@@ -5,7 +5,7 @@ use Carbon\Carbon;
 <x-layouts.print>
     <h2 class="text-xl font-bold underline text-center mt-4">Daftar Dokter</h2>
     <p class="text-sm mt-2 mb-4 text-center border-gray-400 pb-1">
-        Tanggal Cetak: {{ \Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y H:i') }} 
+        Tanggal Cetak: {{ Carbon::now('Asia/Jakarta')->format('d/m/Y H:i') }} 
     </p>
     
     
@@ -14,33 +14,33 @@ use Carbon\Carbon;
             <tr>
                 <th class="border border-gray-300 px-3 py-2 text-left">
                     <div class="flex justify-center items-center gap-2">
-                        {{ __('doctor.id') }}
+                        {{ __('pharmacist.id') }}
                     </div>
                 </th>
                 <th class="border border-gray-300 px-3 py-2 text-left">
                     <div class="flex justify-center items-center gap-2">
-                        {{ __('doctor.name') }}
+                        {{ __('pharmacist.name') }}
                     </div>
                 </th>
                 <th class="border border-gray-300 px-3 py-2 text-left">
                     <div class="flex justify-center items-center gap-2">
-                        {{ __('doctor.email') }}
+                        {{ __('email') }}
                     </div>
                 </th>
                 <th class="border border-gray-300 px-3 py-2 text-left">
                     <div class="flex justify-center items-center gap-2">
-                        {{ __('doctor.phone') }}
+                        {{ __('pharmacist.phone') }}
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody class="text-center border-b-1">
-            @foreach ($doctors as $doctor)
+            @foreach ($pharmacists as $pharmacist)
                 <tr class="odd:bg-white even:bg-gray-50 print:bg-white">
-                    <td class="border border-gray-300 px-3 py-2">{{ $doctor->id }}</td>
-                    <td class="border border-gray-300 px-3 py-2">{{ $doctor->name }}</td>
-                    <td class="border border-gray-300 px-3 py-2">{{ $doctor->email }}</td>
-                    <td class="border border-gray-300 px-3 py-2">{{ $doctor->phone }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $pharmacist->id }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $pharmacist->name }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $pharmacist->email }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $pharmacist->phone }}</td>
                 </tr>
             @endforeach
         </tbody>

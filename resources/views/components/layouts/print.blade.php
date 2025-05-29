@@ -58,7 +58,7 @@
                         style="width: 100px; height: auto; margin: 10px;">
                 </td>
                 <td style="text-align: center; border: none;">
-                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800;">Klinik F-21 Minomartani</h2>
+                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800;">F-21 Minomartani</h2>
                     <p style="margin: 0; font-size: 12px;">Jl. Contoh Alamat No. 456, Minomartani, Sleman, Yogyakarta
                     </p>
                     <p style="margin: 0; font-size: 12px;">Telepon: (0274) 7654321 | Email: info@apotekf21.com</p>

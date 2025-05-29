@@ -18,24 +18,27 @@
                             <flux:input label="{{ __('doctor.name') }}" value="{{ $schedule->doctor->name }}" readonly />
 
                             {{-- Available Date --}}
-                            <flux:input label="{{ __('schedule.available_date') }}" name="available_date"
+                            <flux:input label="{{ __('schedule.available_date') }}" name="available_date" type="date"
                                 value="{{ $schedule->available_date }}" required />
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                             {{-- Start Time --}}
-                            <flux:input label="{{ __('schedule.start_time') }}" name="start_time"
-                                value="{{ $schedule->start_time }}" required />
+                            <flux:input label="{{ __('schedule.start_time') }}" name="start_time" type="time"
+                                value="{{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}" required />
 
                             {{-- End Time --}}
-                            <flux:input label="{{ __('schedule.end_time') }}" name="end_time"
-                                value="{{ $schedule->end_time }}" required />
+                            <flux:input label="{{ __('schedule.end_time') }}" name="end_time" type="time"
+                                value="{{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}" required />
                         </div>
+
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                             {{-- Per Patient Time --}}
-                            <flux:input label="{{ __('schedule.per_patient_time') }}" name="per_patient_time"
-                                value="{{ $schedule->per_patient_time }}" required />
+                            <flux:input label="{{ __('schedule.per_patient_time') }} (menit)" name="per_patient_time"
+                                value="{{ $schedule->per_patient_time . ' menit' }}" required />
+
+
 
                             {{-- Serial Visibility --}}
                             <flux:select label="{{ __('schedule.serial_visibility') }} *"

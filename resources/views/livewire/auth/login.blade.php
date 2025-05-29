@@ -12,10 +12,10 @@ use Livewire\Volt\Component;
 
 new #[Layout('components.layouts.auth')] class extends Component {
     #[Validate('required|string|email')]
-    public string $email = '';
+    public string $email = 'nabil@moon.id';
 
     #[Validate('required|string')]
-    public string $password = '';
+    public string $password = '123123123';
 
     public bool $remember = false;
 
@@ -95,29 +95,49 @@ new #[Layout('components.layouts.auth')] class extends Component {
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Alamat Email -->
-        <flux:input wire:model="email" label="Alamat Email" type="email" name="email" required autofocus
-            autocomplete="email" placeholder="email@contoh.com" />
+    <!-- Alamat Email -->
+    <flux:input
+        wire:model="email"
+        label="Alamat Email"
+        type="email"
+        name="email"
+        required
+        autofocus
+        autocomplete="email"
+        placeholder="email@contoh.com"
+    />
 
-        <!-- Kata Sandi -->
-        <div class="relative">
-            <flux:input wire:model="password" label="Kata Sandi" type="password" name="password" required
-                autocomplete="current-password" placeholder="Kata Sandi" />
+    <!-- Kata Sandi -->
+    <div class="relative">
+        <flux:input
+            wire:model="password"
+            label="Kata Sandi"
+            type="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            placeholder="Kata Sandi"
+        />
 
-            @if (Route::has('password.request'))
-                <flux:link class="absolute right-0 top-0 text-sm" href="{{ route('password.request') }}" wire:navigate>
-                    Lupa kata sandi?
-                </flux:link>
-            @endif
-        </div>
+        @if (Route::has('password.request'))
+            <flux:link
+                class="absolute right-0 top-0 text-sm"
+                href="{{ route('password.request') }}"
+                wire:navigate
+            >
+                Lupa kata sandi?
+            </flux:link>
+        @endif
+    </div>
 
-        <!-- Ingat Saya -->
-        <flux:checkbox wire:model="remember" label="Ingat saya" />
+    <!-- Ingat Saya -->
+    <flux:checkbox wire:model="remember" label="Ingat saya" />
 
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full cursor-pointer">Masuk</flux:button>
-        </div>
-    </form>
+    <div class="flex items-center justify-end">
+        <flux:button variant="primary" type="submit" class="w-full cursor-pointer">Masuk</flux:button>
+    </div>
+</form>
+
 
     {{-- <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">
         Belum punya akun?

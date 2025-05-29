@@ -133,7 +133,7 @@
 
 
     <div class="mt-8 lg:flex lg:gap-8">
-        <div id="calendar" class="lg:w-2/3 w-full"></div>
+        <div id="calendar" class="lg:w-2/3 w-full bg-white dark:bg-zinc-800/50 p-5 rounded-2xl"></div>
         <div class="mt-8 lg:mt-0 lg:w-1/3">
 
             <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Jadwal Dokter Hari Ini</h3>

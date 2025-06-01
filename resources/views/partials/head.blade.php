@@ -7,7 +7,7 @@
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/logof21.png') }}">
-<script type="module">
+{{-- <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
     Chatbot.init({
         chatflowid: "bc797c69-b2ac-48ed-bad7-d5a52dbca335",
@@ -111,7 +111,7 @@
             }
         }
     })
-</script>
+</script> --}}
 
 
 <style>

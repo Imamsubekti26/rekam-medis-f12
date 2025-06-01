@@ -16,7 +16,10 @@ class DashboardController extends Controller
         $today = Carbon::today();
         $range = $request->get('range', 'months');
 
-        $totalDoctors = User::where('is_admin', false)->count();
+        $totalDoctors = User::where('is_admin', false)
+                    ->where('role', '!=', 'pharmacist')
+                    ->count();
+
         $totalPatients = Patient::count();
         $totalMedicalRecords = MedicalRecord::count();
         $totalMedicineStock = Medicine::count();

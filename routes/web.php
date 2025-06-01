@@ -33,47 +33,51 @@ Route::resource('patient', PatientController::class)
 // Doctor Routes
 Route::get('doctor/print', [DoctorController::class, 'printList'])
     ->name('doctor.print.list')
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.viewer']);
 Route::resource('doctor', DoctorController::class)
     ->except(['edit'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.viewer']);
 
 // Pharmacist Routes
 Route::get('pharmacist/print', [PharmacistController::class, 'printList'])
     ->name('pharmacist.print.list')
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.viewer']);
 Route::resource('pharmacist', PharmacistController::class)
     ->except(['edit'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.viewer']);
 
 // Medical Record Routes
 Route::get('record/print', [MedicalRecordController::class, 'printList'])
     ->name('record.print.list')
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.editor']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.editor']);
 Route::get('record/{record}/print', [MedicalRecordController::class, 'printDetail'])
     ->name('record.print.detail')
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.editor']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.editor']);
 Route::resource('record', MedicalRecordController::class)
     ->except(['edit', 'store'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.editor']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.editor']);
 
 // Medicine Routes
 Route::get('medicine/print', [MedicineController::class, 'printList'])
     ->name('medicine.print.list')
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.editor,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.editor,doctor.viewer']);
 Route::resource('medicine', MedicineController::class)
     ->except(['edit'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.editor,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.editor,doctor.viewer']);
 
 // Schedule Routes
+Route::get('schedule/print', [ScheduleController::class, 'printList'])
+    ->name('schedule.print.list');
 Route::resource('schedule', ScheduleController::class)
     ->except(['edit'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.viewer,doctor.editor']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.viewer,doctor.editor']);
 
 // Appointment Routes
+Route::get('appointment/print', [AppointmentController::class, 'printList'])
+    ->name('appointment.print.list');
 Route::resource('appointment', AppointmentController::class)
     ->except(['show'])
-    ->middleware(['auth', RoleRestriction::class.':pharmacist.editor,doctor.viewer']);
+    ->middleware(['auth', RoleRestriction::class . ':pharmacist.editor,doctor.viewer']);
 
 Route::get('calendar', [CalenderController::class, 'index'])
     ->middleware('auth')

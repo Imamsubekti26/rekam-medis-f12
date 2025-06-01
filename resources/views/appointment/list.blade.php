@@ -1,5 +1,5 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -22,16 +22,28 @@ use Carbon\Carbon;
                 <div class="flex flex-col md:flex-row justify-between gap-4">
                     {{-- Search Field --}}
                     <form class="flex gap-4 items-center">
-                        <flux:input icon="magnifying-glass" placeholder="{{ __('appointment.search_hint') }}" name="search"
-                            value="{{ request()->query('search') }}" />
+                        <flux:input icon="magnifying-glass" placeholder="{{ __('appointment.search_hint') }}"
+                            name="search" value="{{ request()->query('search') }}" />
                         <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
                         <flux:button type="submit" class="cursor-pointer">{{ __('appointment.search') }}</flux:button>
                     </form>
-                    <flux:button href="{{ route('appointment.create') }}"
-                        class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
-                        icon="plus" wire:navigate>
-                        {{ __('appointment.add') }}
-                    </flux:button>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <flux:button href="{{ route('appointment.create') }}"
+                            class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
+                            icon="plus" wire:navigate>
+                            {{ __('appointment.add') }}
+                        </flux:button>
+                        {{-- / Search Field --}}
+                        <flux:button
+                            onclick="window.open(`{{ route('appointment.print.list', [
+                                'search' => request()->query('search'),
+                                'sort_by' => request()->query('sort_by'),
+                            ]) }}`)"
+                            class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
+                            icon="printer">
+                            {{ __('appointment.print') }}
+                        </flux:button>
+                    </div>
                 </div>
             </div>
         </header>
@@ -75,7 +87,9 @@ use Carbon\Carbon;
                                     {{ Carbon::parse($appointment->time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
-                                    <flux:badge color="{{ $appointment->status === 'pending' ? 'orange' : ($appointment->status === 'approve' ? 'green' : 'red') }}">{{ $appointment->status }}</flux:badge>
+                                    <flux:badge
+                                        color="{{ $appointment->status === 'pending' ? 'orange' : ($appointment->status === 'approve' ? 'green' : 'red') }}">
+                                        {{ $appointment->status }}</flux:badge>
                                 </td>
                                 <td class="p-4">
                                     <div class="flex justify-center items-center gap-1">
@@ -83,66 +97,59 @@ use Carbon\Carbon;
                                             {{-- Approve Button with Tooltip --}}
                                             <flux:modal.trigger name="approve_appointment#{{ $loop->iteration }}">
                                                 <flux:tooltip content="{{ __('appointment.approve') }}">
-                                                    <flux:button icon="check-circle" size="sm" class="cursor-pointer !bg-green-400 hover:!bg-green-500 !text-white" />
+                                                    <flux:button icon="check-circle" size="sm"
+                                                        class="cursor-pointer !bg-green-400 hover:!bg-green-500 !text-white" />
                                                 </flux:tooltip>
                                             </flux:modal.trigger>
 
                                             {{-- Reject Button with Tooltip --}}
                                             <flux:modal.trigger name="reject_appointment#{{ $loop->iteration }}">
                                                 <flux:tooltip content="{{ __('appointment.reject') }}">
-                                                    <flux:button icon="x-circle" size="sm" class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                    <flux:button icon="x-circle" size="sm"
+                                                        class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
                                                 </flux:tooltip>
                                             </flux:modal.trigger>
 
                                             {{-- Edit Button --}}
                                             <flux:tooltip content="{{ __('appointment.update') }}">
-                                                <flux:button 
-                                                    href="{{ route('appointment.edit', $appointment->id) }}" 
-                                                    icon="pencil" 
-                                                    size="sm" 
-                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white" 
-                                                    wire:navigate
-                                                />
+                                                <flux:button href="{{ route('appointment.edit', $appointment->id) }}"
+                                                    icon="pencil" size="sm"
+                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white"
+                                                    wire:navigate />
                                             </flux:tooltip>
                                         @elseif ($appointment->status === 'rejected' && request()->user()->is_editor)
                                             {{-- Reschedule Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.reschedule') }}">
-                                                <flux:button 
-                                                    href="{{ route('appointment.edit', $appointment->id) }}" 
-                                                    icon="clock" 
-                                                    size="sm" 
-                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white" 
-                                                    wire:navigate
-                                                />
+                                                <flux:button href="{{ route('appointment.edit', $appointment->id) }}"
+                                                    icon="clock" size="sm"
+                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white"
+                                                    wire:navigate />
                                             </flux:tooltip>
                                         @elseif ($appointment->status === 'approve' && request()->user()->is_editor)
                                             {{-- Call Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.chat') }}">
-                                                <flux:button 
-                                                    href="https://wa.me/{{ toWhatsappNumber($appointment->phone) }}/" 
-                                                    target="_blank" icon="chat-bubble-oval-left-ellipsis" 
-                                                    size="sm" 
-                                                    class="cursor-pointer !bg-green-500 hover:!bg-green-600 !text-white" 
-                                                />
+                                                <flux:button
+                                                    href="https://wa.me/{{ toWhatsappNumber($appointment->phone) }}/"
+                                                    target="_blank" icon="chat-bubble-oval-left-ellipsis" size="sm"
+                                                    class="cursor-pointer !bg-green-500 hover:!bg-green-600 !text-white" />
                                             </flux:tooltip>
 
                                             {{-- Reschedule Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.reschedule') }}">
-                                                <flux:button href="{{ route('appointment.edit', $appointment->id) }}" icon="clock" size="sm"
-                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white" wire:navigate />
+                                                <flux:button href="{{ route('appointment.edit', $appointment->id) }}"
+                                                    icon="clock" size="sm"
+                                                    class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white"
+                                                    wire:navigate />
                                             </flux:tooltip>
                                         @endif
 
-                                        @if ($appointment->status === 'approve' || ($appointment->status === 'approve' && request()->user()->is_admin) )
+                                        @if ($appointment->status === 'approve' || ($appointment->status === 'approve' && request()->user()->is_admin))
                                             {{-- Process Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.process') }}">
-                                                <flux:button 
-                                                    href="{{ route('record.create') }}" 
-                                                    icon="clipboard-document-list" 
-                                                    size="sm" 
-                                                    class="cursor-pointer !bg-blue-500 hover:!bg-blue-600 !text-white" 
-                                                    wire:navigate
-                                                />
+                                                <flux:button href="{{ route('record.create') }}"
+                                                    icon="clipboard-document-list" size="sm"
+                                                    class="cursor-pointer !bg-blue-500 hover:!bg-blue-600 !text-white"
+                                                    wire:navigate />
                                             </flux:tooltip>
                                         @endif
                                     </div>
@@ -155,7 +162,8 @@ use Carbon\Carbon;
                                     <flux:subheading>{{ __('appointment.approve_msg') }}</flux:subheading>
                                 </div>
                                 @if (!empty($appointment))
-                                    <livewire:components.appointment-whatsapp-confirm type="approve" :appointment="$appointment" />
+                                    <livewire:components.appointment-whatsapp-confirm type="approve"
+                                        :appointment="$appointment" />
                                 @endif
                             </flux:modal>
                             {{-- / Modal Approve --}}
@@ -168,7 +176,8 @@ use Carbon\Carbon;
                                         <flux:subheading>{{ __('appointment.delete_msg') }}</flux:subheading>
                                     </div>
                                     @if (!empty($appointment))
-                                        <livewire:components.appointment-whatsapp-confirm type="reject" :appointment="$appointment" />
+                                        <livewire:components.appointment-whatsapp-confirm type="reject"
+                                            :appointment="$appointment" />
                                     @endif
                                 </div>
                             </flux:modal>

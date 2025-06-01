@@ -30,7 +30,7 @@ class ScheduleController extends Controller
             };
             $query = $query->orderBy($sort[0], $sort[1]);
         } else {
-            $query = $query->orderBy('available_date', 'asc');
+            $query = $query->orderBy('available_date', 'desc');
         }
 
         try {
@@ -154,7 +154,7 @@ public function store(Request $request)
             };
             $query = $query->orderBy($sort[0], $sort[1]);
         } else {
-            $query = $query->orderBy('available_date', 'asc');
+            $query = $query->orderBy('available_date', 'desc');
         }
 
         $schedules = $query->get(); // ambil semua tanpa pagination

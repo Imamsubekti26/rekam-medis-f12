@@ -31,6 +31,7 @@ return [
         'reject' => 'tolak',
         'chat' => 'hubungi pasien',
         'reschedule' => 'Jadwalkan Ulang',
-        'process' => 'Proses Janji Temu'
+        'process' => 'Proses Janji Temu',
+        'print' => 'Cetak Janji Temu'
 ];
 

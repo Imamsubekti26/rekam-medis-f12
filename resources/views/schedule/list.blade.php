@@ -1,5 +1,5 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -8,7 +8,8 @@ use Carbon\Carbon;
         <div>
             <div
                 class="rounded-xl border border-yellow-300 bg-yellow-100 text-yellow-800 dark:border-yellow-600 dark:bg-yellow-900 dark:text-yellow-200 opacity-70 p-4 text-sm">
-                <p><strong class="font-semibold">Perhatian:</strong> Isi jadwal anda minimal untuk 1 minggu kedepan, karena kami membutuhkannya untuk layanan janji temu.</p>
+                <p><strong class="font-semibold">Perhatian:</strong> Isi jadwal anda minimal untuk 1 minggu kedepan,
+                    karena kami membutuhkannya untuk layanan janji temu.</p>
             </div>
         </div>
         {{-- / Alert for Required Data --}}
@@ -36,13 +37,25 @@ use Carbon\Carbon;
                         <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
                         <flux:button type="submit" class="cursor-pointer">{{ __('doctor.search') }}</flux:button>
                     </form>
-                    @if (request()->user()->is_editor)
-                        <flux:button href="{{ route('schedule.create') }}"
-                            class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
-                            icon="plus" wire:navigate>
-                            Tambah Jadwal
+                    <div class="flex flex-col md:flex-row gap-4">
+                        @if (request()->user()->is_editor)
+                            <flux:button href="{{ route('schedule.create') }}"
+                                class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
+                                icon="plus" wire:navigate>
+                                Tambah Jadwal
+                            </flux:button>
+                        @endif
+                        {{-- / Search Field --}}
+                        <flux:button
+                            onclick="window.open(`{{ route('schedule.print.list', [
+                                'search' => request()->query('search'),
+                                'sort_by' => request()->query('sort_by'),
+                            ]) }}`)"
+                            class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
+                            icon="printer">
+                            {{ __('schedule.print') }}
                         </flux:button>
-                    @endif
+                    </div>
                 </div>
             </div>
         </header>
@@ -103,7 +116,8 @@ use Carbon\Carbon;
                                         @if (request()->user()->is_editor)
                                             <flux:modal.trigger name="delete_schedule">
                                                 <flux:tooltip content="{{ __('Delete') }}">
-                                                    <flux:button icon="trash" size="sm" class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                    <flux:button icon="trash" size="sm"
+                                                        class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
                                                 </flux:tooltip>
                                             </flux:modal.trigger>
                                         @endif
@@ -123,7 +137,8 @@ use Carbon\Carbon;
                                             @csrf
                                             @method('DELETE')
                                             <div class="w-full flex justify-end">
-                                                <flux:button type="submit" variant="danger">{{ __('schedule.delete') }}</flux:button>
+                                                <flux:button type="submit" variant="danger">
+                                                    {{ __('schedule.delete') }}</flux:button>
                                             </div>
                                         </form>
                                     @endif

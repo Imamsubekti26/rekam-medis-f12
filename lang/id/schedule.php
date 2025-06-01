@@ -18,6 +18,6 @@ return [
         'serial_visibility_random' => 'Urutkan Secara Acak',
         'title_add' => 'Tambah Jadwal Dokter',
         'title_show' => 'Detail Jadwal Dokter',
-
+        'print' => 'Cetak Jadwal Dokter',
 ];
 

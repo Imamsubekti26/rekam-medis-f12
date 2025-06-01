@@ -109,4 +109,30 @@ class AppointmentController extends Controller
     //     // Mengarahkan kembali dengan pesan sukses
     //     return redirect()->route('appointments.index')->with('success', 'Janji temu berhasil dihapus!');
     // }
+    public function printList(Request $request)
+    {
+        $query = Appointment::query();
+
+        if ($request->has('search') && $request->search != null) {
+            $query = $query->where('patient_name', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('sort_by') && $request->sort_by != null) {
+            $sort = match ($request->sort_by) {
+                'date_asc' => ['appointment_date', 'asc'],
+                'date_desc' => ['appointment_date', 'desc'],
+                'patient_name_asc' => ['patient_name', 'asc'],
+                'patient_name_desc' => ['patient_name', 'desc'],
+                default => ['created_at', 'desc'],
+            };
+            $query = $query->orderBy($sort[0], $sort[1]);
+        } else {
+            $query = $query->orderBy('created_at', 'desc');
+        }
+
+        $appointments = $query->get(); // Ambil semua data tanpa pagination
+
+        return view('appointment.print-list', compact('appointments'));
+    }
 }

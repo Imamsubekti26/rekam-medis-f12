@@ -1,38 +1,40 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Livewire;
 
-use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Livewire\Component;
 
-/**
- * Filter role who can access the route. Admin is allways!
- */
-class RoleRestriction
+class BaseComponent extends Component
 {
     /**
-     * Summary of handle
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @param array<string> $roles
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Daftar role yang diizinkan mengakses komponen ini.
+     * Contoh: ['doctor.viewer', 'pharmacist.editor']
      */
-    public function handle(Request $request, Closure $next, string ...$roles): Response
+    protected $rolePermission = [];
+
+    public function boot()
     {
-        $user = $request->user();
+        $this->applyRoleRestrictions();
+    }
+
+    private function applyRoleRestrictions()
+    {
+        $user = request()->user();
+
+        if (!$user) return;
+        $user->is_editor = false;
 
         // Admin selalu diizinkan
         if ($user->is_admin) {
             $user->is_editor = true;
-            return $next($request);
+            return;
         }
 
         // Ambil method request: GET, POST, PUT, etc.
-        $method = $request->getMethod();
+        $method = request()->getMethod();
 
         // Normalisasi roles: ['doctor.viewer' => ['role' => 'doctor', 'access' => 'viewer']]
-        $allowedRoles = collect($roles)->map(function ($roleAccess) {
+        $allowedRoles = collect($this->rolePermission)->map(function ($roleAccess) {
             [$role, $access] = explode('.', $roleAccess);
             return ['role' => $role, 'access' => $access];
         });
@@ -43,17 +45,15 @@ class RoleRestriction
                 // Kalau viewer, hanya boleh GET
                 if ($allowed['access'] === 'viewer' && $method === 'GET') {
                     $user->is_editor = false;
-                    return $next($request);
+                    return;
                 }
 
                 // Kalau editor, boleh semua method
                 if ($allowed['access'] === 'editor') {
                     $user->is_editor = true;
-                    return $next($request);
+                    return;
                 }
             }
         }
-
-        return redirect()->back()->withErrors('Kamu tidak memiliki akses ke halaman yang dituju.');
     }
 }

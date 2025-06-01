@@ -28,7 +28,7 @@
             </button>
         </div>
         <script>
-            setTimeout(() => { document.getElementById('close-notif').click() }, 2000);
+            setTimeout(() => { document.getElementById('close-notif').click() }, 5000);
         </script>
     @endif
 </div>

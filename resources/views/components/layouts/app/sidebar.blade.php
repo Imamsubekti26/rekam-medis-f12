@@ -42,36 +42,32 @@
                         {{ __('dashboard.patient') }}
                     </flux:navlist.item>
 
-                    @if (request()->user()->is_admin)
-                        <flux:navlist.item
-                            icon="user"
-                            :href="route('doctor.index')"
-                            :current="request()->routeIs('doctor.index')"
-                            wire:navigate
-                            class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
-                            {{ __('dashboard.doctor') }}
-                        </flux:navlist.item>
+                    <flux:navlist.item
+                        icon="user"
+                        :href="route('doctor.index')"
+                        :current="request()->routeIs('doctor.index')"
+                        wire:navigate
+                        class="{{ request()->routeIs('doctor.index') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.doctor') }}
+                    </flux:navlist.item>
 
-                        <flux:navlist.item
-                            icon="user"
-                            :href="route('pharmacist.index')"
-                            :current="request()->routeIs('pharmacist.index')"
-                            wire:navigate
-                            class="{{ request()->routeIs('pharmacist.index') ? 'flux-navlist-item-active' : '' }}">
-                            {{ __('dashboard.pharmacist') }}
-                        </flux:navlist.item>
-                    @endif
-                    
-                    @if (request()->user()->role != 'doctor')
-                        <flux:navlist.item
-                            icon="inbox"
-                            :href="route('medicine.index')"
-                            :current="request()->routeIs('medicine.index')"
-                            wire:navigate
-                            class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
-                            {{ __('dashboard.medicine') }}
-                        </flux:navlist.item>
-                    @endif
+                    <flux:navlist.item
+                        icon="user"
+                        :href="route('pharmacist.index')"
+                        :current="request()->routeIs('pharmacist.index')"
+                        wire:navigate
+                        class="{{ request()->routeIs('pharmacist.index') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.pharmacist') }}
+                    </flux:navlist.item>
+                
+                    <flux:navlist.item
+                        icon="inbox"
+                        :href="route('medicine.index')"
+                        :current="request()->routeIs('medicine.index')"
+                        wire:navigate
+                        class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
+                        {{ __('dashboard.medicine') }}
+                    </flux:navlist.item>
 
                     <flux:navlist.group expandable heading="Jadwal & Janji Temu">
                         {{-- Jadwal Dokter --}}

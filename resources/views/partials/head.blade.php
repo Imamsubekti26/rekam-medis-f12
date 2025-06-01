@@ -27,7 +27,7 @@
                 dragAndDrop: true,
                 iconColor: 'white',
                 autoWindowOpen: {
-                    autoOpen: true,
+                    autoOpen: false,
                     openDelay: 2,
                     autoOpenOnMobile: false
                 }

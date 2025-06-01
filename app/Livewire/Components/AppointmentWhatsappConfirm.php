@@ -2,12 +2,15 @@
 
 namespace App\Livewire\Components;
 
+use App\Livewire\BaseComponent;
 use App\Models\Appointment;
 use Carbon\Carbon;
-use Livewire\Component;
 
-class AppointmentWhatsappConfirm extends Component
+class AppointmentWhatsappConfirm extends BaseComponent
 {
+
+    protected $rolePermission = ['pharmacist.editor', 'doctor.viewer'];
+
     private string $apotekName = "Apotek F21 Minomartani";
     public string $whatsappMessage = '';
     public string $whatsappNumber = '';
@@ -17,6 +20,9 @@ class AppointmentWhatsappConfirm extends Component
 
     public function submit()
     {
+        // Ensure user have access to apporve/reject appointment
+        if (!request()->user()->is_editor) return;
+
         // Validasi atau simpan dulu kalau perlu
         $this->validate([
             'whatsappMessage' => 'required|string',

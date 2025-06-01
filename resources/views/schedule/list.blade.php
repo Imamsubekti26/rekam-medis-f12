@@ -36,11 +36,13 @@ use Carbon\Carbon;
                         <input type="hidden" name="sort_by" value="{{ request()->query('sort_by') }}">
                         <flux:button type="submit" class="cursor-pointer">{{ __('doctor.search') }}</flux:button>
                     </form>
-                    <flux:button href="{{ route('schedule.create') }}"
-                        class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
-                        icon="plus" wire:navigate>
-                        Tambah Jadwal
-                    </flux:button>
+                    @if (request()->user()->is_editor)
+                        <flux:button href="{{ route('schedule.create') }}"
+                            class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
+                            icon="plus" wire:navigate>
+                            Tambah Jadwal
+                        </flux:button>
+                    @endif
                 </div>
             </div>
         </header>
@@ -77,61 +79,62 @@ use Carbon\Carbon;
                                 <td class="p-4">{{ $loop->iteration }}</td>
                                 <td class="p-4">{{ $schedule->doctor->name ?? '-' }}</td>
                                 <td class="p-4">
-                                    {{ \Carbon\Carbon::parse($schedule->available_date)->translatedFormat('l, d F Y') }}
+                                    {{ Carbon::parse($schedule->available_date)->translatedFormat('l, d F Y') }}
                                 </td>
                                 <td class="p-4">
-                                    {{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}
+                                    {{ Carbon::parse($schedule->start_time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
-                                    {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}
+                                    {{ Carbon::parse($schedule->end_time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
                                     {{ $schedule->per_patient_time }} menit
                                 </td>
                                 <td class="p-4">
                                     <div class="flex justify-center items-center gap-1">
-                                        <flux:tooltip content="{{ __('Edit') }}">
+                                        <flux:tooltip content="{{ __('Detail') }}">
                                             <flux:button href="{{ route('schedule.show', $schedule->id) }}"
-                                                icon="pencil" size="sm"
+                                                icon="information-circle" size="sm"
                                                 class="cursor-pointer !bg-yellow-400 hover:!bg-yellow-500 !text-white"
                                                 wire:navigate />
                                         </flux:tooltip>
 
                                         {{-- Delete Button with Tooltip --}}
-                                        <flux:tooltip content="{{ __('Delete') }}">
+                                        @if (request()->user()->is_editor)
                                             <flux:modal.trigger name="delete_schedule">
-                                                <flux:button icon="trash" size="sm"
-                                                    class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                <flux:tooltip content="{{ __('Delete') }}">
+                                                    <flux:button icon="trash" size="sm" class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                </flux:tooltip>
                                             </flux:modal.trigger>
-                                        </flux:tooltip>
-
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
+                            {{-- Modal Delete --}}
+                            <flux:modal name="delete_schedule" class="md:w-96">
+                                <div class="space-y-6">
+                                    <div>
+                                        <flux:heading size="lg">{{ __('schedule.delete') }}</flux:heading>
+                                        <flux:subheading>{{ __('schedule.delete_msg') }}</flux:subheading>
+                                    </div>
+                                    @if (!empty($schedule))
+                                        <form method="POST" action="{{ route('schedule.destroy', $schedule->id) }}"
+                                            class="flex justify-end">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="w-full flex justify-end">
+                                                <flux:button type="submit" variant="danger">{{ __('schedule.delete') }}</flux:button>
+                                            </div>
+                                        </form>
+                                    @endif
+
+                                </div>
+                            </flux:modal>
+                            {{-- / Modal Delete --}}
                         @endforeach
                     </tbody>
                 @endif
             </table>
-            {{-- Modal Delete --}}
-            <flux:modal name="delete_schedule" class="md:w-96">
-                <div class="space-y-6">
-                    <div>
-                        <flux:heading size="lg">{{ __('schedule.delete') }}</flux:heading>
-                        <flux:subheading>{{ __('schedule.delete_msg') }}</flux:subheading>
-                    </div>
-                    @if (!empty($schedule))
-                        <form method="POST" action="{{ route('schedule.destroy', $schedule->id) }}"
-                            class="flex justify-end">
-                            @csrf
-                            @method('DELETE')
-                            <flux:button type="submit" variant="danger">{{ __('schedule.delete') }}
-                            </flux:button>
-                        </form>
-                    @endif
-
-                </div>
-            </flux:modal>
-            {{-- / Modal Delete --}}
 
             {{-- Pagination --}}
             <footer class="p-4 px-4 md:px-12">

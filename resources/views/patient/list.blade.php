@@ -39,10 +39,16 @@
                     {{-- Button Filed --}}
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Button Create --}}
-                        <flux:button href="{{ route('patient.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus"
-                            wire:navigate>
-                            {{ __('patient.title_add') }}
-                        </flux:button>
+                        @if (request()->user()->is_editor)
+                            <flux:button 
+                                href="{{ route('patient.create') }}" 
+                                class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" 
+                                icon="plus"
+                                wire:navigate
+                            >
+                                {{ __('patient.title_add') }}
+                            </flux:button>
+                        @endif
 
                         {{-- Button Print --}}
                         <flux:button
@@ -113,7 +119,11 @@
                                 <td class="p-4">
                                     <span
                                         class="px-3 py-1 rounded-full text-sm font-medium
-        {{ $count == 0 ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' }}">
+                                        {{ $count == 0 
+                                            ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' 
+                                            : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' 
+                                        }}"
+                                    >
                                         {{ $count == 0 ? 'Belum pernah rekam medis' : 'Rekam medis ke-' . $count }}
                                     </span>
                                 </td>
@@ -125,14 +135,15 @@
                                             class="cursor-pointer !bg-custom-2 !text-white dark:!bg-yellow-500 dark:hover:!bg-yellow-400"
                                             wire:navigate />
                                     </flux:tooltip>
-                                    <flux:tooltip content="{{ __('medical_record.add') }}">
-                                        <flux:button
-                                            href="{{ route('record.create', ['patient_id' => $patient->id]) }}"
-                                            icon="clipboard-document-list" size="sm"
-                                            class="cursor-pointer !bg-emerald-500 hover:!bg-emerald-600 !text-white dark:!bg-emerald-600 dark:hover:!bg-emerald-500"
-                                            wire:navigate />
-                                    </flux:tooltip>
-
+                                    @if (request()->user()->is_editor)
+                                        <flux:tooltip content="{{ __('medical_record.add') }}">
+                                            <flux:button
+                                                href="{{ route('record.create', ['patient_id' => $patient->id]) }}"
+                                                icon="clipboard-document-list" size="sm"
+                                                class="cursor-pointer !bg-emerald-500 hover:!bg-emerald-600 !text-white dark:!bg-emerald-600 dark:hover:!bg-emerald-500"
+                                                wire:navigate />
+                                        </flux:tooltip>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

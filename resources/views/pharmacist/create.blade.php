@@ -26,7 +26,9 @@
                         {{-- Action Button Form --}}
                         <div class="flex flex-col md:flex-row justify-end gap-4 mt-8">
                             {{-- Submit Button --}}
-                            <flux:button type="submit" variant='primary' class="cursor-pointer">{{ __('pharmacist.add') }}</flux:button>
+                            @if (request()->user()->is_editor)
+                                <flux:button type="submit" variant='primary' class="cursor-pointer">{{ __('pharmacist.add') }}</flux:button>
+                            @endif
                             {{-- Cancel Button --}}
                             <flux:button class="cursor-pointer" href="{{ route('pharmacist.index') }}" wire:navigate>{{ __('cancel') }}</flux:button>
                         </div>

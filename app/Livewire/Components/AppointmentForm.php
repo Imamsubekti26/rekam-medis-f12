@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Components;
 
+use App\Livewire\BaseComponent;
 use App\Models\Appointment;
 use App\Models\DoctorSchedule;
 use Carbon\Carbon;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
 
-class AppointmentForm extends Component
+class AppointmentForm extends BaseComponent
 {
+    protected $rolePermission = ['doctor.viewer', 'pharmacist.editor'];
+
     public $appointmentId = '';
     public $patientName = '';
     public $phone = '';
@@ -31,6 +32,9 @@ class AppointmentForm extends Component
 
     public function getSchedules($whiteListTime = [])
     {
+        // can't edit if has no permission
+        if ($this->appointmentId !== '' && request()->user() && !request()->user()->is_editor) return;
+
         // cek jadwal pada hari x.
         $schedules = DoctorSchedule::where('available_date', $this->selectedDate)->get();
 

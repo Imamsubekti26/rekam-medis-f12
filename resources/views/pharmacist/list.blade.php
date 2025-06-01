@@ -32,7 +32,9 @@
                     {{-- Button Field --}}
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Button Create --}}
-                        <flux:button href="{{ route('pharmacist.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus" wire:navigate>{{ __('pharmacist.title_add') }}</flux:button>
+                        @if (request()->user()->is_editor)
+                            <flux:button href="{{ route('pharmacist.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus" wire:navigate>{{ __('pharmacist.title_add') }}</flux:button>
+                        @endif
 
                         {{-- Button Print --}}
                         <flux:button

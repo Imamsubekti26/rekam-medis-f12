@@ -5,11 +5,15 @@
     <section
         class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-6 md:px-8">
         <div class="flex flex-col md:flex-row justify-end gap-4">
-            <flux:modal.trigger name="delete_record">
-                <flux:button class="cursor-pointer" variant="danger">{{ __('medical_record.delete') }}</flux:button>
-            </flux:modal.trigger>
+            @if (request()->user()->is_editor)
+                <flux:modal.trigger name="delete_record">
+                    <flux:button class="cursor-pointer" variant="danger">{{ __('medical_record.delete') }}</flux:button>
+                </flux:modal.trigger>
+            @endif
             <flux:button class="cursor-pointer" @click="window.open(`{{ route('record.print.detail', $record->id) }}`)">{{ __('medical_record.print') }}</flux:button>
-            <flux:button variant="primary" class="cursor-pointer" wire:click="updateData">{{ __('medical_record.save') }}
+            @if (request()->user()->is_editor)
+                <flux:button variant="primary" class="cursor-pointer" wire:click="updateData">{{ __('medical_record.save') }}
+            @endif
             </flux:button>
             <flux:button @click="window.history.back()" class="cursor-pointer" wire:navigate>{{ __('back') }}
             </flux:button>

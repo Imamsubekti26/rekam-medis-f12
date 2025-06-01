@@ -10,7 +10,9 @@
 
         {{-- Button: Add New Prescription--}}
         <div>
-            <flux:button icon="plus" wire:click="addNewPrescription">{{ __('medical_record.add_prescription') }}</flux:button>
+            @if (request()->user()->is_editor)
+                <flux:button icon="plus" wire:click="addNewPrescription">{{ __('medical_record.add_prescription') }}</flux:button>
+            @endif
         </div>
         {{-- / Button: Add New Prescription --}}
     </div>

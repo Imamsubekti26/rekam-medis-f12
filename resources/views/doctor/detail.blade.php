@@ -31,11 +31,17 @@ use Carbon\Carbon;
                 <div class="flex flex-col-reverse md:flex-row justify-between gap-4">
                     <flux:modal.trigger name="delete_doctor">
                         {{-- Delete Button --}}
-                        <flux:button class="cursor-pointer" variant="danger">{{ __('doctor.delete') }}</flux:button>
+                        @if (request()->user()->is_editor)
+                            <flux:button class="cursor-pointer" variant="danger">{{ __('doctor.delete') }}</flux:button>
+                        @else
+                            <div></div>
+                        @endif
                     </flux:modal.trigger>
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Update Button --}}
-                        <flux:button class="cursor-pointer" type="submit" variant="primary" name="_method" value="PUT">{{ __('doctor.update') }}</flux:button>
+                        @if (request()->user()->is_editor)
+                            <flux:button class="cursor-pointer" type="submit" variant="primary" name="_method" value="PUT">{{ __('doctor.update') }}</flux:button>
+                        @endif
                         {{-- Back Button --}}
                         <flux:button href="{{ route('doctor.index') }}" class="cursor-pointer" wire:navigate>{{ __('back') }}</flux:button>
                     </div>

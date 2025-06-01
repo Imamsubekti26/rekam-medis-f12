@@ -30,12 +30,16 @@
 
     {{-- Action Button --}}
     <td class="p-2 py-4">
-        @if (!$in_edit)
-            <flux:button icon="pencil" variant="ghost" class="cursor-pointer" wire:click="unlockPrescription" />
+        @if (request()->user()->is_editor)
+            @if (!$in_edit)
+                <flux:button icon="pencil" variant="ghost" class="cursor-pointer" wire:click="unlockPrescription" />
+            @else
+                <flux:button icon="check" variant="ghost" class="cursor-pointer" wire:click="lockPrescription" />
+            @endif
+            <flux:button icon="trash" variant="ghost" class="cursor-pointer" wire:click="removePrescription" />
         @else
-            <flux:button icon="check" variant="ghost" class="cursor-pointer" wire:click="lockPrescription" />
+            <span class="italic">no action</span>
         @endif
-        <flux:button icon="trash" variant="ghost" class="cursor-pointer" wire:click="removePrescription" />
     </td>
     {{-- / Action Button --}}
 </tr>

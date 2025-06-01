@@ -79,7 +79,7 @@ use Carbon\Carbon;
                                 </td>
                                 <td class="p-4">
                                     <div class="flex justify-center items-center gap-1">
-                                        @if ($appointment->status === 'pending')
+                                        @if ($appointment->status === 'pending' && request()->user()->is_editor)
                                             {{-- Approve Button with Tooltip --}}
                                             <flux:modal.trigger name="approve_appointment#{{ $loop->iteration }}">
                                                 <flux:tooltip content="{{ __('appointment.approve') }}">
@@ -104,7 +104,7 @@ use Carbon\Carbon;
                                                     wire:navigate
                                                 />
                                             </flux:tooltip>
-                                        @elseif ($appointment->status === 'rejected')
+                                        @elseif ($appointment->status === 'rejected' && request()->user()->is_editor)
                                             {{-- Reschedule Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.reschedule') }}">
                                                 <flux:button 
@@ -115,7 +115,7 @@ use Carbon\Carbon;
                                                     wire:navigate
                                                 />
                                             </flux:tooltip>
-                                        @else
+                                        @elseif ($appointment->status === 'approve' && request()->user()->is_editor)
                                             {{-- Call Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.chat') }}">
                                                 <flux:button 
@@ -131,7 +131,9 @@ use Carbon\Carbon;
                                                 <flux:button href="{{ route('appointment.edit', $appointment->id) }}" icon="clock" size="sm"
                                                     class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white" wire:navigate />
                                             </flux:tooltip>
+                                        @endif
 
+                                        @if ($appointment->status === 'approve' || ($appointment->status === 'approve' && request()->user()->is_admin) )
                                             {{-- Process Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.process') }}">
                                                 <flux:button 
@@ -143,7 +145,6 @@ use Carbon\Carbon;
                                                 />
                                             </flux:tooltip>
                                         @endif
-
                                     </div>
                                 </td>
                             </tr>

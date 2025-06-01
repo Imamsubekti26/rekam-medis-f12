@@ -28,11 +28,13 @@
                 <div class="flex flex-col md:flex-row justify-end gap-4">
                     {{-- Button Create --}}
                     {{-- Button Add --}}
-                    <flux:button href="{{ route('record.create') }}"
-                        class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
-                        icon="plus" wire:navigate>
-                        {{ __('medical_record.title_add') }}
-                    </flux:button>
+                    @if (request()->user()->is_editor)
+                        <flux:button href="{{ route('record.create') }}"
+                            class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
+                            icon="plus" wire:navigate>
+                            {{ __('medical_record.title_add') }}
+                        </flux:button>
+                    @endif
 
                     {{-- Button Print --}}
                     <flux:button

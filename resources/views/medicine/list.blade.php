@@ -52,9 +52,16 @@
                     {{-- Button Field --}}
                     <div class="flex flex-col md:flex-row gap-4">
                         {{-- Button Create --}}
-                        <flux:button href="{{ route('medicine.create') }}" class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" icon="plus"
-                            wire:navigate>
-                            {{ __('medicine.title_add') }}</flux:button>
+                        @if (request()->user()->is_editor)
+                            <flux:button 
+                                href="{{ route('medicine.create') }}" 
+                                class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600" 
+                                icon="plus"
+                                wire:navigate
+                            >
+                                {{ __('medicine.title_add') }}
+                            </flux:button>
+                        @endif
                         {{-- / Search Field --}}
                         <flux:button
                             onclick="window.open(`{{ route('medicine.print.list', [
@@ -122,33 +129,34 @@
                                         </flux:tooltip>
                                     
                                         {{-- Delete Button with Tooltip --}}
-                                        <flux:tooltip content="{{ __('Delete') }}">
+                                        @if (request()->user()->is_editor)
                                             <flux:modal.trigger name="delete_medicine">
-                                                <flux:button icon="trash" size="sm"
-                                                    class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                <flux:tooltip content="{{ __('Delete') }}">
+                                                    <flux:button icon="trash" size="sm" class="cursor-pointer !bg-red-500 hover:!bg-red-600 !text-white" />
+                                                </flux:tooltip>
                                             </flux:modal.trigger>
-                                        </flux:tooltip>
-                                        {{-- Modal Delete --}}
-                                        <flux:modal name="delete_medicine" class="md:w-96">
-                                            <div class="space-y-6">
-                                                <div>
-                                                    <flux:heading size="lg">{{ __('medicine.delete') }}</flux:heading>
-                                                    <flux:subheading>{{ __('medicine.delete_msg') }}</flux:subheading>
-                                                </div>
-                                                <form method="POST" action="{{ route('medicine.destroy', $medicine->id) }}"
-                                                    class="flex justify-end">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <flux:button type="submit" variant="danger">{{ __('medicine.delete') }}
-                                                    </flux:button>
-                                                </form>
-                                            </div>
-                                        </flux:modal>
-                                        {{-- / Modal Delete --}}
+                                        @endif
                                     </div>                                    
                                 </td>
-
+                                
                             </tr>
+                            {{-- Modal Delete --}}
+                            <flux:modal name="delete_medicine" class="md:w-96">
+                                <div class="space-y-6">
+                                    <div>
+                                        <flux:heading size="lg">{{ __('medicine.delete') }}</flux:heading>
+                                        <flux:subheading>{{ __('medicine.delete_msg') }}</flux:subheading>
+                                    </div>
+                                    <form method="POST" action="{{ route('medicine.destroy', $medicine->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="w-full flex justify-end">
+                                            <flux:button type="submit" variant="danger">{{ __('medicine.delete') }}</flux:button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </flux:modal>
+                            {{-- / Modal Delete --}}
                         @endforeach
                     </tbody>
                 @endif

@@ -9,8 +9,16 @@ test('guests are redirected to the login page', function () {
     $response->assertRedirect('/login');
 });
 
-test('authenticated users can visit the dashboard', function () {
-    $user = User::factory()->create();
+test('doctor can visit the dashboard', function () {
+    $user = User::factory()->doctor()->create();
+    $this->actingAs($user);
+
+    $response = $this->get('/dashboard');
+    $response->assertStatus(200);
+});
+
+test('pharmacist can visit the dashboard', function () {
+    $user = User::factory()->pharmacist()->create();
     $this->actingAs($user);
 
     $response = $this->get('/dashboard');

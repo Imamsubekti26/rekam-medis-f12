@@ -8,31 +8,31 @@
 </style>
 <x-layouts.app>
     <div
-    class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
+        class="flex w-full flex-1 flex-col rounded-2xl px-8 py-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-200 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 shadow-xl">
 
-    <div class="flex justify-between items-start">
-        {{-- Breadcrumbs kiri --}}
-        <x-bread-crumbs />
+        <div class="flex justify-between items-start">
+            {{-- Breadcrumbs kiri --}}
+            <x-bread-crumbs />
 
-        {{-- Logo kanan --}}
-        <img src="{{ asset('/assets/img/redesignf21m.png') }}" alt="Logo" class="w-18 sm:w-25 !important h-auto object-contain"
-        />
+            {{-- Logo kanan --}}
+            <img src="{{ asset('/assets/img/redesignf21m.png') }}" alt="Logo"
+                class="w-18 sm:w-25 !important h-auto object-contain" />
+        </div>
+
+        {{-- Title --}}
+        <h2 class="font-semibold text-center md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-2">
+            {{ __('dashboard.welcome') }}
+            <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
+                {{ Auth::user()->name }}
+            </span>!
+        </h2>
+        {{-- / Title --}}
+
+        <p class="text-sm text-rose-600 dark:text-rose-300">
+            Jika tampilan terlihat berantakan, silakan lakukan <strong>zoom out</strong> pada browser Anda (Ctrl +
+            Scroll atau Ctrl + -).
+        </p>
     </div>
-
-    {{-- Title --}}
-    <h2 class="font-semibold text-center md:text-start text-xl text-gray-800 dark:text-gray-200 leading-tight mb-2">
-        {{ __('dashboard.welcome') }} 
-        <span class="text-rose-600 dark:text-fuchsia-300 font-bold">
-            {{ Auth::user()->name }}
-        </span>!
-    </h2>
-    {{-- / Title --}}
-
-    <p class="text-sm text-rose-600 dark:text-rose-300">
-        Jika tampilan terlihat berantakan, silakan lakukan <strong>zoom out</strong> pada browser Anda (Ctrl +
-        Scroll atau Ctrl + -).
-    </p>
-</div>
 
 
 
@@ -46,8 +46,10 @@
                 <p class="text-1xl font-bold">{{ $totalDoctors }}</p>
                 <span
                     class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">
-                    +{{ $newDoctorsToday }} hari ini
+                    {{ $schedulesToday }} dokter aktif hari ini
                 </span>
+
+
 
             </div>
 
@@ -61,9 +63,19 @@
                     class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newPatientsToday }}
                     hari ini</span>
             </div>
+            <div
+                class="flex flex-col items-center p-5 rounded-xl bg-yellow-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
+                <i class="fas fa-calendar-check text-3xl mb-2 text-yellow-500"></i>
+                <h2 class="text-sm font-semibold">Total Janji Temu</h2>
+                <p class="text-1xl font-bold">{{ $totalAppointments }}</p>
+                <span
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newAppointmentsToday }}
+                    hari ini</span>
+            </div>
+
 
             <!-- Total Rekam Medis -->
-            <div
+            {{-- <div
                 class="flex flex-col items-center p-5 rounded-xl bg-yellow-100 dark:bg-slate-800 text-gray-900 dark:text-white shadow-md hover:shadow-lg transition">
                 <i class="fas fa-file-medical text-3xl mb-2 text-yellow-500"></i>
                 <h2 class="text-sm font-semibold">Total Rekam Medis</h2>
@@ -71,7 +83,7 @@
                 <span
                     class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newMedicalRecordsToday }}
                     hari ini</span>
-            </div>
+            </div> --}}
 
             <!-- Stok Obat -->
             <div
@@ -80,14 +92,16 @@
                 <h2 class="text-sm font-semibold">Total Jenis Obat</h2>
                 <p class="text-1xl font-bold">{{ $totalMedicineStock }}</p>
                 <span
-                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">+{{ $newMedicineStockToday }}
-                    hari ini</span>
+                    class="text-sm sm:text-sm font-medium text-green-600 bg-green-200 dark:text-green-900 px-4 rounded-full shadow-sm dark:shadow-md">
+                    {{ $newMedicineStockToday }} obat baru ditambahkan hari ini
+                </span>
             </div>
         </div>
         <div
             class="w-full bg-yellow-100 dark:bg-yellow-800 text-sm text-yellow-900 dark:text-yellow-100 p-4 rounded-lg shadow-md opacity-70">
             <i class="fas fa-info-circle mr-2"></i>
-            Jika grafik tidak muncul, silakan <strong class="cursor-pointer hover:underline" onclick="window.location.reload()">refresh halaman</strong> untuk memuat ulang data.
+            Jika grafik tidak muncul, silakan <strong class="cursor-pointer hover:underline"
+                onclick="window.location.reload()">refresh halaman</strong> untuk memuat ulang data.
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Grafik Area Statistik -->
@@ -168,16 +182,16 @@
         </div>
     </div>
 
-    <script>    
+    <script>
         function loadChart() {
             const isDarkMode = document.documentElement.classList.contains("dark");
-    
+
             const textColor = isDarkMode ? "#e5e7eb" : "#333";
             const gridColor = isDarkMode ? "#374151" : "#ddd";
-    
+
             const lineBgColor = isDarkMode ? "rgba(168, 85, 247, 0.2)" : "rgba(54, 162, 235, 0.2)";
             const lineBorderColor = isDarkMode ? "rgba(168, 85, 247, 1)" : "rgba(54, 162, 235, 1)";
-            
+
             const ctxBar = document.getElementById("dashboardChart")?.getContext("2d");
             if (ctxBar) {
                 if (window.barChartInstance) window.barChartInstance.destroy();
@@ -185,8 +199,7 @@
                     type: "bar",
                     data: {
                         labels: {!! json_encode($rangeLabels) !!},
-                        datasets: [
-                            {
+                        datasets: [{
                                 label: "Laki-laki",
                                 data: {!! json_encode($maleCounts) !!},
                                 backgroundColor: lineBorderColor,
@@ -212,20 +225,28 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                ticks: { color: textColor },
-                                grid: { color: gridColor },
+                                ticks: {
+                                    color: textColor
+                                },
+                                grid: {
+                                    color: gridColor
+                                },
                             },
                             x: {
-                                ticks: { color: textColor },
-                                grid: { color: gridColor },
+                                ticks: {
+                                    color: textColor
+                                },
+                                grid: {
+                                    color: gridColor
+                                },
                             },
                         },
                     },
                 });
             }
-    
+
             const ctxArea = document.getElementById("areaChart")?.getContext("2d");
-            if(ctxArea) {
+            if (ctxArea) {
                 if (window.lineChartInstance) window.lineChartInstance.destroy();
                 window.lineChartInstance = new Chart(ctxArea, {
                     type: "line",
@@ -251,12 +272,20 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                ticks: { color: textColor },
-                                grid: { color: gridColor },
+                                ticks: {
+                                    color: textColor
+                                },
+                                grid: {
+                                    color: gridColor
+                                },
                             },
                             x: {
-                                ticks: { color: textColor },
-                                grid: { color: gridColor },
+                                ticks: {
+                                    color: textColor
+                                },
+                                grid: {
+                                    color: gridColor
+                                },
                             },
                         },
                     },
@@ -271,7 +300,7 @@
             url.searchParams.set("range", selectedRange);
             window.location.href = url.toString(); // redirect dengan parameter baru
         });
-    
+
         // Observer untuk mendeteksi perubahan mode gelap/terang
         if (window.darkModeObserver) window.darkModeObserver.disconnect();
         window.darkModeObserver = new MutationObserver((mutations) => {
@@ -281,9 +310,11 @@
                 }
             }
         });
-    
-        window.darkModeObserver.observe(document.documentElement, { attributes: true });
-    
+
+        window.darkModeObserver.observe(document.documentElement, {
+            attributes: true
+        });
+
         // Panggil saat pertama kali
         window.addEventListener("DOMContentLoaded", () => {
             if (window.location.pathname === '/dashboard') {
@@ -291,5 +322,5 @@
             }
         });
     </script>
-    
+
 </x-layouts.app>

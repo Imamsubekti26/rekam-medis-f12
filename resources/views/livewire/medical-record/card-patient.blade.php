@@ -13,29 +13,50 @@
 
     <div class="mt-12">
         @if ($patient_id != null)
-            {{-- Form Input --}}
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
-                {{-- Member ID --}}
-                <flux:input label="{{ __('patient.member_id') }} *" value="{{ $patient_data->member_id }}" disabled />
-                {{-- Name --}}
-                <flux:input label="{{ __('patient.name') }} *" value="{{ $patient_data->name }}" disabled />
-                {{-- Gender --}}
-                <flux:select label="{{ __('patient.gender') }} *" placeholder="{{ __('choose') }}" disabled>
-                    <option value="1" {{ $patient_data->is_male ? 'selected' : '' }}>{{ __('patient.male') }}
-                    </option>
-                    <option value="0" {{ !$patient_data->is_male ? 'selected' : '' }}>{{ __('patient.female') }}
-                    </option>
-                </flux:select>
-                {{-- Age --}}
-                <flux:input type="text" label="{{ __('patient.age') }}"
-                    value="{{ Carbon::createFromDate($patient_data->date_of_birth)->age }}" disabled />
-            </div>
+            <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300 border-collapse">
+                <tbody>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.member_id') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ $patient_data->member_id }}
+                        </td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.name') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ $patient_data->name }}
+                        </td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.gender') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ $patient_data->is_male ? __('patient.male') : __('patient.female') }}
+                        </td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.age') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ \Carbon\Carbon::createFromDate($patient_data->date_of_birth)->age }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
             <div class="grid auto-rows-min gap-4 md:grid-cols-2 mt-4 mb-8">
                 {{-- Drug Allergies --}}
-                <flux:textarea label="{{ __('patient.drug_allergies') }}" resize="none" disabled>
+                <flux:textarea label="{{ __('patient.drug_allergies') }}" resize="none">
                     {{ $patient_data->drug_allergies }}</flux:textarea>
                 {{-- Food Allergies --}}
-                <flux:textarea label="{{ __('patient.food_allergies') }}" resize="none" disabled>
+                <flux:textarea label="{{ __('patient.food_allergies') }}" resize="none">
                     {{ $patient_data->food_allergies }}</flux:textarea>
             </div>
             {{-- / Form Input --}}

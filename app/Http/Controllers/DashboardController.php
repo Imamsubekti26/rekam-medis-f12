@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
+use App\Models\DoctorSchedule;
 use App\Models\User;
 use App\Models\Patient;
 use App\Models\MedicalRecord;
@@ -21,14 +23,16 @@ class DashboardController extends Controller
                     ->count();
 
         $totalPatients = Patient::count();
+        $totalAppointments = Appointment::count();
         $totalMedicalRecords = MedicalRecord::count();
         $totalMedicineStock = Medicine::count();
 
         $totalMalePatients = Patient::where('is_male', true)->count();
         $totalFemalePatients = Patient::where('is_male', false)->count();
 
-        $newDoctorsToday = User::where('is_admin', false)->whereDate('created_at', $today)->count();
+        $schedulesToday = DoctorSchedule::whereDate('available_date', $today)->count();
         $newPatientsToday = Patient::whereDate('created_at', $today)->count();
+        $newAppointmentsToday = Appointment::whereDate('created_at', $today)->count();
         $newMedicalRecordsToday = MedicalRecord::whereDate('created_at', $today)->count();
         $newMedicineStockToday = Medicine::whereDate('created_at', $today)->count();
 
@@ -143,10 +147,12 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'totalDoctors',
             'totalPatients',
+            'totalAppointments',
             'totalMedicalRecords',
             'totalMedicineStock',
-            'newDoctorsToday',
+            'schedulesToday',
             'newPatientsToday',
+            'newAppointmentsToday',
             'newMedicalRecordsToday',
             'newMedicineStockToday',
             'totalMalePatients',

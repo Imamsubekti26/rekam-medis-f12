@@ -33,6 +33,10 @@
                 </flux:navlist.group>
 
                 <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
+                    @php
+    $role = auth()->user()->role;
+@endphp
+@if (in_array($role, ['admin', 'doctor', 'pharmacist']))
                     <flux:navlist.item
                         icon="users"
                         :href="route('patient.index')"
@@ -41,7 +45,8 @@
                         class="{{ request()->routeIs('patient.index') ? 'flux-navlist-item-active' : '' }}">
                         {{ __('dashboard.patient') }}
                     </flux:navlist.item>
-
+                    @endif
+@if ($role === 'admin')
                     <flux:navlist.item
                         icon="user"
                         :href="route('doctor.index')"
@@ -59,7 +64,8 @@
                         class="{{ request()->routeIs('pharmacist.index') ? 'flux-navlist-item-active' : '' }}">
                         {{ __('dashboard.pharmacist') }}
                     </flux:navlist.item>
-                
+                    @endif
+                @if (in_array($role, ['admin', 'pharmacist']))
                     <flux:navlist.item
                         icon="inbox"
                         :href="route('medicine.index')"
@@ -68,6 +74,7 @@
                         class="{{ request()->routeIs('medicine.index') ? 'flux-navlist-item-active' : '' }}">
                         {{ __('dashboard.medicine') }}
                     </flux:navlist.item>
+                    @endif
 
                     <flux:navlist.group expandable heading="Jadwal & Janji Temu">
                         {{-- Jadwal Dokter --}}

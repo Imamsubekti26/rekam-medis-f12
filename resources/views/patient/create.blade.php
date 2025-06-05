@@ -13,7 +13,7 @@
                         {{-- Form Input --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {{-- Member ID --}}
-                            <flux:input label="{{ __('patient.member_id') }} *" name="member_id" value="{{ old('member_id') }}" required />
+                            <flux:input label="{{ __('patient.nik') }} *" name="nik" value="{{ old('nik') }}" required />
                             {{-- Name --}}
                             <flux:input label="{{ __('patient.name') }} *" name="name" value="{{ old('name') }}" required />
                             {{-- Address --}}

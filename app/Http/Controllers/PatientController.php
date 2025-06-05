@@ -19,15 +19,15 @@ class PatientController extends Controller
         if ($request->has("search") && $request->search != null) {
             $query = $query->where("name", "like", "%" . $request->search . "%")
                 ->orWhere("address", "like", "%" . $request->search . "%")
-                ->orWhere("member_id", "like", "%" . $request->search . "%");
+                ->orWhere("nik", "like", "%" . $request->search . "%");
         }
 
         if ($request->has("sort_by") && $request->sort_by != null) {
             $sort = match ($request->sort_by) {
                 "name_asc" => ["name", "asc"],
                 "name_desc" => ["name", "desc"],
-                "member_id_asc" => ["member_id", "asc"],
-                "member_id_desc" => ["member_id", "desc"],
+                "nik_asc" => ["nik", "asc"],
+                "nik_desc" => ["nik", "desc"],
                 "address_asc" => ["address", "asc"],
                 "address_desc" => ["address", "desc"],
             };
@@ -58,7 +58,7 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'member_id' => ['required', 'string'],
+            'nik' => ['required', 'string'],
             'name' => ['required', 'string', 'min:3'],
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'numeric'],
@@ -106,7 +106,7 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
-            'member_id' => ['required', 'string'],
+            'nik' => ['required', 'string'],
             'name' => ['required', 'string', 'min:3'],
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'numeric'],
@@ -147,7 +147,7 @@ class PatientController extends Controller
             $query->where(function ($q) use ($request) {
                 $q->where("name", "like", "%" . $request->search . "%")
                     ->orWhere("address", "like", "%" . $request->search . "%")
-                    ->orWhere("member_id", "like", "%" . $request->search . "%");
+                    ->orWhere("nik", "like", "%" . $request->search . "%");
             });
         }
 
@@ -155,8 +155,8 @@ class PatientController extends Controller
             $sort = match ($request->sort_by) {
                 "name_asc" => ["name", "asc"],
                 "name_desc" => ["name", "desc"],
-                "member_id_asc" => ["member_id", "asc"],
-                "member_id_desc" => ["member_id", "desc"],
+                "nik_asc" => ["nik", "asc"],
+                "nik_desc" => ["nik", "desc"],
                 "address_asc" => ["address", "asc"],
                 "address_desc" => ["address", "desc"],
                 default => ["created_at", "asc"]

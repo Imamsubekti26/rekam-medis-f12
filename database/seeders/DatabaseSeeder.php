@@ -39,13 +39,13 @@ class DatabaseSeeder extends Seeder
 
         // Create Patient
         Patient::factory()->create([
-            'member_id' => '11101',
+            'nik' => '3175091301020001',
             'name' => 'Imam',
             'is_male' => true,
         ]);
 
         Patient::factory()->create([
-            'member_id' => '11102',
+            'nik' => '3517012108990002',
             'name' => 'Subekti',
             'is_male' => true,
         ]);

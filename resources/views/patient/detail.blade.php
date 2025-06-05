@@ -19,7 +19,7 @@ use Carbon\Carbon;
                 {{-- Form Input --}}
                 <div class="grid auto-rows-min gap-4 md:grid-cols-3 mt-12 mb-8">
                     {{-- Member ID --}}
-                    <flux:input label="{{ __('patient.member_id') }} *" name="member_id" value="{{ $patient->member_id }}" required />
+                    <flux:input label="{{ __('patient.nik') }} *" name="nik" value="{{ $patient->nik }}" required />
                     {{-- Name --}}
                     <flux:input label="{{ __('patient.name') }} *" name="name" value="{{ $patient->name }}" required />
                     {{-- Address --}}

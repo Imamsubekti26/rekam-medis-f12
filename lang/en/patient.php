@@ -5,7 +5,7 @@ return [
     'title_add' => 'Add New Patient',
     'title_show' => 'Patient Detail',
     'title_medic' => "Medical Record Histories",
-    'member_id' => 'Member ID',
+    'nik' => 'Member ID',
     'name' => 'Patient Name',
     'address' => 'Address',
     'phone' => 'Phone Number',

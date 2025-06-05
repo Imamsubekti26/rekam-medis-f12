@@ -17,10 +17,10 @@
                 <tbody>
                     <tr class="border-b dark:border-gray-700">
                         <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
-                            {{ __('patient.member_id') }}
+                            {{ __('patient.nik') }}
                         </th>
                         <td class="py-2 text-gray-900 dark:text-white">
-                            {{ $patient_data->member_id }}
+                            {{ $patient_data->nik }}
                         </td>
                     </tr>
                     <tr class="border-b dark:border-gray-700">
@@ -63,7 +63,7 @@
         @else
             <form class="relative w-full max-w-md flex flex-col gap-2" wire:submit.prevent="findPatientById">
                 <div class="flex gap-4 items-center">
-                    <flux:input wire:model.debounce.300ms="member_id" wire:keydown="findPatientById"
+                    <flux:input wire:model.debounce.300ms="nik" wire:keydown="findPatientById"
                         placeholder="{{ __('patient.search_id') }}" />
                     <flux:button type="submit" variant="primary" class="cursor-pointer">
                         {{ __('patient.search') }}
@@ -76,7 +76,7 @@
                         @foreach ($suggestions as $suggestion)
                             <li wire:click="setPatient('{{ $suggestion->id }}')"
                                 class="px-4 py-2 text-sm text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer transition-colors duration-150">
-                                <span class="font-semibold">{{ $suggestion->member_id }}</span>
+                                <span class="font-semibold">{{ $suggestion->nik }}</span>
                                 <span class="text-zinc-500 ml-2">{{ $suggestion->name }}</span>
                             </li>
                         @endforeach

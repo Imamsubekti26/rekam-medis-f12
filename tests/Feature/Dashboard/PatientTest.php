@@ -43,7 +43,7 @@ test('doctor can manipulate the patient data', function () {
     $this->actingAs($user);
 
     $patientData = [
-        'member_id' => '1122332',
+        'nik' => '1122332',
         'name' => 'john doe',
     ];
 
@@ -52,7 +52,7 @@ test('doctor can manipulate the patient data', function () {
     $this->assertDatabaseHas('patients', $patientData);
     $response->assertRedirect('/patient');
 
-    $patient = Patient::where('member_id', '1122332')->first();
+    $patient = Patient::where('nik', '1122332')->first();
     $patientData['name'] = 'john updated';
 
     // test: update
@@ -72,7 +72,7 @@ test('pharmacist can manipulate the patient data', function () {
     $this->actingAs($user);
 
     $patientData = [
-        'member_id' => '1122332',
+        'nik' => '1122332',
         'name' => 'john doe',
     ];
 
@@ -81,7 +81,7 @@ test('pharmacist can manipulate the patient data', function () {
     $this->assertDatabaseHas('patients', $patientData);
     $response->assertRedirect('/patient');
 
-    $patient = Patient::where('member_id', '1122332')->first();
+    $patient = Patient::where('nik', '1122332')->first();
     $patientData['name'] = 'john updated';
 
     // test: update

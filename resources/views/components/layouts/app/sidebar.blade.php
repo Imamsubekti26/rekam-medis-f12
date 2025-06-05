@@ -34,9 +34,9 @@
 
                 <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
                     @php
-    $role = auth()->user()->role;
-@endphp
-@if (in_array($role, ['admin', 'doctor', 'pharmacist']))
+                        $role = auth()->user()->role;
+                    @endphp
+                    @if (in_array($role, ['admin', 'doctor', 'pharmacist']))
                     <flux:navlist.item
                         icon="users"
                         :href="route('patient.index')"
@@ -46,7 +46,7 @@
                         {{ __('dashboard.patient') }}
                     </flux:navlist.item>
                     @endif
-@if ($role === 'admin')
+                    @if ($role === 'admin')
                     <flux:navlist.item
                         icon="user"
                         :href="route('doctor.index')"
@@ -65,7 +65,7 @@
                         {{ __('dashboard.pharmacist') }}
                     </flux:navlist.item>
                     @endif
-                @if (in_array($role, ['admin', 'pharmacist']))
+                    @if (in_array($role, ['admin', 'pharmacist']))
                     <flux:navlist.item
                         icon="inbox"
                         :href="route('medicine.index')"

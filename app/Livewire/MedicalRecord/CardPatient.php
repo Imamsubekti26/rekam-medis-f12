@@ -11,7 +11,7 @@ class CardPatient extends Component
 {
     public ?string $patient_id;
     public ?Patient $patient_data;
-    public string $member_id = '';
+    public string $nik = '';
     public Collection|array $suggestions = [];
 
     #[On('collectPatient')]
@@ -24,7 +24,7 @@ class CardPatient extends Component
     {
         if ($patient != null) {
             $this->patient_id = $patient->id;
-            $this->member_id = $patient->member_id;
+            $this->nik = $patient->nik;
             $this->patient_data = $patient;
             return;
         }
@@ -32,13 +32,13 @@ class CardPatient extends Component
         if (request()->has('patient_id') && request()->patient_id != null) {
             $this->patient_id = request()->patient_id;
             $this->patient_data = Patient::find($this->patient_id);
-            $this->member_id = $this->patient_data->member_id;
+            $this->nik = $this->patient_data->nik;
         }
     }
 
     public function findPatientById()
     {
-        if (trim($this->member_id) === '') {
+        if (trim($this->nik) === '') {
             $this->patient_data = null;
             $this->patient_id = null;
             $this->suggestions = [];
@@ -46,7 +46,7 @@ class CardPatient extends Component
         }
 
         // Live search mode - suggestions
-        $this->suggestions = Patient::where('member_id', 'like', '%' . $this->member_id . '%')
+        $this->suggestions = Patient::where('nik', 'like', '%' . $this->nik . '%')
             ->limit(5)
             ->get();
 
@@ -64,7 +64,7 @@ class CardPatient extends Component
         $this->patient_data = Patient::find($id);
         if ($this->patient_data) {
             $this->patient_id = $this->patient_data->id;
-            $this->member_id = $this->patient_data->member_id;
+            $this->nik = $this->patient_data->nik;
         }
         $this->suggestions = [];
     }

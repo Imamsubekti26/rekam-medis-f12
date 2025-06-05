@@ -78,8 +78,8 @@
                         {{-- Member ID --}}
                         <th class="p-4 py-6">
                             <div class="flex justify-center items-center gap-2">
-                                {{ __('patient.member_id') }}
-                                <livewire:components.sorter :asc="'member_id_asc'" :desc="'member_id_desc'" />
+                                {{ __('patient.nik') }}
+                                <livewire:components.sorter :asc="'nik_asc'" :desc="'nik_desc'" />
                             </div>
                         </th>
                         {{-- Patient Name --}}
@@ -109,7 +109,7 @@
                         @foreach ($patients as $patient)
                             <tr
                                 class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
-                                <td class="p-4">{{ $patient->member_id }}</td>
+                                <td class="p-4">{{ $patient->nik }}</td>
                                 <td class="p-4">{{ $patient->name }}</td>
                                 <td class="p-4">{{ $patient->address }}</td>
                                 <td class="p-4">{{ $patient->is_male ? 'L' : 'P' }} /

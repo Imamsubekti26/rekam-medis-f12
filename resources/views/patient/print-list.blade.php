@@ -12,7 +12,7 @@ use Carbon\Carbon;
             <tr>
                 <th class="border border-gray-300 px-3 py-2 text-left w-1/8">
                     <div class="flex justify-center items-center gap-2">
-                        {{ __('patient.member_id') }}
+                        {{ __('patient.nik') }}
                     </div>
                 </th>
                 <th class="border border-gray-300 px-3 py-2 text-left w-1/4">
@@ -40,7 +40,7 @@ use Carbon\Carbon;
         <tbody class="text-center border-b-1">
             @foreach ($patients as $patient)
                 <tr class="odd:bg-white even:bg-gray-50 print:bg-white">
-                    <td class="border border-gray-300 px-3 py-2">{{ $patient->member_id }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $patient->nik }}</td>
                     <td class="border border-gray-300 px-3 py-2">{{ $patient->name }}</td>
                     <td class="border border-gray-300 px-3 py-2 text-sm">
                         {{ $patient->is_male ? 'L' : 'P' }} /

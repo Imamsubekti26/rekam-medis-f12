@@ -2,6 +2,10 @@
     @csrf
     {{-- Form Input --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {{-- Patient NIK --}}
+        <div class="col-span-1 md:col-span-2">
+            <flux:input wire:model="patientNIK" label="{{ __('appointment.nik') }} *" name="patientNIK" required />
+        </div>
         {{-- Patient Name --}}
         <flux:input wire:model="patientName" label="{{ __('appointment.name') }} *" name="patientName" required />
         {{-- Phone --}}
@@ -13,6 +17,7 @@
             wire:change="getSchedules"
             label="{{ __('appointment.date') }} *" 
             name="date"
+            min="{{ \Carbon\Carbon::today()->format('Y-m-d') }}"
             required 
         />
 

@@ -6,6 +6,7 @@ return [
         'title_update' => 'Ubah Janji Temu',
         'search' => 'Cari',
         'search_hint' => 'Cari nama pasien...',
+        'nik' => 'NIK',
         'name' => 'Nama Lengkap Pasien',
         'phone' => 'Nomor WhatsApp',
         'detail' => 'Keluhan',

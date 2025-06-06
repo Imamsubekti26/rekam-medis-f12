@@ -16,10 +16,21 @@ class Appointment extends Model
     // Tentukan kolom yang dapat diisi secara massal
     protected $fillable = [
         'patient_name',
+        'patient_id',
+        'doctor_id',
         'phone',
         'date',
         'time',
         'detail',
         'status',
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function doctor(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('patient_id')->references('id')->on('patients')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('doctor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('patient_name');
             $table->string('phone');
             $table->date('date');

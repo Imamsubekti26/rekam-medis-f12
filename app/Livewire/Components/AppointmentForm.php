@@ -12,6 +12,7 @@ class AppointmentForm extends BaseComponent
     protected $rolePermission = ['doctor.viewer', 'pharmacist.editor'];
 
     public $appointmentId = '';
+    public $patientNIK = '';
     public $patientName = '';
     public $phone = '';
     public $selectedDate = '';
@@ -23,6 +24,7 @@ class AppointmentForm extends BaseComponent
     public $hasSubmitted = false;
 
     protected $rules = [
+        'patientNIK' => ['required', 'numeric', 'digits:16'],
         'patientName' => ['required', 'string'],
         'phone' => ['required', 'numeric'],
         'selectedDate' => ['required', 'date', 'date_format:Y-m-d'],
@@ -120,9 +122,9 @@ class AppointmentForm extends BaseComponent
         return $schedule;
     }
 
-    public function mount($appointment = null)
+    public function mount(?Appointment $appointment)
     {
-        if (!$appointment) return;
+        if (!$appointment->id) return;
         
         $formattedTime = Carbon::createFromFormat('H:i:s', $appointment->time)->format('H:i');
         $this->appointmentId = $appointment->id;

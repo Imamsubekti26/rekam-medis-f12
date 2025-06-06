@@ -1,5 +1,5 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -48,9 +48,9 @@
                         {{-- / Search Field --}}
                         <flux:button
                             onclick="window.open(`{{ route('schedule.print.list', [
-                                'search' => request()->query('search'),
-                                'sort_by' => request()->query('sort_by'),
-                            ]) }}`)"
+    'search' => request()->query('search'),
+    'sort_by' => request()->query('sort_by'),
+]) }}`)"
                             class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
                             icon="printer">
                             {{ __('schedule.print') }}
@@ -71,7 +71,8 @@
                         <th class="p-4 py-6">Tanggal</th>
                         <th class="p-4 py-6">Waktu Mulai</th>
                         <th class="p-4 py-6">Waktu Selesai</th>
-                        <th class="p-4 py-6">Durasi Pasien</th>
+                        <th class="p-4 py-6">Tipe Jadwal</th>
+                        <th class="p-4 py-6">Keterangan </th>
                         <th class="p-4 py-6">{{ __('action') }}</th>
                     </tr>
                 </thead>
@@ -101,7 +102,11 @@
                                     {{ Carbon::parse($schedule->end_time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
-                                    {{ $schedule->per_patient_time }} menit
+                                    {{ $schedule->serial_visibility == 'Random' ? 'Acak' : 'Berurutan' }}
+                                </td>
+                                <td class="p-4">
+                                    {{ $schedule->handle_count }}
+                                    {{ $schedule->serial_visibility == 'Random' ? 'sesi/jadwal' : 'menit/sesi' }}
                                 </td>
                                 <td class="p-4">
                                     <div class="flex justify-center items-center gap-1">

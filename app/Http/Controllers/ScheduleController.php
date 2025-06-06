@@ -15,6 +15,10 @@ class ScheduleController extends Controller
     {
         $query = DoctorSchedule::query();
 
+        if ($request->user()->role == 'doctor') {
+            $query = $query->where('doctor_id', $request->user()->id);
+        }
+
         if ($request->has('search') && $request->search != null) {
             $query = $query->whereHas('doctor', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%');
@@ -45,37 +49,37 @@ class ScheduleController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
-{
-    try {
-        $doctors = User::where('is_admin', false)->where('role', 'doctor')->get(); // ambil hanya dokter
-        
-        return view('schedule.create', compact('doctors'));
-    } catch (\Exception $e) {
-        dd($e); // untuk debug kalau error
-        return redirect()->route('schedule.index')->withErrors(__('schedule.show_failed'));
+    {
+        try {
+            $doctors = User::where('is_admin', false)->where('role', 'doctor')->get(); // ambil hanya dokter
+            
+            return view('schedule.create', compact('doctors'));
+        } catch (\Exception $e) {
+            dd($e); // untuk debug kalau error
+            return redirect()->route('schedule.index')->withErrors(__('schedule.show_failed'));
+        }
     }
-}
 
 
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'doctor_id' => ['required', 'exists:users,id'],
-        'available_date' => ['required', 'date'],
-        'start_time' => ['required'],
-        'end_time' => ['required'],
-        'per_patient_time' => ['required', 'integer'],
-        'serial_visibility' => ['required', 'in:Sequential,Random'], // harus pilih salah satu enum
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'doctor_id' => ['required', 'exists:users,id'],
+            'available_date' => ['required', 'date'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+            'handle_count' => ['required', 'integer'],
+            'serial_visibility' => ['required', 'in:Sequential,Random'], // harus pilih salah satu enum
+        ]);
 
-    try {
-        DoctorSchedule::create($validated);
-        return redirect()->route('schedule.index')->with('success', __('schedule.create_success'));
-    } catch (\Exception $e) {
-        dd($e);
-        return redirect()->back()->withErrors(__('schedule.create_failed'));
+        try {
+            DoctorSchedule::create($validated);
+            return redirect()->route('schedule.index')->with('success', __('schedule.create_success'));
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->withErrors(__('schedule.create_failed'));
+        }
     }
-}
 
 
     /**
@@ -99,23 +103,23 @@ public function store(Request $request)
      * Update the specified resource in storage.
      */
     public function update(Request $request, DoctorSchedule $schedule)
-{
-    $validated = $request->validate([
-        'available_date' => ['required', 'date'],
-        'start_time' => ['required'],
-        'end_time' => ['required'],
-        'per_patient_time' => ['required', 'integer'],
-        'serial_visibility' => ['nullable', 'string'], // bisa kosong atau salah satu dari Sequential/Random
-    ]);
+    {
+        $validated = $request->validate([
+            'available_date' => ['required', 'date'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+            'handle_count' => ['required', 'integer'],
+            'serial_visibility' => ['nullable', 'string'], // bisa kosong atau salah satu dari Sequential/Random
+        ]);
 
-    try {
-        $schedule->update($validated);
-        return redirect()->route('schedule.index')->with('success', __('schedule.update_success'));
-    } catch (\Exception $e) {
-        dd($e);
-        return redirect()->back()->withErrors(__('schedule.update_failed'));
+        try {
+            $schedule->update($validated);
+            return redirect()->route('schedule.index')->with('success', __('schedule.update_success'));
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->withErrors(__('schedule.update_failed'));
+        }
     }
-}
 
 
     /**

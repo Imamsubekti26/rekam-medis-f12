@@ -18,8 +18,8 @@ class DoctorSchedule extends Model
         'available_date',
         'start_time',
         'end_time',
-        'per_patient_time',
         'serial_visibility',
+        'handle_count',
     ];
 
     /**

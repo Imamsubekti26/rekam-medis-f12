@@ -86,5 +86,8 @@ select:focus[data-flux-control] {
     transition: all 0.3s ease;
 }
 
-
+.fc-daygrid-day-frame:hover {
+    cursor: pointer;
+    background-color: #3B82F6;
+}
 

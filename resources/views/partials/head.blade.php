@@ -3,8 +3,8 @@
 
 <title>{{ $title ?? 'Rekam Medis F21-Minomartani' }}</title>
 
-<link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+{{-- <link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" /> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/logof21.png') }}">
 {{-- <script type="module">

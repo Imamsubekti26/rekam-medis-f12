@@ -15,9 +15,9 @@ class Appointment extends Model
 
     // Tentukan kolom yang dapat diisi secara massal
     protected $fillable = [
-        'patient_name',
         'patient_id',
         'doctor_id',
+        'schedule_id',
         'phone',
         'date',
         'time',
@@ -32,5 +32,9 @@ class Appointment extends Model
 
     public function doctor(){
         return $this->belongsTo(User::class);
+    }
+
+    public function schedule(){
+        return $this->belongsTo(DoctorSchedule::class, 'schedule_id');
     }
 }

@@ -31,7 +31,7 @@ class AppointmentWhatsappConfirm extends BaseComponent
         try {
             // update data di DB
             if ($this->type == 'approve') {
-                Appointment::where('id', $this->appointmentId)->update(['status' => 'approve']);
+                Appointment::where('id', $this->appointmentId)->update(['status' => 'approved']);
             } else {
                 Appointment::where('id', $this->appointmentId)->update(['status' => 'rejected']);
             }
@@ -60,9 +60,9 @@ class AppointmentWhatsappConfirm extends BaseComponent
         // pesan dibawah JANGAN DIKASIH 'ENTER'. nanti bakal kedetek sama textarea!
         // kalau mau lihatnya sedikit lebih enak, aktifkan word wrap di vscode => alt + Z
 
-        $approveMsg = "Halo *$appointment->patient_name*,\n\nTerima kasih telah mengajukan permintaan janji temu dengan dokter kami di *$this->apotekName*.\n\nKami konfirmasi bahwa permintaan Anda telah *disetujui*.\n\nTanggal: $date\nWaktu: $time\n\nSilakan datang sesuai jadwal. Jika ada perubahan, silakan hubungi kami dengan membalas pesan ini.\n\nTerima kasih, salam sehat.";
+        $approveMsg = "Halo *{$appointment->patient->name}*,\n\nTerima kasih telah mengajukan permintaan janji temu dengan dokter kami di *$this->apotekName*.\n\nKami konfirmasi bahwa permintaan Anda telah *disetujui*.\n\nTanggal: $date\nWaktu: $time\n\nSilakan datang sesuai jadwal. Jika ada perubahan, silakan hubungi kami dengan membalas pesan ini.\n\nTerima kasih, salam sehat.";
 
-        $rejectMsg = "Halo *$appointment->patient_name*,\n\nTerima kasih atas permintaan janji temu Anda dengan dokter kami di *$this->apotekName*.\nMohon maaf, saat ini *kami belum bisa melakukan janji temu sesuai jadwal yang Anda pilih*.\n\nTanggal: $date\nWaktu: $time\n\nDengan alasan *dokter sedang tidak di tempat*.\nJika anda ingin *menjadwalkan ulang* janji temu Anda, balas pesan ini dengan ketik *Setuju*\n\nTerima kasih atas pengertiannya.";
+        $rejectMsg = "Halo *{$appointment->patient->name}*,\n\nTerima kasih atas permintaan janji temu Anda dengan dokter kami di *$this->apotekName*.\nMohon maaf, saat ini *kami belum bisa melakukan janji temu sesuai jadwal yang Anda pilih*.\n\nTanggal: $date\nWaktu: $time\n\nDengan alasan *dokter sedang tidak di tempat*.\nJika anda ingin *menjadwalkan ulang* janji temu Anda, balas pesan ini dengan ketik *Setuju*\n\nTerima kasih atas pengertiannya.";
 
         $this->whatsappMessage = $type == "approve" ? $approveMsg : $rejectMsg;
     }

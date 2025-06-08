@@ -15,12 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('patient_id')->references('id')->on('patients')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignUuid('doctor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('patient_name');
+            $table->foreignUuid('schedule_id')->nullable()->references('id')->on('doctor_schedules')->onUpdate('no action')->onDelete('no action');
             $table->string('phone');
             $table->date('date');
             $table->time('time');
             $table->string('detail');
-            $table->enum('status', ['approve', 'pending', 'rejected'])->default('pending');
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

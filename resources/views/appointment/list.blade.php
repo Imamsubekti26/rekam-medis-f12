@@ -1,5 +1,5 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -28,7 +28,7 @@
                         <flux:button type="submit" class="cursor-pointer">{{ __('appointment.search') }}</flux:button>
                     </form>
                     <div class="flex flex-col md:flex-row gap-4">
-                        <flux:button href="{{ route('appointment.create') }}"
+                        <flux:button href="{{ route('home') }}"
                             class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
                             icon="plus" wire:navigate>
                             {{ __('appointment.add') }}
@@ -36,9 +36,9 @@
                         {{-- / Search Field --}}
                         <flux:button
                             onclick="window.open(`{{ route('appointment.print.list', [
-                                'search' => request()->query('search'),
-                                'sort_by' => request()->query('sort_by'),
-                            ]) }}`)"
+    'search' => request()->query('search'),
+    'sort_by' => request()->query('sort_by'),
+]) }}`)"
                             class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
                             icon="printer">
                             {{ __('appointment.print') }}
@@ -59,6 +59,7 @@
                         <th class="p-4 py-6">Nomor WA</th>
                         <th class="p-4 py-6">Tanggal</th>
                         <th class="p-4 py-6">Waktu</th>
+                        <th class="p-4 py-6">Dokter</th>
                         <th class="p-4 py-6">Status</th>
                         <th class="p-4 py-6">{{ __('action') }}</th>
                     </tr>
@@ -78,7 +79,7 @@
                             <tr
                                 class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
                                 <td class="p-4">{{ $loop->iteration }}</td>
-                                <td class="p-4">{{ $appointment->patient_name ?? '-' }}</td>
+                                <td class="p-4">{{ $appointment->patient->name ?? '-' }}</td>
                                 <td class="p-4">{{ $appointment->phone ?? '-' }}</td>
                                 <td class="p-4">
                                     {{ Carbon::parse($appointment->date)->translatedFormat('l, d F Y') }}
@@ -87,8 +88,11 @@
                                     {{ Carbon::parse($appointment->time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
+                                    {{ $appointment->doctor->name }}
+                                </td>
+                                <td class="p-4">
                                     <flux:badge
-                                        color="{{ $appointment->status === 'pending' ? 'orange' : ($appointment->status === 'approve' ? 'green' : 'red') }}">
+                                        color="{{ $appointment->status === 'pending' ? 'orange' : ($appointment->status === 'approved' ? 'green' : 'red') }}">
                                         {{ $appointment->status }}</flux:badge>
                                 </td>
                                 <td class="p-4">
@@ -125,7 +129,7 @@
                                                     class="cursor-pointer !bg-yellow-500 hover:!bg-yellow-600 !text-white"
                                                     wire:navigate />
                                             </flux:tooltip>
-                                        @elseif ($appointment->status === 'approve' && request()->user()->is_editor)
+                                        @elseif ($appointment->status === 'approved' && request()->user()->is_editor)
                                             {{-- Call Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.chat') }}">
                                                 <flux:button
@@ -143,10 +147,10 @@
                                             </flux:tooltip>
                                         @endif
 
-                                        @if ($appointment->status === 'approve' || ($appointment->status === 'approve' && request()->user()->is_admin))
+                                        @if ($appointment->status === 'approved' && (request()->user()->role == 'doctor' || request()->user()->is_admin))
                                             {{-- Process Button with Tooltip --}}
                                             <flux:tooltip content="{{ __('appointment.process') }}">
-                                                <flux:button href="{{ route('record.create') }}"
+                                                <flux:button href="{{ route('record.create', ['patient_id' => $appointment->patient_id]) }}"
                                                     icon="clipboard-document-list" size="sm"
                                                     class="cursor-pointer !bg-blue-500 hover:!bg-blue-600 !text-white"
                                                     wire:navigate />

@@ -18,7 +18,7 @@ class DoctorSchedule extends Model
         'available_date',
         'start_time',
         'end_time',
-        'serial_visibility',
+        'schedule_type',
         'handle_count',
     ];
 
@@ -28,5 +28,13 @@ class DoctorSchedule extends Model
     public function doctor()
     {
         return $this->belongsTo(User::class, 'doctor_id');
+    }
+
+    /**
+     * Relasi ke tabel appointment.
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'schedule_id');
     }
 }

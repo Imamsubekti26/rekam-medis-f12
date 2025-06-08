@@ -102,11 +102,11 @@ use Carbon\Carbon;
                                     {{ Carbon::parse($schedule->end_time)->format('H:i') }}
                                 </td>
                                 <td class="p-4">
-                                    {{ $schedule->serial_visibility == 'Random' ? 'Acak' : 'Berurutan' }}
+                                    {{ $schedule->schedule_type == 'Random' ? 'Acak' : 'Berurutan' }}
                                 </td>
                                 <td class="p-4">
                                     {{ $schedule->handle_count }}
-                                    {{ $schedule->serial_visibility == 'Random' ? 'sesi/jadwal' : 'menit/sesi' }}
+                                    {{ $schedule->schedule_type == 'Random' ? 'sesi/jadwal' : 'menit/sesi' }}
                                 </td>
                                 <td class="p-4">
                                     <div class="flex justify-center items-center gap-1">

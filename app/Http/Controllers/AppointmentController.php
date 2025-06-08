@@ -12,6 +12,10 @@ class AppointmentController extends Controller
     {
         $query = Appointment::query();
 
+        if ($request->user()->role == 'doctor') {
+            $query = $query->where('doctor_id', $request->user()->id);
+        }
+
         if ($request->has('search') && $request->search != null) {
             $query = $query->where('patient_name', 'like', '%' . $request->search . '%');
             $query = $query->orWhere('phone', 'like', '%' . $request->search . '%');

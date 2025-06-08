@@ -18,7 +18,7 @@ class DoctorScheduleForm extends Component
     public ?string $available_date;
     public ?string $start_time;
     public ?string $end_time;
-    public ?string $serial_visibility;
+    public ?string $schedule_type;
     public ?int $handle_count;
 
     public function serialVisibilityChanged()
@@ -38,7 +38,7 @@ class DoctorScheduleForm extends Component
             $this->available_date = $doctorSchedule->available_date;
             $this->start_time = $doctorSchedule->start_time;
             $this->end_time = $doctorSchedule->end_time;
-            $this->serial_visibility = $doctorSchedule->serial_visibility;
+            $this->schedule_type = $doctorSchedule->schedule_type;
             $this->handle_count = $doctorSchedule->handle_count;
         } else {
             // kalau tambah, tergantung lu dokter atau admin

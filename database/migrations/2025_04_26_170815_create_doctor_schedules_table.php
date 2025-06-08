@@ -14,7 +14,7 @@ return new class extends Migration
             $table->date('available_date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->enum('serial_visibility', ['Sequential', 'Random'])->default('Sequential');
+            $table->enum('schedule_type', ['Sequential', 'Random'])->default('Sequential');
             $table->integer('handle_count')->default(20)->comment('Max patient can handled when random / how long doctor handle patient in minute when sequential');
             $table->timestamps();
         });

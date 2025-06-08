@@ -5,7 +5,7 @@
             <div
                 class="border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-4 md:p-12">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
-                    {{ $schedule_id ? __('doctor.title_show') : __('doctor.title_add') }}
+                    {{ $schedule_id ? __('schedule.title_show') : __('schedule.title_add') }}
                 </h2>
                 <form class="mt-12"
                     action="{{ $schedule_id ? route('schedule.update', $schedule_id) : route('schedule.store') }}"
@@ -51,23 +51,23 @@
 
                         {{-- Serial Visibility --}}
                         @if (request()->user()->is_editor)
-                            <flux:select label="{{ __('schedule.serial_visibility') }} *" name="serial_visibility"
-                                wire:model="serial_visibility" wire:change="serialVisibilityChanged" required>
+                            <flux:select label="{{ __('schedule.schedule_type') }} *" name="schedule_type"
+                                wire:model="schedule_type" wire:change="serialVisibilityChanged" required>
                                 <flux:select.option value="Sequential">
-                                    {{ __('schedule.serial_visibility_sequential') }}
+                                    {{ __('schedule.schedule_type_sequential') }}
                                 </flux:select.option>
                                 <flux:select.option value="Random">
-                                    {{ __('schedule.serial_visibility_random') }}
+                                    {{ __('schedule.schedule_type_random') }}
                                 </flux:select.option>
                             </flux:select>
                         @else
-                            <flux:input type="text" label="{{ __('schedule.serial_visibility') }} *" disabled
-                                wire:model="serial_visibility" />
+                            <flux:input type="text" label="{{ __('schedule.schedule_type') }} *" disabled
+                                wire:model="schedule_type" />
                         @endif
 
                         {{-- Per Patient Time --}}
                         <flux:input type="number"
-                            label="{{ $serial_visibility == 'Random' ? __('schedule.session_count') : __('schedule.per_patient_time') }} *"
+                            label="{{ $schedule_type == 'Random' ? __('schedule.session_count') : __('schedule.per_patient_time') }} *"
                             name="handle_count" :disabled="!request()->user()->is_editor" wire:model="handle_count"
                             required />
 

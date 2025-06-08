@@ -69,7 +69,7 @@ class ScheduleController extends Controller
             'start_time' => ['required'],
             'end_time' => ['required'],
             'handle_count' => ['required', 'integer'],
-            'serial_visibility' => ['required', 'in:Sequential,Random'], // harus pilih salah satu enum
+            'schedule_type' => ['required', 'in:Sequential,Random'], // harus pilih salah satu enum
         ]);
 
         try {
@@ -109,7 +109,7 @@ class ScheduleController extends Controller
             'start_time' => ['required'],
             'end_time' => ['required'],
             'handle_count' => ['required', 'integer'],
-            'serial_visibility' => ['nullable', 'string'], // bisa kosong atau salah satu dari Sequential/Random
+            'schedule_type' => ['nullable', 'string'], // bisa kosong atau salah satu dari Sequential/Random
         ]);
 
         try {

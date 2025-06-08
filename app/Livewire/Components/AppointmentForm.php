@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Events\NotificationEvent;
 use App\Livewire\BaseComponent;
 use App\Models\Appointment;
 use App\Models\DoctorSchedule;
@@ -179,7 +180,7 @@ class AppointmentForm extends BaseComponent
             if (request()->user()) {
                 return redirect()->route('appointment.index');
             } else {
-                // TODO: send notification to pusher
+                event(new NotificationEvent('New appointment!'));
                 $this->hasSubmitted = true;
             }
         } catch (\Exception $e) {

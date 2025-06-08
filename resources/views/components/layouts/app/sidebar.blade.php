@@ -34,7 +34,7 @@
 
                 <flux:navlist.group heading="{{ __('dashboard.manage_data') }}" class="grid">
                     @php
-                        $role = auth()->user()->role;
+$role = auth()->user()->role;
                     @endphp
                     @if (in_array($role, ['admin', 'doctor', 'pharmacist']))
                     <flux:navlist.item
@@ -201,5 +201,9 @@
         {{ $slot }}
 
         @fluxScripts
+
+        <script>
+            window.x_layout = 'Dashboard';
+        </script>
     </body>
 </html>

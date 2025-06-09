@@ -78,7 +78,7 @@ use \Carbon\Carbon;
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
-        height: 525,
+        aspectRatio: 1.4,
         headerToolbar: {
             left: 'prev,next',
             center: 'title',

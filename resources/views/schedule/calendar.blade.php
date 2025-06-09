@@ -144,22 +144,44 @@
 </x-layouts.app>
 
 <script>
-    function loadCalendar() {
-        const schedule = @json($events);
+    const schedule = @json($events);
 
-        const calendarEl = document.getElementById('calendar');
-        if (!calendarEl) return; // Jangan lanjut kalau #calendar belum ada
-
-        // Destroy kalau sebelumnya sudah ada
-        if ($('#calendar').data('fullCalendar')) {
-            $('#calendar').fullCalendar('destroy');
+    function smoothScrollTo(id) {
+        const element = document.getElementById(id);
+        if ('scrollBehavior' in document.documentElement.style) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            window.scrollTo(0, element.offsetTop);
         }
+    }
 
-        $('#calendar').fullCalendar({
-            header: {
+    function applyEventStyle(info) {
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const bgColor = isDarkMode ? '#8b5cf6' : '#3b82f6';
+        const borderColor = isDarkMode ? '#7c3aed' : '#2563eb';
+
+        info.el.style.backgroundColor = bgColor;
+        info.el.style.borderColor = borderColor;
+        info.el.style.color = 'white';
+        info.el.style.padding = '4px 6px';
+        info.el.style.borderRadius = '4px';
+        info.el.style.cursor = 'pointer';
+    }
+
+    function loadCalendar() {
+        const calendarEl = document.getElementById('calendar');
+        if (!calendarEl) return;
+
+        const { Calendar, dayGridPlugin, timeGridPlugin, interactionPlugin } = window.FullCalendar;
+
+        const calendar = new Calendar(calendarEl, {
+            plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+            initialView: 'dayGridMonth',
+            aspectRatio: 1.4,
+            headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'dayGridMonth,timeGridWeek,timeGridDay' // You can add more views if needed
             },
             buttonText: {
                 today: 'Hari Ini',
@@ -168,67 +190,52 @@
                 day: 'Hari'
             },
             events: schedule,
-            selectable: true,
-            selectHelper: true,
-            timeFormat: 'HH:mm',
-            eventClick: function(event) {
-                $('#doctorName').text(event.doctor_name);
-                $('#availableDate').text(event.available_date);
-                $('#startTime').text(event.start_time);
-                $('#endTime').text(event.end_time);
-                $('#perPatientTime').text(event.per_patient_time);
-                $('#tailwindModal').removeClass('hidden');
+            displayEventTime: false,
+            eventDidMount: function(info) {
+                applyEventStyle(info);
             },
-            eventRender: function(event, element) {
-                element.css('cursor', 'pointer');
-                applyEventStyle(element);
+            dateClick: function(info) {
+                $wire.getDaySchedules(info);
+                smoothScrollTo('schedule');
+            },
+            eventClick: function({ event }) {
+                // Tampilkan modal dengan informasi event
+                document.getElementById('doctorName').textContent = event.extendedProps.doctor_name;
+                document.getElementById('availableDate').textContent = event.extendedProps.available_date;
+                document.getElementById('startTime').textContent = event.extendedProps.start_time;
+                document.getElementById('endTime').textContent = event.extendedProps.end_time;
+                document.getElementById('perPatientTime').textContent = event.extendedProps.per_patient_time;
+                document.getElementById('tailwindModal').classList.remove('hidden');
             }
+        });
+
+        calendar.render();
+
+        // Observer untuk dark mode
+        if (window.calendarDarkModeObserver) window.calendarDarkModeObserver.disconnect();
+        window.calendarDarkModeObserver = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.attributeName === "class") {
+                    calendar.destroy();
+                    loadCalendar(); // Re-init saat mode gelap terang berubah
+                }
+            }
+        });
+        window.calendarDarkModeObserver.observe(document.documentElement, {
+            attributes: true
         });
     }
 
-    function applyEventStyle(element) {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        if (isDarkMode) {
-            element.css({
-                'background-color': '#8b5cf6',
-                'border-color': '#7c3aed',
-                'color': 'white',
-                'padding': '4px 6px',
-                'border-radius': '4px'
-            });
-        } else {
-            element.css({
-                'background-color': '#3b82f6',
-                'border-color': '#2563eb',
-                'color': 'white',
-                'padding': '4px 6px',
-                'border-radius': '4px'
-            });
-        }
-    }
-
-    // Modal close event
-    document.getElementById('closeModal')?.addEventListener('click', function() {
+    // Modal close
+    document.getElementById('closeModal')?.addEventListener('click', function () {
         document.getElementById('tailwindModal')?.classList.add('hidden');
     });
 
-    // Observer untuk mendeteksi dark/light mode
-    if (window.calendarDarkModeObserver) window.calendarDarkModeObserver.disconnect();
-    window.calendarDarkModeObserver = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-            if (mutation.attributeName === "class") {
-                loadCalendar(); // Reload calendar saat dark/light mode berubah
-            }
-        }
-    });
-    window.calendarDarkModeObserver.observe(document.documentElement, {
-        attributes: true
-    });
-
-    // Load pertama kali
+    // Inisialisasi saat halaman dimuat
     window.addEventListener('DOMContentLoaded', () => {
         if (window.location.pathname.includes('calendar')) {
             loadCalendar();
         }
     });
 </script>
+

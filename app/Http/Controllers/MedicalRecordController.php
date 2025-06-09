@@ -19,7 +19,7 @@ class MedicalRecordController extends Controller
 
         if ($request->has("search") && $request->search != null) {
             $query->where(function ($q) use ($request) {
-                $q->where("record_number", "like", "%" . $request->search . "%")
+                $q->where("no_rm", "like", "%" . $request->search . "%")
                 ->orWhere("patients.name", "like", "%" . $request->search . "%");
             });
         }
@@ -41,8 +41,8 @@ class MedicalRecordController extends Controller
         // 🔃 Sortir
         if ($request->has("sort_by") && $request->sort_by != null) {
             $sort = match ($request->sort_by) {
-                "record_number_asc" => ["record_number", "asc"],
-                "record_number_desc" => ["record_number", "desc"],
+                "no_rm_asc" => ["no_rm", "asc"],
+                "no_rm_desc" => ["no_rm", "desc"],
                 "date_asc" => ["date", "asc"],
                 "date_desc" => ["date", "desc"],
                 "patient_asc" => ["patients.name", "asc"],

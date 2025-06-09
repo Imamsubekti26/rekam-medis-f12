@@ -6,7 +6,7 @@
     <div class="grid grid-cols-2 text-sm mt-4 mx-12">
         <div>
             <h3 class="font-bold mt-4">No. Rekam Medis:</h3>
-            <p>{{ $record->record_number }}</p>
+            <p>{{ $record->patient->no_rm }}</p>
             <h3 class="font-bold mt-4">Tanggal Periksa:</h3>
             <p>{{ $record->date }}</p>
             <h3 class="font-bold mt-4">Dokter:</h3>
@@ -15,7 +15,7 @@
         <div>
             <h3 class="font-bold mt-4">Data Pasien:</h3>
             <table>
-                <x-table-row label="ID Member">{{ $record->patient->member_id }}</x-table-row>
+                <x-table-row label="No NIK">{{ $record->patient->nik }}</x-table-row>
                 <x-table-row label="Nama">{{ $record->patient->name }}</x-table-row>
                 <x-table-row
                     label="Jenis Kelamin">{{ $record->patient->is_male ? 'Laki-laki' : 'Perempuan' }}</x-table-row>

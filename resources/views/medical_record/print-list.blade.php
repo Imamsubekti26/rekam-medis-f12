@@ -39,7 +39,7 @@ use Carbon\Carbon;
         <tbody class="text-center border-b-1">
             @foreach ($records as $record)
                 <tr class="odd:bg-white even:bg-gray-50 print:bg-white">
-                    <td class="border border-gray-300 px-3 py-2">{{ $record->record_number }}</td>
+                    <td class="border border-gray-300 px-3 py-2">{{ $record->patient->no_rm }}</td>
                     <td class="border border-gray-300 px-3 py-2">
                         {{ Carbon::parse($record->date)->setTimezone('Asia/Jakarta')->format('y/m/d H:i') }}
                     </td>

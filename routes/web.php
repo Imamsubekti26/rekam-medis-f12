@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+Route::get('/kontakami', function () {
+    return view('contact');
+})->name('kontak');
+
+Route::get('/daftar', function () {
     return view('welcome3');
 })->name('home');
 

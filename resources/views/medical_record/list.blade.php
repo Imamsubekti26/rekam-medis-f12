@@ -144,7 +144,7 @@
                         @foreach ($records as $record)
                             <tr
                                 class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
-                                <td class="p-4">{{ $record->record_number }}</td>
+                                <td class="p-4">{{ $record->patient->no_rm }}</td>
                                 <td class="p-4">
                                     {{ Carbon::parse($record->date)->setTimezone('Asia/Jakarta')->format('y/m/d H:i') }}
                                 </td>

@@ -37,6 +37,8 @@ return [
     'condition' => 'Kondisi',
     'notes' => 'Catatan',
     'print' => 'Cetak Rekam Medis',
+    'print_rm' => 'Cetak Riwayat Medis',
+    'print_report' => 'Cetak Hasil Medis',
     'empty_prescriptions' => 'Belum ada resep yang ditambahkan, anda dapat menambahkan resep menggunakan tombol di kanan atas',
     'prescription_status' => 'Status Resep',
 

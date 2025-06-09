@@ -10,7 +10,7 @@
                     <flux:button class="cursor-pointer" variant="danger">{{ __('medical_record.delete') }}</flux:button>
                 </flux:modal.trigger>
             @endif
-            <flux:button class="cursor-pointer" @click="window.open(`{{ route('record.print.detail', $record->id) }}`)">{{ __('medical_record.print') }}</flux:button>
+            <flux:button class="cursor-pointer" @click="window.open(`{{ route('record.print.detail', $record->id) }}`)">{{ __('medical_record.print_report') }}</flux:button>
             @if (request()->user()->is_editor)
                 <flux:button variant="primary" class="cursor-pointer" wire:click="updateData">{{ __('medical_record.save') }}
             @endif

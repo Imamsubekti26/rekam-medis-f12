@@ -170,4 +170,10 @@ class PatientController extends Controller
 
         return view("patient.print-list", compact("patients"));
     }
+    public function printByPatient(Patient $patient)
+    {
+        $medical_records = $patient->medical_records()->with('doctor')->get();
+
+        return view('patient.print-rm', compact('patient', 'medical_records'));
+    }
 }

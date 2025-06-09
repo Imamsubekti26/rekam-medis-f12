@@ -28,24 +28,41 @@
     </div>
     <div class="text-sm mt-8 mx-12">
         <h3 class="font-bold mt-4">Hasil Pemeriksaan:</h3>
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Kolom Kiri -->
             <div>
-                <table>
-                    <x-table-row label="Anamnesis">{{ $record->anamnesis }}</x-table-row>
-                    <x-table-row label="Diagnosis">{{ $record->diagnosis }}</x-table-row>
+                <table class="w-full table-fixed">
+                    <tr>
+                        <td class="w-32 align-top font-medium">Anamnesis</td>
+                        <td class="align-top">: {{ $record->anamnesis }}</td>
+                    </tr>
+                    <tr>
+                        <td class="w-32 align-top font-medium">Diagnosis</td>
+                        <td class="align-top">: {{ $record->diagnosis }}</td>
+                    </tr>
                 </table>
             </div>
+
+            <!-- Kolom Kanan -->
             <div>
-                <table>
-                    <x-table-row
-                        label="Suhu">{{ $record->temperature != 0 ? $record->temperature . 'c' : '-' }}</x-table-row>
-                    <x-table-row
-                        label="Weight">{{ $record->weight != 0 ? $record->weight . 'Kg' : '-' }}</x-table-row>
-                    <x-table-row label="Tekanan Darah">{{ $record->blood_pressure ?? '-' }}</x-table-row>
+                <table class="w-full table-fixed">
+                    <tr>
+                        <td class="w-32 font-medium">Suhu</td>
+                        <td>: {{ $record->temperature != 0 ? $record->temperature . '°C' : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium">Weight</td>
+                        <td>: {{ $record->weight != 0 ? $record->weight . ' Kg' : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium">Tekanan Darah</td>
+                        <td>: {{ $record->blood_pressure ?? '-' }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
     </div>
+
     @if (count($record->prescriptions) > 0)
         <div class="text-sm mt-8 mx-12 print:mx-12 print:mt-4">
             <h3 class="font-bold mt-4 text-lg border-b border-gray-400 pb-1 print:font-semibold print:text-base">

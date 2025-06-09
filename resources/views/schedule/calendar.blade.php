@@ -131,7 +131,7 @@
                                 <p><span class="font-medium">Waktu:</span> {{ $schedule['start_time'] }} -
                                     {{ $schedule['end_time'] }}</p>
                                 <p><span class="font-medium">Durasi per pasien:</span>
-                                    {{ $schedule['per_patient_time'] }} menit</p>
+                                    {{ $schedule['handle_count'] }} menit</p>
                             </div>
                         </div>
                     @endforeach
@@ -204,7 +204,7 @@
                 document.getElementById('availableDate').textContent = event.extendedProps.available_date;
                 document.getElementById('startTime').textContent = event.extendedProps.start_time;
                 document.getElementById('endTime').textContent = event.extendedProps.end_time;
-                document.getElementById('perPatientTime').textContent = event.extendedProps.per_patient_time;
+                document.getElementById('perPatientTime').textContent = event.extendedProps.handle_count;
                 document.getElementById('tailwindModal').classList.remove('hidden');
             }
         });

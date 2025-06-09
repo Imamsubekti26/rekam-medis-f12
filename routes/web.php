@@ -31,6 +31,9 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 // Patient Routes
+Route::get('record/print/{patient}', [PatientController::class, 'printByPatient'])
+    ->name('record.print.by_patient')
+    ->middleware(['auth']);
 Route::get('patient/print', [PatientController::class, 'printList'])
     ->name('patient.print.list')
     ->middleware(['auth']);

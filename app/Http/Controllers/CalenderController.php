@@ -34,7 +34,7 @@ class CalenderController extends Controller
                 'available_date' => $schedule->available_date,
                 'start_time' => $schedule->start_time,
                 'end_time' => $schedule->end_time,
-                'per_patient_time' => $schedule->per_patient_time,
+                'handle_count' => $schedule->handle_count,
             ];
         });
     }

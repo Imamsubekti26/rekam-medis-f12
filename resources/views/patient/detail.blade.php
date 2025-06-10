@@ -94,17 +94,30 @@
         {{-- Table Medical Record Lists --}}
         <section
             class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-4 md:p-12">
-            <div class="flex justify-between">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                 {{-- Title --}}
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight inline-block">
+                <h2
+                    class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center md:text-left">
                     {{ __('patient.title_medic') }}
                 </h2>
                 {{-- / Title --}}
 
-                {{-- Button Add New Record --}}
-                <flux:button href="{{ route('record.create', ['patient_id' => $patient->id]) }}" icon="plus"
-                    wire:navigate>
-                    {{ __('medical_record.add') }}</flux:button>
+                {{-- Button Group --}}
+                <div class="flex flex-col sm:flex-row gap-2 justify-center md:justify-end">
+                    {{-- Add New Record Button --}}
+                    <flux:button href="{{ route('record.create', ['patient_id' => $patient->id]) }}" variant="primary"
+                        icon="plus" wire:navigate>
+                        {{ __('medical_record.add') }}
+                    </flux:button>
+
+                    {{-- Print Button --}}
+                    <flux:button
+                        onclick="window.open(`{{ route('record.print.by_patient', ['patient' => $patient->id]) }}`)"
+                        class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
+                        icon="printer">
+                        {{ __('medical_record.print_rm') }}
+                    </flux:button>
+                </div>
             </div>
 
             <div class="w-full mt-8 overflow-y-auto">
@@ -159,12 +172,11 @@
                     keperluan dokumentasi atau rujukan.
                 </div>
 
-                {{-- Print Button --}}
-                <flux:button
-                    onclick="window.open(`{{ route('record.print.by_patient', ['patient' => $patient->id]) }}`)"
-                    class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
-                    icon="printer">
-                    {{ __('medical_record.print_rm') }}
+                {{-- Back to Patient List Button --}}
+                <flux:button href="{{ route('patient.index') }}"
+                    class="!bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
+                    icon="arrow-left">
+                    List Pasien
                 </flux:button>
             </div>
         </section>

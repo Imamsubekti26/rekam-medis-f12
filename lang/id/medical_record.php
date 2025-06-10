@@ -28,6 +28,7 @@ return [
     'record_number' => 'Nomor Rekam Medis',
     'date' => 'Tanggal Pemeriksaan',
     'blood_pressure' => 'Tekanan Darah',
+    'checkup_date' => 'Tanggal Periksa',
     'temperature' => 'Suhu Tubuh',
     'weight' => 'Berat Badan',
     'aftermeal' => 'Sesudah Makan',

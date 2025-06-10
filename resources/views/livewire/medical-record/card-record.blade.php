@@ -8,18 +8,21 @@
 
     {{-- Form --}}
     <div class="mt-12">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-3 xl:grid-cols-5 mt-12 mb-8">
 
             {{-- Doctor Name --}}
             @if ($doctor_list)
                 <flux:select wire:model="doctor_id" label="{{ __('doctor.name') }} *" placeholder="{{ __('choose') }}">
-                    @foreach ($doctor_list as $doctor )
+                    @foreach ($doctor_list as $doctor)
                         <flux:select.option value="{{ $doctor->id }}">{{ $doctor->name }}</flux:select.option>
                     @endforeach
                 </flux:select>
             @else
-                <flux:input wire:model="doctor_name" label="{{ __('doctor.name') }} *" readonly />
+                <flux:input wire:model="doctor_name" label="{{ __('doctor.name') }} *" disabled />
             @endif
+
+            {{-- Tanggal --}}
+            <flux:input type="date" wire:model="checkup_date" label="{{ __('medical_record.checkup_date') }} *" disabled />
 
             {{-- Temperature --}}
             <flux:input wire:model="temperature" type="number" label="{{ __('medical_record.temperature') }} (C)" />

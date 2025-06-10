@@ -18,6 +18,7 @@ class CardRecord extends Component
     public ?string $anamnesis;
     public ?string $diagnosis;
     public ?string $therapy;
+    public ?string $checkup_date;
 
     #[On('collectRecord')]
     public function sendRecordToParent()
@@ -45,6 +46,7 @@ class CardRecord extends Component
             $this->anamnesis = $record->anamnesis;
             $this->diagnosis = $record->diagnosis;
             $this->therapy = $record->therapy;
+            $this->checkup_date = Carbon::parse($record->date)->format('Y-m-d');
             return;
         }
 
@@ -56,6 +58,8 @@ class CardRecord extends Component
         $doctor = request()->user();
         $this->doctor_id = $doctor->id;
         $this->doctor_name = $doctor->name;
+
+        $this->checkup_date = Carbon::today()->format('Y-m-d');
     }
 
     public function render()

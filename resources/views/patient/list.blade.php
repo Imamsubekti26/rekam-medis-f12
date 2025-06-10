@@ -73,11 +73,18 @@
             <table class="w-full min-w-[1000px]">
                 <thead class="border-b-1">
                     <tr>
-                        {{-- Member ID --}}
+                        {{-- NIK --}}
                         <th class="p-4 py-6">
                             <div class="flex justify-center items-center gap-2">
                                 {{ __('patient.nik') }}
                                 <livewire:components.sorter :asc="'nik_asc'" :desc="'nik_desc'" />
+                            </div>
+                        </th>
+                        {{-- no_rm --}}
+                        <th class="p-4 py-6">
+                            <div class="flex justify-center items-center gap-2">
+                                {{ __('patient.no_rm') }}
+                                <livewire:components.sorter :asc="'no_rm_asc'" :desc="'no_rm_desc'" />
                             </div>
                         </th>
                         {{-- Patient Name --}}
@@ -108,6 +115,7 @@
                             <tr
                                 class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
                                 <td class="p-4">{{ $patient->nik }}</td>
+                                <td class="p-4">{{ $patient->no_rm }}</td>
                                 <td class="p-4">{{ $patient->name }}</td>
                                 <td
                                     class="p-4 {{ empty($patient->address) ? 'italic text-red-500 dark:text-red-400' : '' }}">

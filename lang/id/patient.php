@@ -6,6 +6,7 @@ return [
     'title_show' => 'Detail Pasien',
     'title_medic' => 'Riwayat Rekam Medis',
     'nik' => 'NIK',
+    'no_rm' => 'No. RM',
     'name' => 'Nama Pasien',
     'address' => 'Alamat',
     'phone' => 'Nomor Telepon',
@@ -33,4 +34,5 @@ return [
     'food_allergies' => 'Alergi Makanan',
     'print' => 'Cetak Daftar Pasien',
     'medical_status' => 'Status Rekam Medis',
+    'empty_medical_record' => 'Pasien belum memiliki/melakukan rekam medis'
 ];

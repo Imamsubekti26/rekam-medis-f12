@@ -19,7 +19,8 @@ class PatientController extends Controller
         if ($request->has("search") && $request->search != null) {
             $query = $query->where("name", "like", "%" . $request->search . "%")
                 ->orWhere("address", "like", "%" . $request->search . "%")
-                ->orWhere("nik", "like", "%" . $request->search . "%");
+                ->orWhere("nik", "like", "%" . $request->search . "%")
+                ->orWhere("no_rm", "like", "%" . $request->search . "%");
         }
 
         if ($request->has("sort_by") && $request->sort_by != null) {
@@ -28,6 +29,8 @@ class PatientController extends Controller
                 "name_desc" => ["name", "desc"],
                 "nik_asc" => ["nik", "asc"],
                 "nik_desc" => ["nik", "desc"],
+                "no_rm_asc" => ["no_rm", "asc"],
+                "no_rm_desc" => ["no_rm", "desc"],
                 "address_asc" => ["address", "asc"],
                 "address_desc" => ["address", "desc"],
             };

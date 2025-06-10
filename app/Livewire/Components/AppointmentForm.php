@@ -90,44 +90,6 @@ class AppointmentForm extends BaseComponent
         $this->availableTime = self::generateAvalilableTime($startTime, $endTime, $sessionDuration, 0, $unavailableTime);
     }
 
-    private function parseNIK($nik) {
-        // Pastikan NIK 16 digit dan hanya angka
-        if (!preg_match('/^[0-9]{16}$/', $nik)) {
-            return ['error' => 'Format NIK tidak valid'];
-        }
-    
-        // Ambil bagian tanggal lahir (6 digit setelah kode wilayah)
-        $date = substr($nik, 6, 2);
-        $month = substr($nik, 8, 2);
-        $tahun = substr($nik, 10, 2);
-    
-        // Cek jenis kelamin (tanggal > 40 = perempuan)
-        $is_male = (int)$date <= 40;
-        
-        // Normalisasi tanggal untuk perempuan (dikurangi 40)
-        if (!$is_male) {
-            $date = (int)$date - 40;
-            $date = str_pad($date, 2, '0', STR_PAD_LEFT); // Format 2 digit
-        }
-    
-        // Konversi tahun (asumsi abad 20 atau 21)
-        $fullYear = ($tahun <= (int)date('y')) 
-            ? '20' . $tahun  // 2000 - sekarang
-            : '19' . $tahun; // 1900 - 1999
-    
-        // Validasi tanggal
-        if (!checkdate((int)$month, (int)$date, (int)$fullYear)) {
-            return ['error' => 'Tanggal lahir tidak valid'];
-        }
-    
-        // Format output
-        return [
-            'date_of_birth' => "$fullYear-$month-$date",
-            'is_male' => $is_male,
-            'error' => null
-        ];
-    }
-
     public function submit()
     {
         $this->validate();
@@ -152,7 +114,7 @@ class AppointmentForm extends BaseComponent
                 Appointment::where('id', $this->appointmentId)->update($payload);
             } else {
                 // cek apa pasien dg NIK terkait sudah terdaftar, kalau belum daftarin dulu
-                $patient = $this->parseNIK($this->patientNIK);
+                $patient = parseNIK($this->patientNIK);
 
                 if($patient['error']) {
                     $this->addError('patientNIK', $patient['error']);

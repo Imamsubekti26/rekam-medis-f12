@@ -2,11 +2,7 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kontak - Apotek F21 Minomartani</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/logof21.png') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    @include('partials.head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
@@ -58,11 +54,11 @@
 
             <!-- Tombol Aksi -->
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="/"
+                <a href="/" wire:navigate
                     class="bg-white text-gray-800 hover:bg-gray-100 px-6 py-3 rounded-xl text-center transition w-full sm:w-auto font-medium shadow-md">
                     ← Kembali ke Beranda
                 </a>
-                <a href="/daftar"
+                <a href="/daftar" wire:navigate
                     class="bg-violet-700 hover:bg-violet-800 text-white px-6 py-3 rounded-xl text-center transition w-full sm:w-auto font-medium shadow-md">
                     Buat Janji Temu
                 </a>
@@ -80,6 +76,7 @@
         </div>
     </div>
 
+    @fluxScripts
 </body>
 
 </html>

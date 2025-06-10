@@ -9,7 +9,7 @@
 
     <!-- Tombol Back di kiri atas -->
     <div class="absolute left-5 top-5 mt-2 ml-2 z-50">
-        <a href="/"
+        <a href="/" wire:navigate
             class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-4 py-2 rounded-xl transition dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
             ← Kembali
         </a>

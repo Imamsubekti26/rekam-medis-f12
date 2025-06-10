@@ -28,7 +28,7 @@ use Carbon\Carbon;
                         <flux:button type="submit" class="cursor-pointer">{{ __('appointment.search') }}</flux:button>
                     </form>
                     <div class="flex flex-col md:flex-row gap-4">
-                        <flux:button href="{{ route('home') }}"
+                        <flux:button href="{{ route('schedule.calendar') }}"
                             class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600"
                             icon="plus" wire:navigate>
                             {{ __('appointment.add') }}
@@ -36,9 +36,9 @@ use Carbon\Carbon;
                         {{-- / Search Field --}}
                         <flux:button
                             onclick="window.open(`{{ route('appointment.print.list', [
-    'search' => request()->query('search'),
-    'sort_by' => request()->query('sort_by'),
-]) }}`)"
+                                'search' => request()->query('search'),
+                                'sort_by' => request()->query('sort_by'),
+                            ]) }}`)"
                             class="cursor-pointer !bg-slate-500 hover:!bg-slate-400 !text-white dark:!bg-zinc-700 dark:hover:!bg-zinc-600"
                             icon="printer">
                             {{ __('appointment.print') }}

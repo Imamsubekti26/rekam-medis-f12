@@ -23,7 +23,7 @@ Route::get('/kontakami', function () {
 
 Route::get('/daftar', function () {
     return view('welcome3');
-})->name('home');
+})->name('calendar_public');
 
 // Dashboard Routes
 Route::get('dashboard', [DashboardController::class, 'index'])

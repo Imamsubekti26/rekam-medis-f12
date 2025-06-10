@@ -2,11 +2,7 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Janji Temu - Apotek F21 Minomartani</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/logof21.png') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    @include('partials.head')
     <!-- DotLottie Player -->
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
@@ -38,11 +34,11 @@
                 Buat janji temu Anda sekarang untuk pelayanan kesehatan yang lebih baik.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="/daftar"
+                <a href="/daftar" wire:navigate
                     class="bg-[#6D28D9] hover:bg-[#5B21B6] text-white px-6 py-3 rounded-xl text-center transition">
                     Buat Janji Temu
                 </a>
-                <a href="/kontakami"
+                <a href="/kontakami" wire:navigate
                     class="bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-xl text-center transition">Hubungi
                     Kami</a>
             </div>
@@ -50,6 +46,7 @@
 
     </div>
 
+    @fluxScripts
 </body>
 
 </html>

@@ -4,6 +4,14 @@ import {
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from "@tailwindcss/vite";
 
+const exterdalDepencency = [
+    '@fullcalendar/core',
+    '@fullcalendar/daygrid',
+    '@fullcalendar/interaction',
+    'laravel-echo',
+    'pusher-js'
+];
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -12,6 +20,9 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    optimizeDeps: {
+        include: exterdalDepencency,
+    },
     server: {
         cors: true,
     },

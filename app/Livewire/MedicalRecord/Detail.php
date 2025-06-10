@@ -3,6 +3,7 @@
 namespace App\Livewire\MedicalRecord;
 
 use App\Models\MedicalRecord;
+use App\Models\Medicine;
 use App\Models\Prescription;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -48,7 +49,10 @@ class Detail extends Component
         try {
             DB::beginTransaction();
             MedicalRecord::where('id', $this->record['id'])->update($this->record);
+
+            $medicineStock = ['increment' => array_column($this->deletedPrescriptions, 'medicine_id'), 'decrement' => []];
             
+            // update resep yang berubah
             foreach ($this->prescriptions as $prescription) {
                 if (isset($prescription['updated']) && $prescription['updated'] == true) {
                     Prescription::updateOrCreate([
@@ -60,11 +64,24 @@ class Detail extends Component
                         'notes'=> $prescription['notes'],
                         'medical_record_id' => $this->record['id'],
                     ]);
+                    array_push($medicineStock['decrement'], $prescription['medicine_id']);
                 }
             }
 
-            foreach ($this->deletedPrescriptions as $prescription_id) {
-                Prescription::where('id', $prescription_id)->delete();
+            // delete resep yang dihapus
+            Prescription::whereIn('id', array_column( $this->deletedPrescriptions, 'id'))->delete();
+
+            // update stok obat
+            $duplicates = array_intersect($medicineStock['increment'], $medicineStock['decrement']);
+            if (!empty($duplicates)) {
+                $medicineStock['increment'] = array_diff($medicineStock['increment'], $duplicates);
+                $medicineStock['decrement'] = array_diff($medicineStock['decrement'], $duplicates);
+            }
+            if ($medicineStock['increment'] != []) {
+                Medicine::whereIn('id', $medicineStock['increment'])->increment('stock');
+            }
+            if ($medicineStock['decrement'] != []) {
+                Medicine::whereIn('id', $medicineStock['decrement'])->decrement('stock');
             }
 
             DB::commit();

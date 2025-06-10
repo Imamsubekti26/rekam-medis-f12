@@ -27,10 +27,10 @@ class CardPrescription extends Component
     }
 
     #[On('removePrescription')]
-    public function deletePrescription($id)
+    public function deletePrescription($prescription)
     {
-        array_push($this->deletedPrescriptions, $id);
-        $index = array_search($id, array_column($this->prescriptions, 'id'));
+        array_push($this->deletedPrescriptions, $prescription);
+        $index = array_search($prescription['id'], array_column($this->prescriptions, 'id'));
         unset($this->prescriptions[$index]);
         $this->prescriptions = array_values($this->prescriptions);
     }

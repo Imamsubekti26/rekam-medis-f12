@@ -41,7 +41,7 @@ class Prescription extends Component
 
     public function removePrescription()
     {
-        $this->dispatch('removePrescription', $this->key);
+        $this->dispatch('removePrescription', ['id' => $this->key, 'medicine_id' => $this->medicine_id]);
     }
 
     #[On('dropdownOnSearch')]

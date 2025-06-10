@@ -3,7 +3,7 @@
 namespace App\Livewire\MedicalRecord;
 
 use App\Models\MedicalRecord;
-use App\Models\Prescription;
+use App\Models\Medicine;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -55,15 +55,14 @@ class Create extends Component
     {
         try {
             DB::beginTransaction();
-            $newMedical = new MedicalRecord($this->record);
-            $newMedical->save();
-
-            $this->record_id = $newMedical->id;
+            $medicalRecord = MedicalRecord::create($this->record);
+            $medicalRecord->prescriptions()->createMany($this->prescriptions);
             
-            Prescription::bulkInsert($newMedical->id, $this->prescriptions);
+            Medicine::whereIn('id', collect($this->prescriptions)->pluck('medicine_id'))
+                ->decrement('stock');
             DB::commit();
 
-            $this->redirectRoute('patient.show', $newMedical->patient_id);
+            $this->redirectRoute('patient.show', $medicalRecord->patient_id);
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);

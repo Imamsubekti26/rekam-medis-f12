@@ -1,4 +1,4 @@
-@php 
+@php
     use Carbon\Carbon;
 @endphp
 
@@ -41,16 +41,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($medical_records as $record)
-                    <tr class="odd:bg-white even:bg-gray-50 print:bg-white">
-                        <td class="border border-gray-300 px-3 py-2">{{ $loop->iteration }}</td>
-                        <td class="border border-gray-300 px-3 py-2">{{ Carbon::parse($record->date)->format('d/m/Y H:i') }}</td>
-                        <td class="border border-gray-300 px-3 py-2">{{ $record->doctor->name }}</td>
-                        <td class="border border-gray-300 px-3 py-2">{{ $record->anamnesis }}</td>
-                        <td class="border border-gray-300 px-3 py-2">{{ $record->diagnosis }}</td>
+                @if ($medical_records->isEmpty())
+                    <tr>
+                        <td colspan="5" class="border border-gray-300 px-3 py-4 text-center text-red-600 italic">
+                            Tidak ada data rekam medis untuk pasien ini.
+                        </td>
                     </tr>
-                @endforeach
+                @else
+                    @foreach ($medical_records as $record)
+                        <tr class="odd:bg-white even:bg-gray-50 print:bg-white">
+                            <td class="border border-gray-300 px-3 py-2">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-3 py-2">
+                                {{ Carbon::parse($record->date)->format('d/m/Y H:i') }}</td>
+                            <td class="border border-gray-300 px-3 py-2">{{ $record->doctor->name }}</td>
+                            <td class="border border-gray-300 px-3 py-2">{{ $record->anamnesis }}</td>
+                            <td class="border border-gray-300 px-3 py-2">{{ $record->diagnosis }}</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
+
         </table>
     </div>
 </x-layouts.print>

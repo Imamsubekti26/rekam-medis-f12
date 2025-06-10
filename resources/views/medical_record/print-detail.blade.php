@@ -34,11 +34,11 @@
                 <table class="w-full table-fixed">
                     <tr>
                         <td class="w-32 align-top font-medium">Anamnesis</td>
-                        <td class="align-top">: {{ $record->anamnesis }}</td>
+                        <td class="align-top">: {{ $record->anamnesis ?: '-' }}</td>
                     </tr>
                     <tr>
                         <td class="w-32 align-top font-medium">Diagnosis</td>
-                        <td class="align-top">: {{ $record->diagnosis }}</td>
+                        <td class="align-top">: {{ $record->diagnosis ?: '-' }}</td>
                     </tr>
                 </table>
             </div>
@@ -66,7 +66,8 @@
     @if (count($record->prescriptions) > 0)
         <div class="text-sm mt-8 mx-12 print:mx-12 print:mt-4">
             <h3 class="font-bold mt-4 text-lg border-b border-gray-400 pb-1 print:font-semibold print:text-base">
-                Resep Obat</h3>
+                Resep Obat
+            </h3>
             <table class="w-full text-start mt-3 border border-gray-300 print:text-sm print:border-collapse">
                 <thead class="bg-gray-100 print:bg-gray-200">
                     <tr>
@@ -82,12 +83,24 @@
                             <td class="border border-gray-300 px-3 py-2">{{ $p->medicine->name }}</td>
                             <td class="border border-gray-300 px-3 py-2">{{ $p->rule_of_use }}</td>
                             <td class="border border-gray-300 px-3 py-2">
-                                {{ $p->aftermeal ? 'Setelah Makan' : 'Sebelum Makan' }}</td>
+                                {{ $p->aftermeal ? 'Setelah Makan' : 'Sebelum Makan' }}
+                            </td>
                             <td class="border border-gray-300 px-3 py-2">{{ $p->notes }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+    @else
+        <div class="text-sm mt-8 mx-12 print:mx-12 print:mt-4">
+            <h3 class="font-bold mt-4 text-lg border-b border-gray-400 pb-1 print:font-semibold print:text-base">
+                Resep Obat
+            </h3>
+            <div
+                class="bg-yellow-100 text-yellow-800 border border-yellow-300 px-4 py-3 rounded relative mt-4 print:bg-white print:text-black print:border-0">
+                <strong>Perhatian:</strong> Tidak ada resep obat yang tercatat untuk kunjungan ini.
+            </div>
+        </div>
     @endif
+
 </x-layouts.print>

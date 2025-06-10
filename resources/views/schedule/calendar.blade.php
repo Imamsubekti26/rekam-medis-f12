@@ -230,6 +230,7 @@
     document.getElementById('closeModal')?.addEventListener('click', function () {
         document.getElementById('tailwindModal')?.classList.add('hidden');
     });
+    
 
     // Inisialisasi saat halaman dimuat
     window.addEventListener('DOMContentLoaded', () => {

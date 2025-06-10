@@ -88,7 +88,10 @@
                                 <td class="p-4">{{ $pharmacist->id }}</td>
                                 <td class="p-4">{{ $pharmacist->name }}</td>
                                 <td class="p-4">{{ $pharmacist->email }}</td>
-                                <td class="p-4">{{ $pharmacist->phone }}</td>
+                                <td
+                                    class="p-4 {{ empty($pharmacist->phone) ? 'italic text-red-500 dark:text-red-400' : '' }}">
+                                    {{ $pharmacist->phone ?: 'Belum diisi' }}
+                                </td>
                                 <td class="p-4">
                                     <flux:tooltip content="{{ __('detail') }}">
                                         <flux:button href="{{ route('pharmacist.show', $pharmacist->id) }}" icon="information-circle" size="sm" class="cursor-pointer !bg-custom-2 !text-white dark:!bg-yellow-500 dark:hover:!bg-yellow-400" wire:navigate/>

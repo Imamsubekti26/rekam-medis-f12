@@ -126,7 +126,8 @@
                                 {{ __('doctor.name') }}
                             </div>
                         </th>
-                        <th class="p-4 py-6">
+                        {{-- <th> Anamnesis --}}
+                        <th class="p-4 py-6 w-[180px]">
                             <div class="flex justify-center items-center gap-2">
                                 {{ __('medical_record.anamnesis') }}
                             </div>
@@ -150,7 +151,10 @@
                                 </td>
                                 <td class="p-4">{{ $record->patient->name }}</td>
                                 <td class="p-4">{{ $record->doctor->name }}</td>
-                                <td class="p-4">{{ $record->anamnesis }}</td>
+                                {{-- <td> Anamnesis --}}
+                                <td class="p-4 max-w-[180px] truncate" title="{{ $record->anamnesis }}">
+                                    {{ $record->anamnesis }}
+                                </td>
                                 <td class="p-4">
                                     @if ($record->prescriptions && $record->prescriptions->count() > 0)
                                         <span

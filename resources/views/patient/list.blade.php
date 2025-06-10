@@ -109,7 +109,10 @@
                                 class="hover:bg-blue-100 dark:hover:bg-slate-700 transition even:bg-blue-50 dark:even:bg-slate-800">
                                 <td class="p-4">{{ $patient->nik }}</td>
                                 <td class="p-4">{{ $patient->name }}</td>
-                                <td class="p-4">{{ $patient->address }}</td>
+                                <td
+                                    class="p-4 {{ empty($patient->address) ? 'italic text-red-500 dark:text-red-400' : '' }}">
+                                    {{ $patient->address ?: 'Belum diisi' }}
+                                </td>
                                 <td class="p-4">{{ $patient->is_male ? 'L' : 'P' }} /
                                     {{ Carbon::createFromDate($patient->date_of_birth)->age }}</td>
                                 {{-- Status Rekam Medis --}}

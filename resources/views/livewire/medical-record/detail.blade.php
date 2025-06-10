@@ -5,6 +5,13 @@
     <section
         class="w-full border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 overflow-hidden shadow-sm rounded-lg md:rounded-2xl p-6 md:px-8">
         <div class="flex flex-col md:flex-row justify-end gap-4">
+            <flux:button 
+            href="{{ route('patient.show', $record->patient->id) }}" 
+            icon="user" 
+            class="cursor-pointer !bg-blue-600 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-700 transition duration-200 ease-in-out rounded-md shadow"
+            wire:navigate>
+            {{ __('patient.title_medic') }}
+        </flux:button>
             @if (request()->user()->is_editor)
                 <flux:modal.trigger name="delete_record">
                     <flux:button class="cursor-pointer" variant="danger">{{ __('medical_record.delete') }}</flux:button>

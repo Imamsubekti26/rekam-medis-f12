@@ -1,5 +1,5 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 
 <x-layouts.app>
@@ -121,28 +121,28 @@
             </div>
 
             <div class="w-full mt-8 overflow-y-auto">
-                <table class="w-full min-w-2xl">
-                    <thead class="border-b-1">
-                        <tr>
-                            {{-- Record Number --}}
-                            <th class="p-4 py-6">{{ __('medical_record.record_number') }}</th>
-                            {{-- Date --}}
-                            <th class="p-4 py-6">{{ __('medical_record.date') }}</th>
-                            {{-- Doctor Name --}}
-                            <th class="p-4 py-6">{{ __('doctor.name') }}</th>
-                            {{-- Anamnesis --}}
-                            <th class="p-4 py-6">{{ __('medical_record.anamnesis') }}</th>
-                            {{-- Action --}}
-                            <th class="p-4 py-6">{{ __('patient.action') }}</th>
-                        </tr>
-                    </thead>
-                    @if ($medical_records)
+                @if (count($medical_records) != 0)
+                    <table class="w-full min-w-2xl">
+                        <thead class="border-b-1">
+                            <tr>
+                                {{-- Record Number --}}
+                                <th class="p-4 py-6">{{ __('medical_record.record_number') }}</th>
+                                {{-- Date --}}
+                                <th class="p-4 py-6">{{ __('medical_record.date') }}</th>
+                                {{-- Doctor Name --}}
+                                <th class="p-4 py-6">{{ __('doctor.name') }}</th>
+                                {{-- Anamnesis --}}
+                                <th class="p-4 py-6">{{ __('medical_record.anamnesis') }}</th>
+                                {{-- Action --}}
+                                <th class="p-4 py-6">{{ __('patient.action') }}</th>
+                            </tr>
+                        </thead>
                         <tbody class="text-center">
                             @foreach ($medical_records as $record)
                                 <tr>
                                     <td class="p-4">{{ $record->patient->no_rm }}</td>
                                     <td class="p-4">
-                                        {{ Carbon::parse($record->date)->setTimezone('Asia/Jakarta')->format('y/m/d H:i') }}
+                                        {{ Carbon::parse($record->date)->format('y/m/d H:i') }}
                                     </td>
                                     <td class="p-4">{{ $record->doctor->name }}</td>
                                     <td class="p-4">{{ $record->anamnesis }}</td>
@@ -156,8 +156,12 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    @endif
-                </table>
+                    </table>
+                @else
+                    <div class="w-full h-full flex justify-center items-center py-5">
+                        <p class="italic">{{ __('patient.empty_medical_record') }}</p>
+                    </div>
+                @endif
             </div>
         </section>
         {{-- / Detail Medical Record Lists --}}

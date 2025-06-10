@@ -119,8 +119,9 @@ class MedicalRecordController extends Controller
     public function destroy(MedicalRecord $record)
     {
         try{
+            $patient_id = $record->patient->id;
             $record->delete();
-            return redirect()->route('record.index')->with('success', __('medical_record.delete_success'));
+            return redirect()->route('patient.show', $patient_id)->with('success', __('medical_record.delete_success'));
         } catch (\Exception $e) {
             dd($e);
             return redirect()->back()->withErrors(__('medical_record.delete_failed'));

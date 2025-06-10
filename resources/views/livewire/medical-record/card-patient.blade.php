@@ -1,5 +1,5 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 @endphp
 {{-- Form Card Update --}}
 <header
@@ -44,21 +44,27 @@
                             {{ __('patient.age') }}
                         </th>
                         <td class="py-2 text-gray-900 dark:text-white">
-                            {{ \Carbon\Carbon::createFromDate($patient_data->date_of_birth)->age }}
+                            {{ Carbon::createFromDate($patient_data->date_of_birth)->age }}
+                        </td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.drug_allergies') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ $patient_data->drug_allergies ?? '-' }}
+                        </td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <th class="pr-4 py-2 font-medium text-gray-600 dark:text-gray-400">
+                            {{ __('patient.food_allergies') }}
+                        </th>
+                        <td class="py-2 text-gray-900 dark:text-white">
+                            {{ $patient_data->food_allergies ?? '-' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
-
-
-            <div class="grid auto-rows-min gap-4 md:grid-cols-2 mt-4 mb-8">
-                {{-- Drug Allergies --}}
-                <flux:textarea label="{{ __('patient.drug_allergies') }}" resize="none">
-                    {{ $patient_data->drug_allergies }}</flux:textarea>
-                {{-- Food Allergies --}}
-                <flux:textarea label="{{ __('patient.food_allergies') }}" resize="none">
-                    {{ $patient_data->food_allergies }}</flux:textarea>
-            </div>
             {{-- / Form Input --}}
         @else
             <form class="relative w-full max-w-md flex flex-col gap-2" wire:submit.prevent="findPatientById">

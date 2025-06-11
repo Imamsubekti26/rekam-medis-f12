@@ -140,7 +140,16 @@
                         <th class="p-4 py-6 text-center">{{ __('action') }}</th>
                     </tr>
                 </thead>
-                @if ($records)
+
+                @if ($records->isEmpty())
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center pt-8 text-gray-800 dark:text-gray-200">
+                                Belum ada rekam medis 
+                            </td>
+                        </tr>
+                    </tbody>
+                @else
                     <tbody class="text-center border-b-1">
                         @foreach ($records as $record)
                             <tr

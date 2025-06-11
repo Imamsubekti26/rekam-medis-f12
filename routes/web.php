@@ -3,6 +3,8 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardokterController;
+use App\Http\Controllers\DashboardPharmacistController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicineController;
@@ -29,6 +31,14 @@ Route::get('/daftar', function () {
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::get('/dashboardokter', [DashboardokterController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboardokter');
+
+Route::get('/dashboardpharmacist', [DashboardPharmacistController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboardpharmacist');
 
 // Patient Routes
 Route::get('record/print/{patient}', [PatientController::class, 'printByPatient'])

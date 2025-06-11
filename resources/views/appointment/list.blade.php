@@ -68,7 +68,7 @@ use Carbon\Carbon;
                 @if ($appointments->isEmpty())
                     <tbody>
                         <tr>
-                            <td colspan="7" class="text-center pt-8 text-gray-800 dark:text-gray-200">
+                            <td colspan="8" class="text-center pt-8 text-gray-800 dark:text-gray-200">
                                 {{ __('appointment.empty_list') }}
                             </td>
                         </tr>

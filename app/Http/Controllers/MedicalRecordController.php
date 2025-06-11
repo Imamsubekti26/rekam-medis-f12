@@ -23,6 +23,9 @@ class MedicalRecordController extends Controller
                 ->orWhere("patients.name", "like", "%" . $request->search . "%");
             });
         }
+        if ($request->user()->role == 'doctor') {
+            $query = $query->where('doctor_id', $request->user()->id);
+        }
 
         // 🔍 Filter dokter
         if ($request->has("doctor_id") && $request->doctor_id != null) {

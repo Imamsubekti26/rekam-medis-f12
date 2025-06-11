@@ -51,10 +51,10 @@ class CardRecord extends Component
         }
 
         if (request()->user()->is_admin) {
-            $this->doctor_list = User::where('is_admin', false)->get();
+            $this->doctor_list = User::where('role', 'doctor')->get();
             return;
         }
-        
+
         $doctor = request()->user();
         $this->doctor_id = $doctor->id;
         $this->doctor_name = $doctor->name;

@@ -80,7 +80,7 @@ use Carbon\Carbon;
                 @if ($schedules->isEmpty())
                     <tbody>
                         <tr>
-                            <td colspan="7" class="text-center pt-8 text-gray-800 dark:text-gray-200">
+                            <td colspan="8" class="text-center pt-8 text-gray-800 dark:text-gray-200">
                                 {{ __('No schedules available.') }}
                             </td>
                         </tr>

@@ -28,6 +28,18 @@ class BreadCrumbs extends Component
                     "link" => route('dashboard')
                 ]
             ],
+            'dashboardokter' => [
+                [
+                    "label" => __('dashboard.dashboard'),
+                    "link" => route('dashboardokter')
+                ]
+            ],
+            'dashboardpharmacist' => [
+                [
+                    "label" => __('dashboard.dashboard'),
+                    "link" => route('dashboardpharmacist')
+                ]
+            ],
             'record.index' => [
                 [
                     "label" => __('dashboard.medical_record'),

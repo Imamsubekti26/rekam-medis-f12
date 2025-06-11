@@ -32,7 +32,7 @@ class DashboardController extends Controller
 
         $schedulesToday = DoctorSchedule::whereDate('available_date', $today)->count();
         $newPatientsToday = Patient::whereDate('created_at', $today)->count();
-        $newAppointmentsToday = Appointment::whereDate('created_at', $today)->count();
+        $newAppointmentsToday = Appointment::whereDate('date', $today)->count();
         $newMedicalRecordsToday = MedicalRecord::whereDate('created_at', $today)->count();
         $newMedicineStockToday = Medicine::whereDate('created_at', $today)->count();
 

@@ -25,7 +25,6 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public function login(): void
     {
         $this->validate();
-
         $this->ensureIsNotRateLimited();
 
         if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
@@ -39,7 +38,23 @@ new #[Layout('components.layouts.auth')] class extends Component {
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = Auth::user();
+
+        // Redirect berdasarkan role
+        if ($user->role === 'admin') {
+            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        } elseif ($user->role === 'doctor') {
+            $this->redirectIntended(default: route('dashboardokter', absolute: false), navigate: true);
+        } elseif ($user->role === 'pharmacist') {
+            // Nanti bisa diatur ke route khusus apoteker
+            $this->redirectIntended(default: route('dashboardpharmacist', absolute: false), navigate: true);
+        } else {
+            // fallback: logout jika role tidak dikenal
+            Auth::logout();
+            Session::invalidate();
+            Session::regenerateToken();
+            abort(403, 'Unauthorized role.');
+        }
     }
 
     /**
@@ -95,48 +110,29 @@ new #[Layout('components.layouts.auth')] class extends Component {
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="login" class="flex flex-col gap-6">
-    <!-- Alamat Email -->
-    <flux:input
-        wire:model="email"
-        label="Alamat Email"
-        type="email"
-        name="email"
-        required
-        autofocus
-        autocomplete="email"
-        placeholder="email@contoh.com"
-    />
+        <!-- Alamat Email -->
+        <flux:input wire:model="email" label="Alamat Email" type="email" name="email" required autofocus
+            autocomplete="email" placeholder="email@contoh.com" />
 
-    <!-- Kata Sandi -->
-    <div class="relative">
-        <flux:input
-            wire:model="password"
-            label="Kata Sandi"
-            type="password"
-            name="password"
-            required
-            autocomplete="current-password"
-            placeholder="Kata Sandi"
-        />
+        <!-- Kata Sandi -->
+        <div class="relative">
+            <flux:input wire:model="password" label="Kata Sandi" type="password" name="password" required
+                autocomplete="current-password" placeholder="Kata Sandi" />
 
-        @if (Route::has('password.request'))
-            <flux:link
-                class="absolute right-0 top-0 text-sm"
-                href="{{ route('password.request') }}"
-                wire:navigate
-            >
-                Lupa kata sandi?
-            </flux:link>
-        @endif
-    </div>
+            @if (Route::has('password.request'))
+                <flux:link class="absolute right-0 top-0 text-sm" href="{{ route('password.request') }}" wire:navigate>
+                    Lupa kata sandi?
+                </flux:link>
+            @endif
+        </div>
 
-    <!-- Ingat Saya -->
-    <flux:checkbox wire:model="remember" label="Ingat saya" />
+        <!-- Ingat Saya -->
+        <flux:checkbox wire:model="remember" label="Ingat saya" />
 
-    <div class="flex items-center justify-end">
-        <flux:button variant="primary" type="submit" class="w-full cursor-pointer">Masuk</flux:button>
-    </div>
-</form>
+        <div class="flex items-center justify-end">
+            <flux:button variant="primary" type="submit" class="w-full cursor-pointer">Masuk</flux:button>
+        </div>
+    </form>
 
 
     {{-- <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">

@@ -22,6 +22,7 @@ class Prescription extends Model
     {
         return $this->belongsTo(MedicalRecord::class);
     }
+    
 
     public static function bulkInsert(string $medicalRecordId, array $data)
     {

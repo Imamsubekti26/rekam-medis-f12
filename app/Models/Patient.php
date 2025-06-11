@@ -33,13 +33,13 @@ class Patient extends Model
             if (empty($patient->no_rm)) {
                 $datePart = now()->format('ymd'); // yymmdd
 
-                // Cari pasien terakhir dengan no_rm yang dimulai dengan "RM-$datePart."
-                $lastPatient = Patient::where('no_rm', 'like', "RM-{$datePart}.%")
+                // Ambil pasien terakhir berdasarkan nomor RM secara global (tanpa filter tanggal)
+                $lastPatient = Patient::where('no_rm', 'like', 'RM-%')
                     ->orderBy('no_rm', 'desc')
                     ->first();
 
                 if ($lastPatient) {
-                    // Ambil bagian nomor urut setelah titik
+                    // Ambil 4 digit terakhir setelah titik (misalnya: RM-250609.0042 → 0042)
                     $lastNumber = (int) substr($lastPatient->no_rm, -4);
                     $newNumber = $lastNumber + 1;
                 } else {
@@ -50,6 +50,7 @@ class Patient extends Model
             }
         });
     }
+
 
 
     public function medical_records()

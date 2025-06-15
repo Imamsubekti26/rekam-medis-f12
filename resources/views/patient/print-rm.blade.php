@@ -53,7 +53,7 @@
                             <td class="border border-gray-300 px-3 py-2">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-3 py-2">
                                 {{ Carbon::parse($record->date)->format('d/m/Y H:i') }}</td>
-                            <td class="border border-gray-300 px-3 py-2">{{ $record->doctor->name }}</td>
+                            <td class="border border-gray-300 px-3 py-2">Dr. {{ $record->doctor->name }}</td>
                             <td class="border border-gray-300 px-3 py-2">{{ $record->anamnesis }}</td>
                             <td class="border border-gray-300 px-3 py-2">{{ $record->diagnosis }}</td>
                         </tr>

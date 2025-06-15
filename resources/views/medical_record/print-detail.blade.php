@@ -10,7 +10,7 @@
             <h3 class="font-bold mt-4">Tanggal Periksa:</h3>
             <p>{{ $record->date }}</p>
             <h3 class="font-bold mt-4">Dokter:</h3>
-            <p>{{ $record->doctor->name }}</p>
+            <p>Dr. {{ $record->doctor->name }}</p>
         </div>
         <div>
             <h3 class="font-bold mt-4">Data Pasien:</h3>

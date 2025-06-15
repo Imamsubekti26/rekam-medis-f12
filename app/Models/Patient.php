@@ -25,6 +25,10 @@ class Patient extends Model
         'drug_allergies'
     ];
 
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -50,8 +54,6 @@ class Patient extends Model
             }
         });
     }
-
-
 
     public function medical_records()
     {

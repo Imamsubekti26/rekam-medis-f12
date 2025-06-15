@@ -37,7 +37,7 @@ class DashboardController extends Controller
         $newMedicineStockToday = Medicine::whereDate('created_at', $today)->count();
 
         // Ambil umur pasien dan kelompokkan berdasarkan range umur
-        $patients = Patient::selectRaw("TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) as age, is_male")
+        $patients = Patient::select(['is_male', 'date_of_birth'])
             ->whereNotNull('date_of_birth')
             ->get();
 
@@ -58,7 +58,7 @@ class DashboardController extends Controller
 
         foreach ($patients as $patient) {
             foreach ($ranges as $label => [$min, $max]) {
-                if ($patient->age >= $min && $patient->age <= $max) {
+                if ($patient->date_of_birth->age >= $min && $patient->date_of_birth->age <= $max) {
                     $index = array_search($label, $rangeLabels);
                     if ($patient->is_male) {
                         $maleCounts[$index]++;
@@ -80,50 +80,54 @@ class DashboardController extends Controller
                     $chartLabels->push(now()->subDays($i)->format('d M'));
                 }
 
-                $records = MedicalRecord::selectRaw("DATE_FORMAT(date, '%d %b') as label, COUNT(*) as total")
-                    ->where('date', '>=', now()->subDays(6)->startOfDay())
-                    ->groupBy('label')
-                    ->pluck('total', 'label');
+                $records = MedicalRecord::where('date', '>=', now()->subDays(6)->startOfDay())
+                    ->get()
+                    ->groupBy(function ($record) {
+                        return $record->date->format('d M');
+                    })
+                    ->map->count();
 
                 $chartData = $chartLabels->map(fn($label) => $records[$label] ?? 0);
                 break;
 
-                case 'weeks':
-                    $chartLabels = collect();
+            case 'weeks':
+                $chartLabels = collect();
                 
-                    // Buat label minggu terakhir secara dinamis
-                    for ($i = 6; $i >= 0; $i--) {
-                        $weekStart = now()->subWeeks($i)->startOfWeek();
-                        $yearWeek = $weekStart->format('oW'); // Tahun ISO + Minggu (misal: 202415)
-                        $label = $i === 0 ? 'Minggu ini' : ($i === 1 ? '1 minggu lalu' : "$i minggu lalu");
-                        $chartLabels->push([
-                            'label' => $label,
-                            'key' => $yearWeek
-                        ]);
-                    }
+                // Buat label minggu terakhir secara dinamis
+                for ($i = 6; $i >= 0; $i--) {
+                    $weekStart = now()->subWeeks($i)->startOfWeek();
+                    $yearWeek = $weekStart->format('oW'); // Tahun ISO + Minggu (misal: 202415)
+                    $label = $i === 0 ? 'Minggu ini' : ($i === 1 ? '1 minggu lalu' : "$i minggu lalu");
+                    $chartLabels->push([
+                        'label' => $label,
+                        'key' => $yearWeek
+                    ]);
+                }
                 
-                    // Ambil data dari database dengan format YEARWEEK
-                    $records = MedicalRecord::selectRaw("YEARWEEK(date, 1) as yearweek, COUNT(*) as total")
-                        ->where('date', '>=', now()->subWeeks(6)->startOfWeek())
-                        ->groupBy('yearweek')
-                        ->pluck('total', 'yearweek');
+                // Get records
+                $records = MedicalRecord::where('date', '>=', now()->subWeeks(6)->startOfWeek())
+                    ->get()
+                    ->groupBy(function ($record) {
+                        return $record->date->startOfWeek()->format('oW');
+                    })
+                    ->map->count();
                 
-                    // Konversi label menjadi chart-ready
-                    $chartData = $chartLabels->map(fn($item) => $records[$item['key']] ?? 0);
+                $chartData = $chartLabels->map(fn($item) => $records[$item['key']] ?? 0);
                     $chartLabels = $chartLabels->pluck('label'); // Ambil hanya label untuk Chart.js
                 
-                    break;
-                
+                break;
 
             case 'years':
                 for ($i = 6; $i >= 0; $i--) {
                     $chartLabels->push(now()->subYears($i)->format('Y'));
                 }
 
-                $records = MedicalRecord::selectRaw("YEAR(date) as label, COUNT(*) as total")
-                    ->where('date', '>=', now()->subYears(6)->startOfYear())
-                    ->groupBy('label')
-                    ->pluck('total', 'label');
+                $records = MedicalRecord::where('date', '>=', now()->subYears(6)->startOfYear())
+                    ->get()
+                    ->groupBy(function ($record) {
+                        return $record->date->format('Y');
+                    })
+                    ->map->count();
 
                 $chartData = $chartLabels->map(fn($label) => $records[$label] ?? 0);
                 break;
@@ -133,16 +137,17 @@ class DashboardController extends Controller
                     $chartLabels->push(now()->subMonths($i)->format('M Y'));
                 }
 
-                $records = MedicalRecord::selectRaw("DATE_FORMAT(date, '%b %Y') as label, COUNT(*) as total")
-                    ->where('date', '>=', now()->subMonths(6)->startOfMonth())
-                    ->groupBy('label')
-                    ->orderByRaw("MIN(date)")
-                    ->pluck('total', 'label');
+                $records = MedicalRecord::where('date', '>=', now()->subMonths(6)->startOfMonth())
+                    ->get()
+                    ->sortBy('date')
+                    ->groupBy(function ($record) {
+                        return $record->date->format('M Y');
+                    })
+                    ->map->count();
 
                 $chartData = $chartLabels->map(fn($label) => $records[$label] ?? 0);
                 break;
         }
-
 
         return view('dashboard', compact(
             'totalDoctors',

@@ -53,7 +53,7 @@ class MedicalRecordController extends Controller
             };
             $query->orderBy($sort[0], $sort[1]);
         } else {
-            $query->orderBy("created_at", "asc");
+            $query->orderBy("created_at", "desc");
         }
 
         try {

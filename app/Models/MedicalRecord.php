@@ -13,7 +13,7 @@ class MedicalRecord extends Model
     protected $fillable = ['record_number', 'date', 'patient_id', 'doctor_id', 'weight', 'temperature', 'blood_pressure', 'anamnesis', 'diagnosis', 'therapy'];
 
     protected $casts = [
-        'date' => 'date',
+        'date' => 'datetime',
     ];
 
     public function patient()

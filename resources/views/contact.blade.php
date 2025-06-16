@@ -4,8 +4,7 @@
 <head>
     @include('partials.head')
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-cover bg-center bg-no-repeat min-h-screen text-white"
@@ -23,7 +22,8 @@
         <section class="w-full md:w-1/2 flex justify-center">
             <div
                 class="w-full max-w-[650px] aspect-[4/3] bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-                <div class="bg-violet-700 text-white px-6 py-3 font-semibold flex items-center gap-2 text-sm sm:text-base">
+                <div
+                    class="bg-violet-700 text-white px-6 py-3 font-semibold flex items-center gap-2 text-sm sm:text-base">
                     <i class="fas fa-map-marked-alt"></i>
                     Lokasi Apotek F21
                 </div>
@@ -38,14 +38,17 @@
         <section class="w-full md:w-1/2 max-w-xl px-2 sm:px-0">
             <h1 class="text-3xl sm:text-4xl font-bold mb-4">Hubungi Kami</h1>
             <p class="text-base sm:text-lg text-gray-300 mb-6">
-                Apotek F21 Minomartani siap membantu Anda. Jika ada kendala silakan hubungi kami melalui informasi di bawah ini.
+                Apotek F21 Minomartani siap membantu Anda. Jika ada kendala silakan hubungi kami melalui informasi di
+                bawah ini.
             </p>
 
             <div class="space-y-3 text-gray-200 text-sm sm:text-base mb-6">
-                <p><strong><i class="fas fa-home mr-2"></i>Alamat:</strong> Jl. Raya Minomartani No.21, Sleman, Yogyakarta</p>
-                <p><strong><i class="fas fa-envelope mr-2"></i>Email:</strong> info@apotekf21.com</p>
-                <p><strong><i class="fas fa-phone mr-2"></i>Telepon:</strong> (0274) 123-456</p>
-                <p><strong><i class="fas fa-clock mr-2"></i>Jam Operasional:</strong> Senin - Sabtu, 08.00 - 20.00 WIB</p>
+                <p><strong><i class="fas fa-home mr-2"></i>Alamat:</strong> Jl. Raya Minomartani No.21, Sleman,
+                    Yogyakarta</p>
+                <p><strong><i class="fas fa-envelope mr-2"></i>Email:</strong> apotekf21@gmail.com</p>
+                <p><strong><i class="fas fa-phone mr-2"></i>Telepon:</strong> 0889-5279-893</p>
+                <p><strong><i class="fas fa-clock mr-2"></i>Jam Operasional:</strong> Senin - Minggu, 06.30 - 21.30 WIB
+                </p>
             </div>
 
             <!-- Tombol Aksi -->
@@ -62,14 +65,16 @@
 
             <!-- Sosial Media -->
             <div class="flex gap-5 mt-6 text-2xl text-white justify-center sm:justify-start">
-                <a href="#" class="hover:text-green-400 transition" aria-label="WhatsApp">
+                <a href="https://wa.me/628895279893" class="hover:text-green-400 transition" aria-label="WhatsApp"
+                    target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp"></i>
                 </a>
-                <a href="#" class="hover:text-pink-400 transition" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="hover:text-blue-400 transition" aria-label="Facebook">
+                <a href="https://web.facebook.com/apotekf21minomartani" target="_blank"
+                    class="hover:text-blue-400 transition" aria-label="Facebook">
                     <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/p/BBPEZbxh2VN/?hl=en" target="_blank" class="hover:text-pink-400 transition" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
                 </a>
             </div>
         </section>

@@ -1,0 +1,17 @@
+{
+    "name": "F21 Minomartani",
+    "short_name": "F21",
+    "start_url": "/index.php",
+    "background_color": "#6777ef",
+    "description": "F21 Minomartani",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "/assets/img/logof21.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

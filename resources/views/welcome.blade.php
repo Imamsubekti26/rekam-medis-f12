@@ -4,7 +4,11 @@
 <head>
     @include('partials.head')
     <!-- DotLottie Player -->
-    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- PWA -->
+    <meta name="theme-color" content="#6777ef"/>
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
 </head>
 
 <body class="bg-cover bg-center bg-no-repeat min-h-screen text-white"
@@ -50,6 +54,21 @@
     </div>
 
     @fluxScripts
+        <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").then(
+        (registration) => {
+            console.log("Service worker registration succeeded:", registration);
+        },
+        (error) => {
+            console.error(`Service worker registration failed: ${error}`);
+        }
+        );
+    } else {
+        console.error("Service workers are not supported.");
+    }
+    </script>
 </body>
 
 </html>

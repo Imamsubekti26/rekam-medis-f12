@@ -32,8 +32,8 @@ COPY . .
 # Copy composer dependencies from builder stage
 COPY --from=composer /app/vendor ./vendor
 
-# Laravel optimization commands
-RUN php artisan optimize
+# Laravel optimization commands; update: move it to entrypoint,sh
+# RUN php artisan optimize
 
 # Setup permissions
 RUN chown -R www-data:www-data /var/www \

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Bagian ini berjalan SETELAH Render menyuntikkan variabel lingkungan.
 # Ini adalah tempat yang tepat untuk membuat cache.

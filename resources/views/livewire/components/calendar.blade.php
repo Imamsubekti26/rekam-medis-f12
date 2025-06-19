@@ -22,7 +22,7 @@ use \Carbon\Carbon;
             @endif
             <div class="grid w-full grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach ($selectedSchedule as $schedule)
-                    <div class="p-4 rounded-lg border dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-900" wire:ignore>
+                    <div class="p-4 rounded-lg border dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-900">
                         <div class="flex justify-between">
                             <div class="flex flex-col justify-between">
                                 <h1 class="font-semibold text-lg first-letter:uppercase">{{ $schedule->doctor->name }}</h1>
@@ -32,12 +32,14 @@ use \Carbon\Carbon;
                                 </div>
                                 <div class="flex flex-col items-end gap-4">
                                     <p class="text-sm">{{ $schedule->appointments_count }} pendaftar </p>
-                                <flux:modal.trigger name="register">
-                                    <flux:button wire:click="showModalDialog('{{ $schedule->id }}')"
-                                        class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600">
-                                        Jadwalkan
-                                    </flux:button>
-                                </flux:modal.trigger>
+                                    @if(Carbon::createFromFormat('Y-m-d', $schedule->available_date) >= Carbon::today())
+                                        <flux:modal.trigger name="register">
+                                            <flux:button wire:click="showModalDialog('{{ $schedule->id }}')"
+                                                class="cursor-pointer !bg-custom-2 hover:!bg-blue-400 !text-white dark:!bg-custom-50 dark:hover:!bg-purple-600">
+                                                Jadwalkan
+                                            </flux:button>
+                                        </flux:modal.trigger>
+                                    @endif
                             </div>
                         </div>
                     </div>

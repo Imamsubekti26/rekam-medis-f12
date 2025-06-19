@@ -22,7 +22,7 @@ return [
     'name' => 'Nama Obat',
     'stock' => 'Stok',
     'price' => 'Harga',
-    'barcode' => 'Kode Barcode',
+    'barcode' => 'ID Obat',
     'description' => 'Deskripsi Obat',
     'print' => 'Cetak Daftar Obat',
 ];

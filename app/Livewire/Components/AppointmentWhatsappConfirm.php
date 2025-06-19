@@ -60,7 +60,7 @@ class AppointmentWhatsappConfirm extends BaseComponent
         // pesan dibawah JANGAN DIKASIH 'ENTER'. nanti bakal kedetek sama textarea!
         // kalau mau lihatnya sedikit lebih enak, aktifkan word wrap di vscode => alt + Z
 
-        $approveMsg = "Halo *{$appointment->patient->name}*,\n\nTerima kasih telah mengajukan permintaan janji temu dengan dokter kami di *$this->apotekName*.\n\nKami konfirmasi bahwa permintaan Anda telah *disetujui*.\n\nTanggal: $date\nWaktu: $time\n\nSilakan datang sesuai jadwal. Jika ada perubahan, silakan hubungi kami dengan membalas pesan ini.\n\nTerima kasih, salam sehat.";
+        $approveMsg = "Halo *{$appointment->patient->name}*,\n\nTerima kasih telah mengajukan permintaan janji temu dengan dokter kami di *{$this->apotekName}*.\n\nKami konfirmasi bahwa permintaan Anda telah *disetujui*.\n\n🗓️ Tanggal: $date\n🕒 Waktu: $time\n\n*Mohon balas pesan ini dengan mengetik \"KONFIRMASI HADIR\"* untuk memastikan Anda benar-benar akan datang sesuai jadwal.\n\nJika tidak ada konfirmasi hingga H-1, maka janji temu akan kami dibatalkan.\n\nTerima kasih atas perhatian Anda. Salam sehat.";
 
         $rejectMsg = "Halo *{$appointment->patient->name}*,\n\nTerima kasih atas permintaan janji temu Anda dengan dokter kami di *$this->apotekName*.\nMohon maaf, saat ini *kami belum bisa melakukan janji temu sesuai jadwal yang Anda pilih*.\n\nTanggal: $date\nWaktu: $time\n\nDengan alasan *dokter sedang tidak di tempat*.\nJika anda ingin *menjadwalkan ulang* janji temu Anda, balas pesan ini dengan ketik *Setuju*\n\nTerima kasih atas pengertiannya.";
 
